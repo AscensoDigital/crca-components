@@ -1,0 +1,33 @@
+
+for d in *
+do
+	if ! [ -d $d ] ; then
+		continue
+	fi
+
+	(
+		cd $d
+		n=1;
+		for f in *.js
+		do
+			i=` basename $f .js `
+			echo "import { $i } from './$d/$i';"
+			n=`expr $n + 1 `;
+		done
+		echo ""
+		echo "export const $d = ["
+		j=1
+		for f in *.js 
+		do
+			i=` basename $f .js `
+			j=` expr $j + 1 `
+			if [ $j -eq $n ] ; then
+				echo "  $i"
+			else
+				echo "  $i,"
+			fi
+		done
+		echo "];"	
+		cd ..
+	) > $d.js
+done

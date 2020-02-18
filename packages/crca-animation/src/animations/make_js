@@ -1,0 +1,34 @@
+
+for d in $*
+do
+	if ! [ -d $d ] ; then
+		continue
+	fi
+
+	cd $d
+	pwd
+
+	for f in *.css
+	do
+		i=` basename $f .css `
+
+		# echo $f $i
+
+		if [ -f $i.js ] ; then
+			echo $i.js existe
+		else
+			echo $i.js NOexiste
+			
+			(
+			echo "import { css } from \"lit-element\";"
+			echo ""
+			echo -n "export const $i = css\` "
+			cat $f
+			echo "\`;"
+			) > $i.js
+
+		fi
+
+	done
+	cd ..
+done
