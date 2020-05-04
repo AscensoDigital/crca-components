@@ -24,7 +24,7 @@ A component for...
 ### Installation
 
 ```bash
-yarn add crca-lazy-loader
+npm install crca-lazy-loader
 ```
 
 ```js
@@ -33,16 +33,9 @@ import 'crca-lazy-loader/crca-lazy-loader.js';
 
 ```js preview-story
 export const Simple = () => html`
-  <crca-lazy-loader></crca-lazy-loader>
-`;
-```
-
-## Variations
-
-###### Custom Title
-
-```js preview-story
-export const CustomTitle = () => html`
-  <crca-lazy-loader title="Hello World"></crca-lazy-loader>
+  <crca-lazy-loader>
+    Cargado directamente
+    <div slot="secondary">Esto aparece finalizada la carga inicial de la página</div>
+  </crca-lazy-loader>
 `;
 ```

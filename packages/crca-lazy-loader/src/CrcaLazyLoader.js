@@ -1,26 +1,27 @@
-import { html, css, LitElement } from 'lit-element';
+import { html, LitElement } from 'lit-element';
 
 export class CrcaLazyLoader extends LitElement {
-
   static get properties() {
     return {
-      firstUpdate: { type: Boolean }
+      lazyLoad: { type: Boolean },
     };
   }
 
   constructor() {
     super();
-    this.firstUpdate = false;
+    this.lazyLoad = false;
   }
 
   render() {
     return html`
       <slot></slot>
-      ${this.firstUpdate ? html`<slot name="secondary"></slot>` : ''}
+      ${this.lazyLoad ? html`<slot name="secondary"></slot>` : ''}
     `;
   }
 
   firstUpdated() {
-    this.firstUpdate=true;
+    window.addEventListener('load', () => {
+      this.lazyLoad = true;
+    });
   }
 }

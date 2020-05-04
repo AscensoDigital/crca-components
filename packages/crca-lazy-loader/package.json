@@ -1,6 +1,6 @@
 {
   "name": "crca-lazy-loader",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Webcomponent crca-lazy-loader following open-wc recommendations",
   "author": "crca-lazy-loader",
   "license": "MIT",
@@ -32,8 +32,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "@open-wc/eslint-config",
-      "eslint-config-prettier"
+      "@open-wc/eslint-config"
     ]
   },
   "prettier": {
@@ -51,5 +50,17 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/claudiocorvalan/crca-lazy-loader.git"
+  },
+  "keywords": [
+    "lit-element",
+    "lazy loader"
+  ],
+  "bugs": {
+    "url": "https://github.com/claudiocorvalan/crca-lazy-loader/issues"
+  },
+  "homepage": "https://github.com/claudiocorvalan/crca-lazy-loader#readme"
 }

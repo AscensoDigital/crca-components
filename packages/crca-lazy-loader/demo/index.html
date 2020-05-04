@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="es-CL">
 <head>
   <meta charset="utf-8">
   <style>
@@ -15,16 +15,14 @@
     import { html, render } from 'lit-html';
     import '../crca-lazy-loader.js';
 
-    const title = 'Hello owc World!';
     render(
       html`
-        <crca-lazy-loader .title=${title}>
+        <crca-lazy-loader>
           some more light-dom
-          <div slot="secondary">Esto debe aparecer finalizado el firstUpdate</div>
+          <div slot="secondary">Esto aparece finalizada la carga inicial de la pagina</div>
         </crca-lazy-loader>
-      `,
-      document.querySelector('#demo')
-    );
+      `, document.querySelector('#demo'),
+);
   </script>
 </body>
 </html>
