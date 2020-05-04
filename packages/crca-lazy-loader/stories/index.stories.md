@@ -39,3 +39,14 @@ export const Simple = () => html`
   </crca-lazy-loader>
 `;
 ```
+
+##Variant
+
+```js preview-story
+export const NotLoadLazy = () => html`
+  <crca-lazy-loader notLoadLazy>
+    Solo se carga este texto
+    <div slot="secondary">Esto aparece finalizada la carga inicial de la página</div>
+  </crca-lazy-loader>
+`;
+```

@@ -4,12 +4,14 @@ export class CrcaLazyLoader extends LitElement {
   static get properties() {
     return {
       lazyLoad: { type: Boolean },
+      notLoadLazy: { type: Boolean },
     };
   }
 
   constructor() {
     super();
     this.lazyLoad = false;
+    this.notLoadLazy = false;
   }
 
   render() {
@@ -21,7 +23,9 @@ export class CrcaLazyLoader extends LitElement {
 
   firstUpdated() {
     window.addEventListener('load', () => {
-      this.lazyLoad = true;
+      if (this.notLoadLazy === false) {
+        this.lazyLoad = true;
+      }
     });
   }
 }
