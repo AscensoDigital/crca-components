@@ -22,7 +22,7 @@
     "lit-element": "^2.2.1"
   },
   "devDependencies": {
-    "es-dev-server": "^1.23.0",
+    "es-dev-server": "^1.57.2",
     "eslint": "^6.1.0",
     "@open-wc/eslint-config": "^2.0.0",
     "prettier": "^2.0.4",
