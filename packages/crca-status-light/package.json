@@ -1,7 +1,6 @@
 {
   "name": "@ascenso/crca-status-light",
-  "private": false,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Webcomponent crca-status-light following open-wc recommendations",
   "author": "crca-status-light",
   "license": "MIT",
@@ -58,6 +57,9 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "gitHead": "8d4e513e4fd593ef15b7a28d9b55b3564f135361"
 }
