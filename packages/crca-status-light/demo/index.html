@@ -22,9 +22,9 @@
         <h2>Basic</h2>
         <crca-status-light></crca-status-light>
         <h2>Danger</h2>
-        <crca-status-light .value=${value} danger="5"></crca-status-light>
+        <crca-status-light .value=${value} danger="5" @crca-status-light-change=${e => console.log(e.detail)}></crca-status-light>
         <h2>Warning</h2>
-        <crca-status-light .value=${value} warning="5"></crca-status-light>
+        <crca-status-light valueAsContent .value=${value} warning="5"></crca-status-light>
         <h2>Success</h2>
         <crca-status-light .value=${value} warningn="3" success="3"></crca-status-light>
       `,
