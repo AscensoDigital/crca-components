@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-status-light",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Webcomponent crca-status-light following open-wc recommendations",
   "author": "Claudio Corvalan",
   "license": "MIT",

@@ -45,24 +45,24 @@ export class CrcaStatusLight extends CrcaStatusLightMixin(LitElement) {
 
   static get properties() {
     return {
-      title: { type: String },
+      titleStatus: { type: String },
     };
   }
 
   constructor() {
     super();
-    this.title = '';
+    this.titleStatus = '';
   }
 
   render() {
     return html`
-      <div class="${this.getClass(this.value)}" title="${this.titleStatus}">
+      <div class="${this.getClass(this.value)}" title="${this._titleStatus}">
         <slot></slot>
       </div>
     `;
   }
 
-  get titleStatus() {
-    return this.title || this.getClass(this.value);
+  get _titleStatus() {
+    return this.titleStatus || this.getClass(this.value);
   }
 }
