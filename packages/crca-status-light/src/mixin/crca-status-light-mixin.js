@@ -7,6 +7,7 @@ export const CrcaStatusLightMixin = Superclass =>
         success: { type: Number },
         warning: { type: Number },
         danger: { type: Number },
+        status: { type: String },
       };
     }
 
@@ -53,5 +54,21 @@ export const CrcaStatusLightMixin = Superclass =>
         }
       }
       return '';
+    }
+
+    updated(changedProperties) {
+      if (changedProperties.has('value')) {
+        const newStatus = this.getClass(this.value);
+        if (this.status !== newStatus) {
+          this.status = newStatus;
+          this.dispatchEvent(
+            new CustomEvent('crca-status-light-change', {
+              detail: {
+                status: newStatus,
+              },
+            })
+          );
+        }
+      }
     }
   };
