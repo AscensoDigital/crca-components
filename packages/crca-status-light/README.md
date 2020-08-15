@@ -4,13 +4,13 @@ This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) reco
 
 ## Installation
 ```bash
-npm i crca-status-light
+npm i @ascenso/crca-status-light
 ```
 
 ## Usage
 ```html
 <script type="module">
-  import 'crca-status-light/crca-status-light.js';
+  import '@ascenso/crca-status-light/crca-status-light.js';
 </script>
 
 <crca-status-light></crca-status-light>
