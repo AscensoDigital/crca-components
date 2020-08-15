@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #fafafa;
+    }
+  </style>
+</head>
+<body>
+  <div id="demo"></div>
+
+  <script type="module">
+    import { html, render } from 'lit-html';
+    import '../crca-status-light.js';
+
+    const value = 4;
+    render(
+      html`
+        <crca-status-light></crca-status-light>
+        <crca-status-light .value=${value} danger="5"></crca-status-light>
+        <crca-status-light .value=${value} warning="5"></crca-status-light>
+        <crca-status-light .value=${value} warningn="3" success="3"></crca-status-light>
+      `,
+      document.querySelector('#demo')
+    );
+  </script>
+</body>
+</html>
