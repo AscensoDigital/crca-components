@@ -1,5 +1,11 @@
 import { html, css, LitElement } from 'lit-element';
 
+import { crcaLoading } from './redux/reducer.js';
+
+crcaStore.addReducers({
+  crcaLoading
+});
+
 export class CrcaReduxLoading extends LitElement {
   static get styles() {
     return css`

@@ -1,6 +1,6 @@
 {
   "name": "crca-redux-loading",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Webcomponent crca-redux-loading following open-wc recommendations",
   "author": "crca-redux-loading",
   "license": "MIT",
@@ -20,8 +20,9 @@
     "storybook:build": "build-storybook"
   },
   "dependencies": {
+    "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
-    "lit-element": "^2.2.1"
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "es-dev-server": "^1.23.0",
