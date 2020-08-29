@@ -5,18 +5,17 @@ import { connect } from 'pwa-helpers/connect-mixin'
 import { crcaLoading } from './redux/reducer.js';
 
 import '@dile/dile-spinner/dile-spinner-modal';
-import { crcaLoadingElementSelector } from './redux/selectors.js';
+import { crcaLoadingPageSelector } from './redux/selectors.js';
 
 crcaStore.addReducers({
   crcaLoading
 });
 
-export class CrcaReduxLoading extends connect(crcaStore)(LitElement) {
+export class CrcaReduxLoadingPage extends connect(crcaStore)(LitElement) {
   static get styles() {
     return css`
       :host {
-        display: inline;
-        padding: var(--crca-redux-loading-padding, 3px);
+        display: block;
       }
     `;
   }
@@ -33,10 +32,10 @@ export class CrcaReduxLoading extends connect(crcaStore)(LitElement) {
   }
 
   stateChanged(state) {
-    this.loading=crcaLoadingElementSelector(state);
+    this.loading=crcaLoadingPageSelector(state);
   }
 
   render() {
-    return html`<dile-spinner ?active="${this.loading}"></dile-spinner>`;
+    return html`<dile-spinner-modal ?active="${this.loading}"></dile-spinner-modal>`;
   }
 }
