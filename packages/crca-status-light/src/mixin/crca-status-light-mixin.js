@@ -25,30 +25,30 @@ export const CrcaStatusLightMixin = Superclass =>
         return '';
       }
       if (this.order === 'asc') {
-        if (this.dander !== null && value <= this.danger) {
+        if (this.dander !== null && Number(value) <= Number(this.danger)) {
           return 'danger';
         }
-        if (this.warning !== null && value <= this.warning) {
+        if (this.warning !== null && Number(value) <= Number(this.warning)) {
           return 'warning';
         }
         if (
           this.success === null ||
-          (this.success !== null && value >= this.success)
+          (this.success !== null && Number(value) >= Number(this.success))
         ) {
           return 'success';
         }
       }
 
       if (this.order === 'desc') {
-        if (this.danger !== null && value >= this.danger) {
+        if (this.danger !== null && Number(value) >= Number(this.danger)) {
           return 'danger';
         }
-        if (this.warning !== null && value >= this.warning) {
+        if (this.warning !== null && Number(value) >= Number(this.warning)) {
           return 'warning';
         }
         if (
           this.success === null ||
-          (this.success !== null && value <= this.success)
+          (this.success !== null && Number(value) <= Number(this.success))
         ) {
           return 'success';
         }
