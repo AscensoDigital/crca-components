@@ -17,6 +17,10 @@ export class CrcaReduxLoading extends connect(crcaStore)(LitElement) {
 
   static get properties() {
     return {
+      material: { type: Boolean },
+      indeterminate: { type: Boolean },
+      progress: { type: Number },
+      density: { type: Number },
       loading: { type: Boolean }
     };
   }
@@ -24,6 +28,10 @@ export class CrcaReduxLoading extends connect(crcaStore)(LitElement) {
   constructor() {
     super();
     this.loading = false;
+    this.material = false;
+    this.indeterminate = false;
+    this.progress=0;
+    this.density=0;
   }
 
   stateChanged(state) {
@@ -31,6 +39,13 @@ export class CrcaReduxLoading extends connect(crcaStore)(LitElement) {
   }
 
   render() {
-    return html`<dile-spinner ?active="${this.loading}"></dile-spinner>`;
+    return this.material
+      ? html`<mwc-circular-progress
+              ?indeterminate=${this.indeterminate}
+              .progress=${this.progress}
+              .density=${this.density}
+              ?closed=${!this.loading}
+            ></mwc-circular-progress>`
+      : html`<dile-spinner ?active="${this.loading}"></dile-spinner>`;
   }
 }
