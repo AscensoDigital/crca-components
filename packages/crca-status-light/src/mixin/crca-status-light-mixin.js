@@ -55,7 +55,11 @@ export const CrcaStatusLightMixin = Superclass =>
     }
 
     updated(changedProperties) {
-      if (changedProperties.has('value')) {
+      if (changedProperties.has('value')
+        || changedProperties.has('danger')
+        || changedProperties.has('warning')
+        || changedProperties.has('success')
+        || changedProperties.has('order')) {
         const newStatus = this.getClass(this.value);
         if (this.status !== newStatus) {
           this.status = newStatus;
