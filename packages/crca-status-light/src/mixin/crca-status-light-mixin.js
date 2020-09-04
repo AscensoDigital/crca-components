@@ -20,19 +20,19 @@ export const CrcaStatusLightMixin = Superclass =>
     }
 
     getClass(value) {
-      console.log(value, this.danger, this.warning, this.success, this.order);
+      // console.log(value, this.danger, this.warning, this.success, this.order);
       const numeric = ['number', 'bigint'];
       if (numeric.indexOf(typeof value) === -1) {
         return '';
       }
       if (this.order === 'asc') {
-        if (this.dander !== null && Number(value) <= Number(this.danger)) {
+        if (this.danger !== null && Number(value) <= Number(this.danger)) {
           return 'danger';
         }
         if (this.warning !== null && Number(value) <= Number(this.warning)) {
           return 'warning';
         }
-        if ( ((this.dander !== null || this.warning !== null) && this.success === null)
+        if ( ((this.danger !== null || this.warning !== null) && this.success === null)
           || (this.success !== null && Number(value) >= Number(this.success))
         ) {
           return 'success';
@@ -46,7 +46,8 @@ export const CrcaStatusLightMixin = Superclass =>
         if (this.warning !== null && Number(value) >= Number(this.warning)) {
           return 'warning';
         }
-        if ( ((this.dander !== null || this.warning !== null) && this.success === null)
+        console.log();
+        if ( ( (this.danger !== null || this.warning !== null) && this.success === null)
           || (this.success !== null && Number(value) <= Number(this.success))
         ) {
           return 'success';
