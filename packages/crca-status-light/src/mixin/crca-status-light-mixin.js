@@ -31,9 +31,8 @@ export const CrcaStatusLightMixin = Superclass =>
         if (this.warning !== null && Number(value) <= Number(this.warning)) {
           return 'warning';
         }
-        if (
-          this.success === null ||
-          (this.success !== null && Number(value) >= Number(this.success))
+        if ( ((this.dander !== null || this.warning !== null) && this.success === null)
+          || (this.success !== null && Number(value) >= Number(this.success))
         ) {
           return 'success';
         }
@@ -46,9 +45,8 @@ export const CrcaStatusLightMixin = Superclass =>
         if (this.warning !== null && Number(value) >= Number(this.warning)) {
           return 'warning';
         }
-        if (
-          this.success === null ||
-          (this.success !== null && Number(value) <= Number(this.success))
+        if ( ((this.dander !== null || this.warning !== null) && this.success === null)
+          || (this.success !== null && Number(value) <= Number(this.success))
         ) {
           return 'success';
         }
