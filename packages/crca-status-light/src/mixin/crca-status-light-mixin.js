@@ -20,6 +20,7 @@ export const CrcaStatusLightMixin = Superclass =>
     }
 
     getClass(value) {
+      console.log(value, this.danger, this.warning, this.success, this.order);
       const numeric = ['number', 'bigint'];
       if (numeric.indexOf(typeof value) === -1) {
         return '';
