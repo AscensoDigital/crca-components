@@ -1,8 +1,38 @@
 import { createSelector } from "reselect";
+import { SCOPE_PAGE, SCOPE_ELEMENT, SCOPE_INTERNAL } from "./actions";
 
-export const crcaLoadingPageSelector = state => state.crcaLoading && state.crcaLoading.page && state.crcaLoading.page.length>0 || false;
-export const crcaLoadingElementSelector = state => state.crcaLoading && state.crcaLoading.element && state.crcaLoading.element.length>0 || false;
-export const crcaLoadingInternalSelector = state => state.crcaLoading && state.crcaLoading.internal && state.crcaLoading.internal.length>0 || false;
+const crcaLoadingStateSelector = state => state && state.crcaLoading || {};
+
+const _crcaLoadingPageSelector = createSelector (
+  crcaLoadingStateSelector,
+  loading => loading.page || []
+)
+
+const _crcaLoadingElementSelector = createSelector (
+  crcaLoadingStateSelector,
+  loading => loading.element || []
+)
+
+const _crcaLoadingInternalSelector = createSelector (
+  crcaLoadingStateSelector,
+  loading => loading.internal || []
+)
+
+export const crcaLoadingPageSelector = createSelector (
+  _crcaLoadingPageSelector,
+  page => page.length>0
+)
+
+export const crcaLoadingElementSelector = createSelector (
+  _crcaLoadingElementSelector,
+  element => element.length>0
+)
+
+export const crcaLoadingInternalSelector = createSelector (
+  _crcaLoadingInternalSelector,
+  internal => internal.length>0
+)
+
 
 export const crcaLoadingUntilElementSelector = createSelector(
   crcaLoadingPageSelector,
@@ -17,3 +47,30 @@ export const crcaLoadingSelector = createSelector(
   (page, element, internal) => page || element || internal
 )
 
+export const crcaLoadingPageExistProccessSelector = (state, process) => {
+  const prcs = _crcaLoadingPageSelector(state);
+  return prcs.filter(p => p===process).length>0
+}
+
+export const crcaLoadingElementExistProccessSelector = (state, process) => {
+  const prcs = _crcaLoadingElementSelector(state);
+  return prcs.filter(p => p===process).length>0
+}
+
+export const crcaLoadingInternalExistProccessSelector = (state, process) => {
+  const prcs = _crcaLoadingInternalSelector(state);
+  return prcs.filter(p => p===process).length>0
+}
+
+export const crcaLoadingExistProccessSelector = (state, process) => {
+  if(crcaLoadingPageExistProccessSelector(state,process)) {
+    return SCOPE_PAGE;
+  }
+  if(crcaLoadingElementExistProccessSelector(state,process)) {
+    return SCOPE_ELEMENT;
+  }
+  if(crcaLoadingInternalExistProccessSelector(state,process)) {
+    return SCOPE_INTERNAL;
+  }
+  return false;
+}
