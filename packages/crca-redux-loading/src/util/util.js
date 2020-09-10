@@ -1,0 +1,1 @@
+export const generateProcessTag = (process, vars) => [process, ...vars].join(" ");
