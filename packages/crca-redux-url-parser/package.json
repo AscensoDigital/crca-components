@@ -1,0 +1,58 @@
+{
+  "name": "@ascenso/crca-redux-url-parser",
+  "version": "0.1.0",
+  "description": "Webcomponent crca-redux-url-parser following open-wc recommendations",
+  "author": "crca-redux-url-parser",
+  "homepage": "https://github.com/AscensoDigital/crca-components#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AscensoDigital/crca-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AscensoDigital/crca-components/issues"
+  },
+  "module": "index.js",
+  "scripts": {
+    "start": "web-dev-server --app-index demo/index.html --node-resolve --open --watch",
+    "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
+    "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
+    "lint:prettier": "prettier \"**/*.js\" --check --ignore-path .gitignore",
+    "format:prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "test": "web-test-runner --coverage",
+    "test:watch": "web-test-runner --watch"
+  },
+  "dependencies": {
+    "lit-element": "^2.2.1",
+    "lit-html": "^1.1.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "@ascenso/crca-redux-loading": "file:../crca-redux-loading"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@open-wc/eslint-config",
+      "eslint-config-prettier"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
