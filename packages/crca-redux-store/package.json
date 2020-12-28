@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-store",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sotre de redux",
   "main": "crcaStore.js",
   "scripts": {

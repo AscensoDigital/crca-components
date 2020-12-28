@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-stepper",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Webcomponent crca-stepper following open-wc recommendations",
   "author": "Claudio Corvalan",
   "license": "MIT",
