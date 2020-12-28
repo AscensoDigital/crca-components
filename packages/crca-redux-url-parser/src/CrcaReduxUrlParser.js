@@ -87,6 +87,7 @@ export class CrcaReduxUrlParser extends connect(crcaStore)(LitElement) {
           </ul>
         </li>
       </ul>
+      <a href="section/param1/param2?query_id=1&query_2=false#anchor1">Url demo con todas las partes</a>
     `;
   }
 }
