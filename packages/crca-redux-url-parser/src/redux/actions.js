@@ -1,4 +1,4 @@
-import { PAGE_404, PAGE_LOGIN, PAGE_NOT_LAST } from "../page.js";
+import { PAGE_HOME, PAGE_NOT_LAST } from "../page.js";
 import { crcaUrlDominioSelector, crcaUrlPageSelector, crcaUrlSubdominioSelector } from "./selectors.js";
 
 export const UPDATE_ANCHOR = "UPDATE_ANCHOR";
@@ -182,7 +182,7 @@ const defaultLocalHost = ['localhost', '127.0.1.1', '127.0.0.1'];
 const defaultLocalSubdominio = 'test';
 
 export const crcaUrlHandleNavigation = (location,
-                homepage = PAGE_LOGIN,
+                homepage = PAGE_HOME,
                 loaders = defaultLoaders,
                 localhosts = defaultLocalHost,
                 localSubdominio = defaultLocalSubdominio ) => (dispatch, getState) => {
@@ -190,37 +190,30 @@ export const crcaUrlHandleNavigation = (location,
   const state = getState();
   const decodedHostname = decodeHostname(location.hostname);
 
-  const isLocalhost = localhosts.includes(decodedHostname.subdominio)
-  if ( decodedHostname.dominio !== undefined || isLocalhost) {
-
-    if ( decodedHostname.dominio !== undefined && decodedHostname.dominio !== crcaUrlDominioSelector(state) ) {
-      dispatch(crcaLoadDominio(decodedHostname.dominio, loaders.dominio));
-    }
-
-    const subdominio = isLocalhost ? localSubdominio : decodedHostname.subdominio;
-    if (subdominio !== crcaUrlSubdominioSelector(state)) {
-      dispatch(crcaLoadSubdominio(subdominio, loaders.subdominio));
-    }
-
-    const path = decodeURIComponent(location.pathname);
-    const url = path === '/' ? homepage : path.slice(1);
-
-    const decodedUrl = decodeUrl(url);
-    if(decodedUrl.page !== crcaUrlPageSelector(state)){
-      dispatch(crcaLoadPage(decodedUrl.page, loaders.page));
-    }
-
-    dispatch(crcaLoadSection(decodedUrl.page, decodedUrl.segments));
-
-    const decodedAnchor = decodeAnchor(location.hash);
-    dispatch(crcaLoadAnchor(decodedAnchor, loaders.anchor));
-
-    const decodedSearch = decodeSearch(location.search);
-    dispatch(crcaLoadSearch(decodedSearch, loaders.search));
-
-  } else {
-    dispatch(crcaLoadPage(PAGE_404, loaders.page));
+  if ( decodedHostname.dominio !== crcaUrlDominioSelector(state) ) {
+    dispatch(crcaLoadDominio(decodedHostname.dominio, loaders.dominio));
   }
+
+  const subdominio = localhosts.includes(decodedHostname.dominio) ? localSubdominio : decodedHostname.subdominio;
+  if (subdominio !== crcaUrlSubdominioSelector(state)) {
+    dispatch(crcaLoadSubdominio(subdominio, loaders.subdominio));
+  }
+
+  const path = decodeURIComponent(location.pathname);
+  const url = path === '/' ? homepage : path.slice(1);
+
+  const decodedUrl = decodeUrl(url);
+  if(decodedUrl.page !== crcaUrlPageSelector(state)){
+    dispatch(crcaLoadPage(decodedUrl.page, loaders.page));
+  }
+
+  dispatch(crcaLoadSection(decodedUrl.page, decodedUrl.segments));
+
+  const decodedAnchor = decodeAnchor(location.hash);
+  dispatch(crcaLoadAnchor(decodedAnchor, loaders.anchor));
+
+  const decodedSearch = decodeSearch(location.search);
+  dispatch(crcaLoadSearch(decodedSearch, loaders.search));
 };
 
 export const crcaUrlNavigate = url => dispatch => {
