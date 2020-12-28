@@ -12,6 +12,13 @@ export {
   decodeSearch,
   decodeUrl,
 
+  updateAnchor,
+  updateDominio,
+  updatePage,
+  updateSearch,
+  updateSection,
+  updateSubdominio,
+
   crcaLoadPage,
   crcaUrlHandleNavigation,
   crcaUrlNavigate
