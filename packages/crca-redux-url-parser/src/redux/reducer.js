@@ -15,7 +15,7 @@ const initialState = {
   page: '',
   pageSection: '',
   sectionParams: [],
-  searchs: [],
+  searchs: {},
   subdominio: ''
 }
 

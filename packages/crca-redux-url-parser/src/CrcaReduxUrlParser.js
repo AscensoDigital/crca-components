@@ -9,7 +9,7 @@ import {
   crcaUrlLastPageSelector,
   crcaUrlPageSectionSelector,
   crcaUrlPageSelector,
-  crcaUrlSearchSelector,
+  crcaUrlSearchsSelector,
   crcaUrlSubdominioSelector,
   crcaUrlSectionParamsSelector
 } from './redux/selectors.js';
@@ -62,7 +62,7 @@ export class CrcaReduxUrlParser extends connect(crcaStore)(LitElement) {
     this.lastPage = crcaUrlLastPageSelector(state);
     this.page = crcaUrlPageSelector(state);
     this.pageSection = crcaUrlPageSectionSelector(state);
-    this.searchs = crcaUrlSearchSelector(state);
+    this.searchs = crcaUrlSearchsSelector(state);
     this.sectionParams = crcaUrlSectionParamsSelector(state);
     this.subdominio = crcaUrlSubdominioSelector(state);
   }

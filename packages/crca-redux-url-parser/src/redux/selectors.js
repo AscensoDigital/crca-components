@@ -27,9 +27,9 @@ export const crcaUrlPageSectionSelector = createSelector (
   url => url.pageSection || ''
 );
 
-export const crcaUrlSearchSelector = createSelector (
+export const crcaUrlSearchsSelector = createSelector (
   crcaUrlStateSelector,
-  url => url.search || {}
+  url => url.searchs || {}
 );
 
 export const crcaUrlSectionParamsSelector = createSelector (
