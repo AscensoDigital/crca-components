@@ -1,6 +1,6 @@
 export { CrcaReduxLoading } from './src/CrcaReduxLoading.js';
 
-export { generateProcessTag } from './src/util/util';
+export { generateProcessTag } from './src/util/util.js';
 
 export {
   startPageLoading,

@@ -16,9 +16,5 @@
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2"
   },
-  "devDependencies": {
-    "@open-wc/demoing-storybook": "^2.0.0",
-    "es-dev-server": "^1.57.2"
-  },
   "gitHead": "8d4e513e4fd593ef15b7a28d9b55b3564f135361"
 }
