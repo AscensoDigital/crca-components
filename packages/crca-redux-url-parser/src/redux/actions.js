@@ -104,25 +104,25 @@ export const updateSubdominio = subdominio => (
   }
 );
 
-const crcaLoadSubdominio = (subdominio, loaderAction = null) => dispatch => {
+const crcaLoadSubdominio = (subdominio, loaderAction = null, autoUpdate = true) => dispatch => {
   if(typeof loaderAction === 'function') {
     dispatch(loaderAction(subdominio));
   }
-  else {
+  if(autoUpdate) {
     dispatch(updateSubdominio(subdominio));
   }
 };
 
-const crcaLoadDominio = (dominio, loaderAction = null) => dispatch => {
+const crcaLoadDominio = (dominio, loaderAction = null, autoUpdate = true) => dispatch => {
   if(typeof loaderAction === 'function') {
     dispatch(loaderAction(dominio));
   }
-  else {
+  if(autoUpdate) {
     dispatch(updateDominio(dominio));
   }
 };
 
-export const crcaLoadPage = (page, loaderAction = null) => dispatch => {
+export const crcaLoadPage = (page, loaderAction = null, autoUpdate = true) => dispatch => {
   if (PAGE_NOT_LAST.indexOf(page) === -1) {
     dispatch(updateLastPage(page));
   }
@@ -130,12 +130,12 @@ export const crcaLoadPage = (page, loaderAction = null) => dispatch => {
   if(typeof loaderAction === 'function') {
     dispatch(loaderAction(page));
   }
-  else {
+  if(autoUpdate) {
     dispatch(updatePage(page));
   }
 };
 
-const crcaLoadSection = (page, segments, loaderAction = null) => (dispatch) => {
+const crcaLoadSection = (page, segments, loaderAction = null, autoUpdate = true) => (dispatch) => {
   let pageSection = '';
   let sectionParams = [];
 
@@ -146,25 +146,25 @@ const crcaLoadSection = (page, segments, loaderAction = null) => (dispatch) => {
   if(typeof loaderAction === 'function') {
     dispatch(loaderAction(page, pageSection, sectionParams));
   }
-  else {
+  if(autoUpdate) {
     dispatch(updateSection(pageSection, sectionParams));
   }
 };
 
-const crcaLoadSearch = (searchs, loaderAction = null) => (dispatch) => {
+const crcaLoadSearch = (searchs, loaderAction = null, autoUpdate = true) => (dispatch) => {
   if(typeof loaderAction === 'function') {
     dispatch(loaderAction(searchs));
   }
-  else {
+  if(autoUpdate) {
     dispatch(updateSearch(searchs));
   }
 };
 
-const crcaLoadAnchor = (anchor, loaderAction = null) => (dispatch) => {
+const crcaLoadAnchor = (anchor, loaderAction = null, autoUpdate = true) => (dispatch) => {
   if(typeof loaderAction === 'function') {
     dispatch(loaderAction(anchor));
   }
-  else {
+  if(autoUpdate) {
     dispatch(updateAnchor(anchor));
   }
 };
