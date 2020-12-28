@@ -218,7 +218,7 @@ export const crcaUrlHandleNavigation = (location, config = {}) => (dispatch, get
   dispatch(crcaLoadSearch(decodedSearch, conf.loaders.search, conf.manualUpdate.search));
 };
 
-export const crcaUrlNavigate = url => dispatch => {
+export const crcaUrlNavigate = (url, config = {}) => dispatch => {
   window.history.pushState({}, '', url);
-  dispatch(crcaUrlHandleNavigation(window.location));
+  dispatch(crcaUrlHandleNavigation(window.location, config));
 };
