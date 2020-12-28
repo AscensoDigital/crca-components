@@ -1,6 +1,7 @@
 export { CrcaReduxUrlParser } from './src/CrcaReduxUrlParser.js';
 
 export {
+  PAGE_HOME,
   PAGE_LOGIN,
   PAGE_404
 } from './src/page.js'
@@ -22,7 +23,8 @@ export {
   crcaUrlLastPageSelector,
   crcaUrlPageSelector,
   crcaUrlPageSectionSelector,
-  crcaUrlSearchSelector,
+  crcaUrlSearchsSelector,
+  crcaUrlSectionParamsSelector,
   crcaUrlSubdominioSelector
 } from './src/redux/selectors.js';
 
