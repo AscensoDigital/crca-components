@@ -89,11 +89,11 @@ export const updateSearch = (searchs) => (
   }
 );
 
-export const updateSection = (pageSection, pageParameter) => (
+export const updateSection = (pageSection, sectionParams) => (
   {
     type: UPDATE_SECTION,
     pageSection,
-    pageParameter,
+    sectionParams,
   }
 );
 

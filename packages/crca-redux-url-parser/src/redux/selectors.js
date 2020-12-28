@@ -32,6 +32,11 @@ export const crcaUrlSearchSelector = createSelector (
   url => url.search || {}
 );
 
+export const crcaUrlSectionParamsSelector = createSelector (
+  crcaUrlStateSelector,
+  url => url.sectionParams || []
+);
+
 export const crcaUrlSubdominioSelector = createSelector (
   crcaUrlStateSelector,
   url => url.subdominio || ''
