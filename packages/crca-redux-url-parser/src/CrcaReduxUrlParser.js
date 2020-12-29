@@ -11,7 +11,12 @@ import {
   crcaUrlPageSelector,
   crcaUrlSearchSelector,
   crcaUrlSubdominioSelector,
-  crcaUrlSectionParamsSelector
+  crcaUrlSectionParamsSelector,
+  crcaUrlDominiosProdSelector,
+  crcaUrlPageNotLastSelector,
+  crcaUrlDevSubdominioSelector,
+  crcaUrlManualUpdateSelector,
+  crcaUrlHomepageSelector
 } from './redux/selectors.js';
 
 import { crcaUrlHandleNavigation } from './redux/actions.js';
@@ -41,6 +46,11 @@ export class CrcaReduxUrlParser extends connect(crcaStore)(LitElement) {
       search: { type: Object },
       sectionParams: { type: Array },
       subdominio: { type: String },
+      devSubdominio: { type: String },
+      dominiosProd: { type: Array },
+      homepage: { type: String },
+      manualUpdate: { type: Object },
+      pageNotLast: { type: Array },
     };
   }
 
@@ -65,10 +75,17 @@ export class CrcaReduxUrlParser extends connect(crcaStore)(LitElement) {
     this.search = crcaUrlSearchSelector(state);
     this.sectionParams = crcaUrlSectionParamsSelector(state);
     this.subdominio = crcaUrlSubdominioSelector(state);
+
+    this.devSubdominio = crcaUrlDevSubdominioSelector(state);
+    this.dominiosProd = crcaUrlDominiosProdSelector(state);
+    this.homepage = crcaUrlHomepageSelector(state);
+    this.manualUpdate = crcaUrlManualUpdateSelector(state);
+    this.pageNotLast = crcaUrlPageNotLastSelector(state);
   }
 
   render() {
     return html`
+      <h1>crca-redux-url-parser</h1>
       <h2>Datos Url Parseada</h2>
       <ul>
         <li><b>subdominio:</b> ${this.subdominio}</li>
@@ -88,6 +105,27 @@ export class CrcaReduxUrlParser extends connect(crcaStore)(LitElement) {
         </li>
       </ul>
       <a href="section/param1/param2?query_id=1&query_2=false#anchor1">Url demo con todas las partes</a>
+
+      <h2>Parámetros Configurables (valores por defecto)</h2>
+      <ul>
+        <li><b>devSubdominio:</b> ${this.devSubdominio}</li>
+        <li><b>dominiosProd:</b>
+          <ul>
+            ${this.dominiosProd.map((sp, idx) => html`<li>${idx} => ${sp}</li>`)}
+          </ul>
+        </li>
+        <li><b>homepage:</b> ${this.homepage}</li>
+        <li><b>manualUpdate:</b>
+          <ul>
+            ${Object.keys(this.manualUpdate).map( idx => html`<li>${idx} => ${this.manualUpdate[idx] ? 'true' : 'false'}</li>`)}
+          </ul>
+        </li>
+        <li><b>pageNotLast:</b>
+          <ul>
+            ${this.pageNotLast.map((sp, idx) => html`<li>${idx} => ${sp}</li>`)}
+          </ul>
+        </li>
+      </ul>
     `;
   }
 }

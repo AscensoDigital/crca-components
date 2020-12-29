@@ -12,7 +12,12 @@ export {
   decodeSearch,
   decodeUrl,
 
+  setDevSubdominio,
   setDominiosProd,
+  setHomepage,
+  setManualUpdate,
+  setPageNotLast,
+
   updateAnchor,
   updateDominio,
   updatePage,
@@ -27,11 +32,16 @@ export {
 
 export {
   crcaUrlAnchorSelector,
+  crcaUrlConfigSelector,
+  crcaUrlDevSubdominioSelector,
   crcaUrlDominioSelector,
   crcaUrlDominiosProdSelector,
+  crcaUrlHomepageSelector,
   crcaUrlIsDominioProdSelector,
   crcaUrlLastPageSelector,
+  crcaUrlManualUpdateSelector,
   crcaUrlPageSelector,
+  crcaUrlPageNotLastSelector,
   crcaUrlPageSectionSelector,
   crcaUrlSearchSelector,
   crcaUrlSectionParamsSelector,

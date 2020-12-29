@@ -1,5 +1,10 @@
+import { PAGE_HOME, PAGE_NOT_LAST } from '../page.js';
 import {
+  SET_DEV_SUBDOMINIO,
   SET_DOMINIOS_PROD,
+  SET_HOMEPAGE,
+  SET_MANUAL_UPDATE,
+  SET_PAGE_NOT_LAST,
   UPDATE_ANCHOR,
   UPDATE_DOMINIO,
   UPDATE_LAST_PAGE,
@@ -9,10 +14,58 @@ import {
   UPDATE_SUBDOMINIO
 } from './actions.js';
 
+
+const initialConfigState = {
+  devSubdominio: '',
+  dominiosProd: [],
+  homepage: PAGE_HOME,
+  manualUpdate: {
+    anchor: false,
+    dominio: false,
+    page: false,
+    section: false,
+    search: false,
+    subdominio: false,
+  },
+  pageNotLast: PAGE_NOT_LAST,
+};
+
+const crcaUrlConfig = (state = initialConfigState, action) => {
+  switch(action.type) {
+    case SET_DEV_SUBDOMINIO:
+      return {
+        ...state,
+        devSubdominio: action.devSubdominio
+      };
+    case SET_DOMINIOS_PROD:
+      return {
+        ...state,
+        dominiosProd: action.dominiosProd
+      };
+    case SET_HOMEPAGE:
+      return {
+        ...state,
+        homepage: action.homepage
+      };
+    case SET_MANUAL_UPDATE:
+      return {
+        ...state,
+        manualUpdate: action.manualUpdate
+      };
+    case SET_PAGE_NOT_LAST:
+      return {
+        ...state,
+        pageNotLast: action.pageNotLast
+      };
+    default:
+      return state;
+  }
+}
+
 const initialState = {
   anchor: '',
   dominio: '',
-  dominiosProd: [],
+  config: initialConfigState,
   lastPage: null,
   page: '',
   pageSection: '',
@@ -23,10 +76,14 @@ const initialState = {
 
 export const crcaUrl = (state = initialState, action) => {
   switch(action.type) {
+    case SET_DEV_SUBDOMINIO:
     case SET_DOMINIOS_PROD:
+    case SET_HOMEPAGE:
+    case SET_MANUAL_UPDATE:
+    case SET_PAGE_NOT_LAST:
       return {
         ...state,
-        dominiosProd: action.dominiosProd
+        config: { ...crcaUrlConfig(state.config, action) }
       }
     case UPDATE_ANCHOR:
       return {

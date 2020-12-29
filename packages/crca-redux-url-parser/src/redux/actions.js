@@ -1,7 +1,18 @@
-import { PAGE_HOME, PAGE_NOT_LAST } from "../page.js";
-import { crcaUrlDominioSelector, crcaUrlPageSelector, crcaUrlSubdominioSelector } from "./selectors.js";
+import {
+  crcaUrlConfigSelector,
+  crcaUrlDominioSelector,
+  crcaUrlPageNotLastSelector,
+  crcaUrlPageSelector,
+  crcaUrlSubdominioSelector,
+  isDomainProd
+} from "./selectors.js";
 
-export const SET_DOMINIOS_PROD = "SET_DOMINIOS_PROD"
+export const SET_DEV_SUBDOMINIO = "SET_DEV_SUBDOMINIO";
+export const SET_DOMINIOS_PROD = "SET_DOMINIOS_PROD";
+export const SET_HOMEPAGE = "SET_HOMEPAGE";
+export const SET_MANUAL_UPDATE = "SET_MANUAL_UPDATE";
+export const SET_PAGE_NOT_LAST = "SET_PAGE_NOT_LAST";
+
 export const UPDATE_ANCHOR = "UPDATE_ANCHOR";
 export const UPDATE_DOMINIO = "UPDATE_DOMINIO";
 export const UPDATE_LAST_PAGE = 'UPDATE_LAST_PAGE';
@@ -54,10 +65,38 @@ export const decodeUrl = url => {
   };
 };
 
+export const setDevSubdominio = devSubdominio => (
+  {
+    type: SET_DEV_SUBDOMINIO,
+    devSubdominio
+  }
+);
+
 export const setDominiosProd = dominiosProd => (
   {
     type: SET_DOMINIOS_PROD,
     dominiosProd
+  }
+);
+
+export const setHomepage = homepage => (
+  {
+    type: SET_HOMEPAGE,
+    homepage
+  }
+);
+
+export const setManualUpdate = manualUpdate => (
+  {
+    type: SET_MANUAL_UPDATE,
+    manualUpdate
+  }
+);
+
+export const setPageNotLast = pageNotLast => (
+  {
+    type: SET_PAGE_NOT_LAST,
+    pageNotLast
   }
 );
 
@@ -164,8 +203,10 @@ const crcaLoadSubdominio = (subdominio, loaderAction = null, manualUpdate = fals
   }
 };
 
-export const crcaLoadPage = (page, loaderAction = null, manualUpdate = false) => dispatch => {
-  if (PAGE_NOT_LAST.indexOf(page) === -1) {
+export const crcaLoadPage = (page, loaderAction = null, manualUpdate = false) => (dispatch, getState) => {
+  const pageNotLast = crcaUrlPageNotLastSelector(getState());
+
+  if (pageNotLast.indexOf(page) === -1) {
     dispatch(updateLastPage(page));
   }
   if(typeof loaderAction === 'function') {
@@ -181,29 +222,26 @@ const defaultLoaders = {
   dominio: null,
   page : null,
   section : null,
-  searchs: null,
+  search: null,
   anchor: null
 }
 
 const defaultConfig = {
-  homepage: PAGE_HOME,
-  loaders: defaultLoaders,
-  localhosts: ['localhost', '127.0.1.1', '127.0.0.1'],
-  localSubdominio: 'test',
-  manualUpdate: {}
+  loaders: defaultLoaders
 };
 
 export const crcaUrlHandleNavigation = (location, config = {}) => (dispatch, getState) => {
-  const conf = {...defaultConfig, ...config};
-
   const state = getState();
+
+  const conf = {...defaultConfig, ...crcaUrlConfigSelector(state), ...config};
+
   const decodedHostname = decodeHostname(location.hostname);
 
   if ( decodedHostname.dominio !== crcaUrlDominioSelector(state) ) {
     dispatch(crcaLoadDominio(decodedHostname.dominio, conf.loaders.dominio, conf.manualUpdate.dominio));
   }
 
-  const subdominio = conf.localhosts.includes(decodedHostname.dominio) ? conf.localSubdominio : decodedHostname.subdominio;
+  const subdominio = isDomainProd(decodedHostname.dominio, conf.dominiosProd) ? decodedHostname.subdominio : conf.devSubdominio;
   if (subdominio !== crcaUrlSubdominioSelector(state)) {
     dispatch(crcaLoadSubdominio(subdominio, conf.loaders.subdominio, conf.manualUpdate.subdominio));
   }

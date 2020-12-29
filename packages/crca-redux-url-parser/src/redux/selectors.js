@@ -1,21 +1,7 @@
 import { createSelector } from "reselect";
+import { PAGE_HOME } from "../page.js";
 
 const crcaUrlStateSelector = state => state && state.crcaUrl || {};
-
-export const crcaUrlAnchorSelector = createSelector (
-  crcaUrlStateSelector,
-  url => url.anchor || ''
-);
-
-export const crcaUrlDominioSelector = createSelector (
-  crcaUrlStateSelector,
-  url => url.dominio || ''
-);
-
-export const crcaUrlDominiosProdSelector = createSelector (
-  crcaUrlStateSelector,
-  url => url.dominiosProd || []
-);
 
 export const isDomainProd = (domain, dominiosProd) => {
   for (const dom of dominiosProd) {
@@ -29,6 +15,36 @@ export const isDomainProd = (domain, dominiosProd) => {
   return false;
 };
 
+export const crcaUrlAnchorSelector = createSelector (
+  crcaUrlStateSelector,
+  url => url.anchor || ''
+);
+
+export const crcaUrlConfigSelector = createSelector (
+  crcaUrlStateSelector,
+  url => url.config || {}
+);
+
+export const crcaUrlDevSubdominioSelector = createSelector (
+  crcaUrlConfigSelector,
+  config => config.devSubdominio || ''
+);
+
+export const crcaUrlDominioSelector = createSelector (
+  crcaUrlStateSelector,
+  url => url.dominio || ''
+);
+
+export const crcaUrlDominiosProdSelector = createSelector (
+  crcaUrlConfigSelector,
+  config => config.dominiosProd || []
+);
+
+export const crcaUrlHomepageSelector = createSelector (
+  crcaUrlConfigSelector,
+  config => config.homepage || PAGE_HOME
+);
+
 export const crcaUrlIsDominioProdSelector = createSelector (
   crcaUrlDominioSelector,
   crcaUrlDominiosProdSelector,
@@ -40,9 +56,19 @@ export const crcaUrlLastPageSelector = createSelector (
   url => url.lastPage || null
 );
 
+export const crcaUrlManualUpdateSelector = createSelector (
+  crcaUrlConfigSelector,
+  config => config.manualUpdate || {}
+);
+
 export const crcaUrlPageSelector = createSelector (
   crcaUrlStateSelector,
   url => url.page || ''
+);
+
+export const crcaUrlPageNotLastSelector = createSelector (
+  crcaUrlConfigSelector,
+  config => config.pageNotLast || []
 );
 
 export const crcaUrlPageSectionSelector = createSelector (
