@@ -1,6 +1,7 @@
 import { PAGE_HOME, PAGE_NOT_LAST } from "../page.js";
 import { crcaUrlDominioSelector, crcaUrlPageSelector, crcaUrlSubdominioSelector } from "./selectors.js";
 
+export const SET_DOMINIOS_PROD = "SET_DOMINIOS_PROD"
 export const UPDATE_ANCHOR = "UPDATE_ANCHOR";
 export const UPDATE_DOMINIO = "UPDATE_DOMINIO";
 export const UPDATE_LAST_PAGE = 'UPDATE_LAST_PAGE';
@@ -20,7 +21,7 @@ export const decodeHostname = hostname => {
   const segments = hostname.split('.');
 
   let subdominio = '';
-  if(segments.lenght>2) {
+  if(segments.length>2) {
     subdominio = segments.shift();
   }
 
@@ -53,6 +54,12 @@ export const decodeUrl = url => {
   };
 };
 
+export const setDominiosProd = dominiosProd => (
+  {
+    type: SET_DOMINIOS_PROD,
+    dominiosProd
+  }
+);
 
 export const updateAnchor = anchor => (
   {
@@ -82,10 +89,10 @@ export const updatePage = page => (
   }
 );
 
-export const updateSearch = (searchs) => (
+export const updateSearch = (search) => (
   {
     type: UPDATE_SEARCH,
-    searchs
+    search
   }
 );
 
@@ -104,12 +111,12 @@ export const updateSubdominio = subdominio => (
   }
 );
 
-const crcaLoadSubdominio = (subdominio, loaderAction = null, manualUpdate = false) => dispatch => {
+const crcaLoadAnchor = (anchor, loaderAction = null, manualUpdate = false) => (dispatch) => {
   if(typeof loaderAction === 'function') {
-    dispatch(loaderAction(subdominio));
+    dispatch(loaderAction(anchor));
   }
   if(!manualUpdate) {
-    dispatch(updateSubdominio(subdominio));
+    dispatch(updateAnchor(anchor));
   }
 };
 
@@ -122,16 +129,12 @@ const crcaLoadDominio = (dominio, loaderAction = null, manualUpdate = false) => 
   }
 };
 
-export const crcaLoadPage = (page, loaderAction = null, manualUpdate = false) => dispatch => {
-  if (PAGE_NOT_LAST.indexOf(page) === -1) {
-    dispatch(updateLastPage(page));
-  }
-
+const crcaLoadSearch = (search, loaderAction = null, manualUpdate = false) => (dispatch) => {
   if(typeof loaderAction === 'function') {
-    dispatch(loaderAction(page));
+    dispatch(loaderAction(search));
   }
   if(!manualUpdate) {
-    dispatch(updatePage(page));
+    dispatch(updateSearch(search));
   }
 };
 
@@ -151,21 +154,25 @@ const crcaLoadSection = (page, segments, loaderAction = null, manualUpdate = fal
   }
 };
 
-const crcaLoadSearch = (searchs, loaderAction = null, manualUpdate = false) => (dispatch) => {
+
+const crcaLoadSubdominio = (subdominio, loaderAction = null, manualUpdate = false) => dispatch => {
   if(typeof loaderAction === 'function') {
-    dispatch(loaderAction(searchs));
+    dispatch(loaderAction(subdominio));
   }
   if(!manualUpdate) {
-    dispatch(updateSearch(searchs));
+    dispatch(updateSubdominio(subdominio));
   }
 };
 
-const crcaLoadAnchor = (anchor, loaderAction = null, manualUpdate = false) => (dispatch) => {
+export const crcaLoadPage = (page, loaderAction = null, manualUpdate = false) => dispatch => {
+  if (PAGE_NOT_LAST.indexOf(page) === -1) {
+    dispatch(updateLastPage(page));
+  }
   if(typeof loaderAction === 'function') {
-    dispatch(loaderAction(anchor));
+    dispatch(loaderAction(page));
   }
   if(!manualUpdate) {
-    dispatch(updateAnchor(anchor));
+    dispatch(updatePage(page));
   }
 };
 

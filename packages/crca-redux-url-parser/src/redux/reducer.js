@@ -1,4 +1,5 @@
 import {
+  SET_DOMINIOS_PROD,
   UPDATE_ANCHOR,
   UPDATE_DOMINIO,
   UPDATE_LAST_PAGE,
@@ -11,16 +12,22 @@ import {
 const initialState = {
   anchor: '',
   dominio: '',
+  dominiosProd: [],
   lastPage: null,
   page: '',
   pageSection: '',
   sectionParams: [],
-  searchs: {},
+  search: {},
   subdominio: ''
 }
 
 export const crcaUrl = (state = initialState, action) => {
   switch(action.type) {
+    case SET_DOMINIOS_PROD:
+      return {
+        ...state,
+        dominiosProd: action.dominiosProd
+      }
     case UPDATE_ANCHOR:
       return {
         ...state,
@@ -34,7 +41,7 @@ export const crcaUrl = (state = initialState, action) => {
     case UPDATE_SEARCH:
       return {
         ...state,
-        searchs: action.searchs
+        search: action.search
       };
     case UPDATE_PAGE:
       return {

@@ -12,6 +12,7 @@ export {
   decodeSearch,
   decodeUrl,
 
+  setDominiosProd,
   updateAnchor,
   updateDominio,
   updatePage,
@@ -27,12 +28,15 @@ export {
 export {
   crcaUrlAnchorSelector,
   crcaUrlDominioSelector,
+  crcaUrlDominiosProdSelector,
+  crcaUrlIsDominioProdSelector,
   crcaUrlLastPageSelector,
   crcaUrlPageSelector,
   crcaUrlPageSectionSelector,
-  crcaUrlSearchsSelector,
+  crcaUrlSearchSelector,
   crcaUrlSectionParamsSelector,
-  crcaUrlSubdominioSelector
+  crcaUrlSubdominioSelector,
+  isDomainProd
 } from './src/redux/selectors.js';
 
 export {

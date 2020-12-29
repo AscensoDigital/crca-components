@@ -12,6 +12,29 @@ export const crcaUrlDominioSelector = createSelector (
   url => url.dominio || ''
 );
 
+export const crcaUrlDominiosProdSelector = createSelector (
+  crcaUrlStateSelector,
+  url => url.dominiosProd || []
+);
+
+export const isDomainProd = (domain, dominiosProd) => {
+  for (const dom of dominiosProd) {
+    const pos = domain.indexOf(dom);
+    const len = domain.length;
+    // console.log(`dom: ${dom}, domain: ${domain}, pos: ${pos}, len: ${len}, Resta: ${len-dom.length}`);
+    if (pos !== -1 && len - dom.length === pos) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const crcaUrlIsDominioProdSelector = createSelector (
+  crcaUrlDominioSelector,
+  crcaUrlDominiosProdSelector,
+  (dominio, dominiosProd) => isDomainProd(dominio, dominiosProd)
+);
+
 export const crcaUrlLastPageSelector = createSelector (
   crcaUrlStateSelector,
   url => url.lastPage || null
@@ -27,9 +50,9 @@ export const crcaUrlPageSectionSelector = createSelector (
   url => url.pageSection || ''
 );
 
-export const crcaUrlSearchsSelector = createSelector (
+export const crcaUrlSearchSelector = createSelector (
   crcaUrlStateSelector,
-  url => url.searchs || {}
+  url => url.search || {}
 );
 
 export const crcaUrlSectionParamsSelector = createSelector (

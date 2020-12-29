@@ -9,7 +9,7 @@ import {
   crcaUrlLastPageSelector,
   crcaUrlPageSectionSelector,
   crcaUrlPageSelector,
-  crcaUrlSearchsSelector,
+  crcaUrlSearchSelector,
   crcaUrlSubdominioSelector,
   crcaUrlSectionParamsSelector
 } from './redux/selectors.js';
@@ -38,7 +38,7 @@ export class CrcaReduxUrlParser extends connect(crcaStore)(LitElement) {
       lastPage: { type: String },
       page: { type: String },
       pageSection: { type: String },
-      searchs: { type: Object },
+      search: { type: Object },
       sectionParams: { type: Array },
       subdominio: { type: String },
     };
@@ -62,7 +62,7 @@ export class CrcaReduxUrlParser extends connect(crcaStore)(LitElement) {
     this.lastPage = crcaUrlLastPageSelector(state);
     this.page = crcaUrlPageSelector(state);
     this.pageSection = crcaUrlPageSectionSelector(state);
-    this.searchs = crcaUrlSearchsSelector(state);
+    this.search = crcaUrlSearchSelector(state);
     this.sectionParams = crcaUrlSectionParamsSelector(state);
     this.subdominio = crcaUrlSubdominioSelector(state);
   }
@@ -81,9 +81,9 @@ export class CrcaReduxUrlParser extends connect(crcaStore)(LitElement) {
           </ul>
         </li>
         <li><b>anchor:</b> ${this.anchor}</li>
-        <li><b>searchs:</b>
+        <li><b>search:</b>
           <ul>
-            ${Object.keys(this.searchs).map( idx => html`<li>${idx} => ${this.searchs[idx]}</li>`)}
+            ${Object.keys(this.search).map( idx => html`<li>${idx} => ${this.search[idx]}</li>`)}
           </ul>
         </li>
       </ul>
