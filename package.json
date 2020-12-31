@@ -31,6 +31,6 @@
     "@ascenso/crca-redux-store": "file:packages/crca-redux-store",
     "@ascenso/crca-status-light": "file:packages/crca-status-light",
     "@ascenso/crca-stepper": "file:packages/crca-stepper",
-    "crca-redux-url-parser": "file:packages/crca-redux-url-parser"
+    "@ascenso/crca-redux-url-parser": "file:packages/crca-redux-url-parser"
   }
 }
