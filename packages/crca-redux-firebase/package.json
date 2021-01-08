@@ -1,0 +1,59 @@
+{
+  "name": "@ascenso/crca-redux-firebase",
+  "version": "0.0.0",
+  "description": "Webcomponent crca-redux-firebase following open-wc recommendations",
+  "author": "crca-redux-firebase",
+  "license": "MIT",
+  "main": "index.js",
+  "module": "index.js",
+  "scripts": {
+    "start": "web-dev-server",
+    "lint": "eslint --ext .js,.html . --ignore-path .gitignore && prettier \"**/*.js\" --check --ignore-path .gitignore",
+    "format": "eslint --ext .js,.html . --fix --ignore-path .gitignore && prettier \"**/*.js\" --write --ignore-path .gitignore",
+    "test": "web-test-runner --coverage",
+    "test:watch": "web-test-runner --watch"
+  },
+  "dependencies": {
+    "@ascenso/crca-redux-store": "^1.0.2",
+    "@ascenso/crca-redux-url-parser": "^0.5.0",
+    "date-fns": "^2.16.1",
+    "firebase": "^8.2.1",
+    "lit-element": "^2.4.0",
+    "lit-html": "^1.1.2",
+    "pwa-helpers": "^0.9.1",
+    "reselect": "^4.0.0"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.1.1",
+    "eslint": "^6.1.0",
+    "@open-wc/eslint-config": "^4.2.0",
+    "prettier": "^2.0.4",
+    "eslint-config-prettier": "^6.11.0",
+    "husky": "^1.0.0",
+    "lint-staged": "^10.0.0",
+    "@web/test-runner": "^0.11.5",
+    "@open-wc/testing": "^2.0.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@open-wc/eslint-config",
+      "eslint-config-prettier"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
