@@ -15,6 +15,8 @@ import {
   crcaFirebaseInitSelector,
 } from './selectors.js';
 import {
+  isNull,
+  isObject,
   TYPE_VALUE_BOOLEAN,
   TYPE_VALUE_NUMBER,
   TYPE_VALUE_OBJECT,
@@ -77,14 +79,14 @@ export const firebaseInitializeApp = (enabledAnalytics = true) => (
   let config = null;
   if (isDominioProd) {
     const configProd = crcaFirebaseConfigProdSelector(state);
-    if (configProd.config === null) {
+    if (isNull(configProd.config)) {
       if (!configProd.useAsDev) {
         console.warn(
           'Firebase Config: Entorno de Producción cargará configuración de desarrollo.'
         );
       }
       const configDev = crcaFirebaseConfigDevSelector(state);
-      if (configDev.config !== null) {
+      if (!isNull(configDev.config)) {
         config = configDev.config;
       }
     } else {
@@ -92,14 +94,14 @@ export const firebaseInitializeApp = (enabledAnalytics = true) => (
     }
   } else {
     const configDev = crcaFirebaseConfigDevSelector(state);
-    if (configDev.config === null) {
+    if (isNull(configDev.config)) {
       if (!configDev.useAsProd) {
         console.warn(
           'Firebase Config: Entorno de Desarrollo cargará configuración de producción.'
         );
       }
       const configProd = crcaFirebaseConfigProdSelector(state);
-      if (configProd.config !== null) {
+      if (!isNull(configProd.config)) {
         config = configProd.config;
       }
     } else {
@@ -107,7 +109,7 @@ export const firebaseInitializeApp = (enabledAnalytics = true) => (
     }
   }
 
-  if (config === null) {
+  if (isNull(config)) {
     console.err('No hay configuración de Firebase seteada');
     return;
   }
@@ -170,7 +172,12 @@ export const crcaFirebaseRemoteConfigGet = (
     case TYPE_VALUE_STRING:
       return remoteConfig.getString(key);
     case TYPE_VALUE_OBJECT:
-      return JSON.parse(remoteConfig.getString(key)) || {};
+      return (
+        (isObject(remoteConfig.getValue(key)._value) &&
+          remoteConfig.getValue(key)._value) ||
+        JSON.parse(remoteConfig.getString(key)) ||
+        {}
+      );
     default:
       return remoteConfig.getValue(key);
   }

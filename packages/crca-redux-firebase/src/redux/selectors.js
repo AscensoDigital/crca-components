@@ -1,11 +1,15 @@
 import { createSelector } from 'reselect';
 import {
-  isObject,
   TYPE_VALUE_BOOLEAN,
   TYPE_VALUE_NUMBER,
-  TYPE_VALUE_VALUE,
+  TYPE_VALUE_OBJECT,
   TYPE_VALUE_STRING,
+  TYPE_VALUE_VALUE,
+  isBoolean,
   isDefined,
+  isNumber,
+  isObject,
+  isString,
 } from '../utils/data-view-util.js';
 
 const crcaFirebaseStateSelector = state => (state && state.crcaFirebase) || {};
@@ -38,7 +42,7 @@ export const crcaFirebaseRemoteConfigInitSelector = createSelector(
 export const crcaFirebaseRemoteConfigConfigSelector = createSelector(
   crcaFirebaseRemoteConfigSelector,
   rc =>
-    (rc && typeof rc.config === 'string' && JSON.parse(rc.config)) ||
+    (rc && isString(rc.config) && JSON.parse(rc.config)) ||
     (rc && isObject(rc.config) && rc.config) ||
     {}
 );
@@ -59,16 +63,32 @@ export const crcaFirebaseRemoteConfigGetSelector = (
   switch (typeValue) {
     case TYPE_VALUE_BOOLEAN:
       return isDefined(value)
-        ? parseInt(value, 10) > 0 || value === 'true'
+        ? (isBoolean(value._value) && value._value) ||
+            (isNumber(value._value) && value._value > 0) ||
+            (isString(value._value) &&
+              (parseInt(value._value, 10) > 0 || value._value === 'true')) ||
+            false
         : false;
     case TYPE_VALUE_NUMBER:
-      return (isDefined(value) && parseInt(value, 10)) || 0;
+      return isDefined(value)
+        ? (isNumber(value._value) && value._value) ||
+            (isString(value._value) && parseInt(value, 10)) ||
+            (isBoolean(value._value) && value._value && 1) ||
+            0
+        : 0;
     case TYPE_VALUE_STRING:
-      return (
-        (isDefined(value) && isObject(value) && JSON.stringify(value)) ||
-        (isDefined(value) && value) ||
-        false
-      );
+      return isDefined(value)
+        ? (isString(value._value) && value._value) ||
+            (isObject(value._value) && JSON.stringify(value._value)) ||
+            (isNumber(value._value) && value._value.toString()) ||
+            ''
+        : '';
+    case TYPE_VALUE_OBJECT:
+      return isDefined(value)
+        ? (isObject(value._value) && value._value) ||
+            (isString(value._value) && JSON.parse(value._value)) ||
+            {}
+        : {};
     default:
       return (isDefined(value) && value) || false;
   }
