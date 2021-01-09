@@ -5,6 +5,7 @@ export {
   setFirebaseConfigProd,
   crcaFirebaseRemoteConfigGet,
   crcaFirebaseRemoteConfigGetAll,
+  crcaFirebaseGet,
 } from './src/redux/actions.js';
 
 export { crcaFirebase } from './src/redux/reducer.js';

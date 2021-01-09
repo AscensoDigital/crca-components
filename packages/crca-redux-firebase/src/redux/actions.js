@@ -65,6 +65,8 @@ export const setFirebaseConfigProd = (config, useAsDev = false) => ({
   },
 });
 
+export const crcaFirebaseGet = () => firebase;
+
 export const firebaseInitializeApp = (enabledAnalytics = true) => (
   dispatch,
   getState
