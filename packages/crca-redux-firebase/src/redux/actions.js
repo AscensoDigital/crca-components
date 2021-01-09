@@ -108,7 +108,7 @@ export const firebaseInitializeApp = (enabledAnalytics = true) => (
   }
 
   if (config === null) {
-    console.exception('No hay configuración de Firebase seteada');
+    console.err('No hay configuración de Firebase seteada');
     return;
   }
 
