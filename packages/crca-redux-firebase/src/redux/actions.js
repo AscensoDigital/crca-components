@@ -31,9 +31,9 @@ export const SUCCESS_FIREBASE = 'SUCCESS_FIREBASE';
 export const SUCCESS_REMOTE_CONFIG = 'SUCCESS_REMOTE_CONFIG';
 export const UPDATE_LAST_FETCH = 'UPDATE_LAST_FETCH';
 
-const setRemoteConfig = remoteConfig => ({
+const setRemoteConfig = config => ({
   type: SET_REMOTE_CONFIG,
-  remoteConfig,
+  config,
 });
 
 const successFirebase = () => ({
