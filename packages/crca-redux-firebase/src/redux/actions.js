@@ -148,3 +148,28 @@ export const firebaseRemoteConfigLoadDefault = defaultConfig => (
     console.log('No se ha inizializado Firebase');
   }
 };
+
+export const TYPE_VALUE_VALUE = 'value';
+export const TYPE_VALUE_BOOLEAN = 'boolean';
+export const TYPE_VALUE_NUMBER = 'number';
+export const TYPE_VALUE_STRING = 'string';
+
+export const crcaFirebaseRemoteConfigGet = (
+  key,
+  typeValue = TYPE_VALUE_VALUE
+) => {
+  switch (typeValue) {
+    case TYPE_VALUE_BOOLEAN:
+      return remoteConfig.getBoolean(key);
+    case TYPE_VALUE_NUMBER:
+      return remoteConfig.getNumber(key);
+    case TYPE_VALUE_STRING:
+      return remoteConfig.getString(key);
+    default:
+      return remoteConfig.getValue(key);
+  }
+};
+
+export const crcaFirebaseRemoteConfigGetAll = () => {
+  return remoteConfig.getAll();
+};

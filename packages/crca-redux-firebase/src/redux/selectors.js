@@ -36,27 +36,3 @@ export const crcaFirebaseRemoteConfigLastFetchSelector = createSelector(
   crcaFirebaseRemoteConfigSelector,
   rc => (rc && rc.lastFetch) || false
 );
-
-export const TYPE_VALUE_VALUE = 'value';
-export const TYPE_VALUE_BOOLEAN = 'boolean';
-export const TYPE_VALUE_INT = 'int';
-
-export const crcaFirebaseRemoteConfigGetSelector = (
-  state,
-  key,
-  typeValue = TYPE_VALUE_VALUE
-) => {
-  const rc = crcaFirebaseRemoteConfigConfigSelector(state);
-  const value = rc[key];
-
-  switch (typeValue) {
-    case TYPE_VALUE_BOOLEAN:
-      return value !== undefined
-        ? parseInt(value, 10) > 0 || value === 'true'
-        : false;
-    case TYPE_VALUE_INT:
-      return value !== undefined ? parseInt(value, 10) : 0;
-    default:
-      return value !== undefined ? value : false;
-  }
-};
