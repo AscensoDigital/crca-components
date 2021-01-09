@@ -8,7 +8,7 @@ import {
   isDefined,
 } from '../utils/data-view-util.js';
 
-const crcaFirebaseStateSelector = state => (state && state.firebase) || {};
+const crcaFirebaseStateSelector = state => (state && state.crcaFirebase) || {};
 
 export const crcaFirebaseInitSelector = createSelector(
   crcaFirebaseStateSelector,
