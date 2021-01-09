@@ -1,8 +1,8 @@
-import firebase from 'firebase/app';
 import 'firebase/firestore';
+import { crcaFirebaseGet } from '../redux/actions.js';
 
 export const getQueryCollectionByProp = (collection, prop, value) => {
-  const db = firebase.firestore();
+  const db = crcaFirebaseGet().firestore();
   return db.collection(collection).where(prop, '==', value);
 };
 
@@ -16,6 +16,6 @@ export const getQueryCollectionByPropSorted = (
 };
 
 export const getQueryCollectionSorted = (collection, sortProp = 'sort') => {
-  const db = firebase.firestore();
+  const db = crcaFirebaseGet().firestore();
   return db.collection(collection).orderBy(sortProp);
 };
