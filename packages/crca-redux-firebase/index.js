@@ -3,10 +3,6 @@ export { CrcaReduxFirebase } from './src/CrcaReduxFirebase.js';
 export {
   setFirebaseConfigDev,
   setFirebaseConfigProd,
-  TYPE_VALUE_BOOLEAN,
-  TYPE_VALUE_NUMBER,
-  TYPE_VALUE_STRING,
-  TYPE_VALUE_VALUE,
   crcaFirebaseRemoteConfigGet,
   crcaFirebaseRemoteConfigGetAll,
 } from './src/redux/actions.js';
@@ -18,6 +14,7 @@ export {
   crcaFirebaseRemoteConfigInitSelector,
   crcaFirebaseRemoteConfigConfigSelector,
   crcaFirebaseRemoteConfigLastFetchSelector,
+  crcaFirebaseRemoteConfigGetSelector,
 } from './src/redux/selectors.js';
 
 export {
@@ -35,6 +32,10 @@ export {
   isObject,
   joinParts,
   sortData,
+  TYPE_VALUE_BOOLEAN,
+  TYPE_VALUE_NUMBER,
+  TYPE_VALUE_STRING,
+  TYPE_VALUE_VALUE,
 } from './src/utils/data-view-util.js';
 
 export {

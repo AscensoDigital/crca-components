@@ -14,6 +14,13 @@ import {
   crcaFirebaseConfigProdSelector,
   crcaFirebaseInitSelector,
 } from './selectors.js';
+import {
+  TYPE_VALUE_BOOLEAN,
+  TYPE_VALUE_NUMBER,
+  TYPE_VALUE_OBJECT,
+  TYPE_VALUE_STRING,
+  TYPE_VALUE_VALUE,
+} from '../utils/data-view-util.js';
 
 export const SET_REMOTE_CONFIG = 'SET_REMOTE_CONFIG';
 export const SET_FIREBASE_CONFIG_DEV = 'SET_FIREBASE_CONFIG_DEV';
@@ -149,11 +156,6 @@ export const firebaseRemoteConfigLoadDefault = defaultConfig => (
   }
 };
 
-export const TYPE_VALUE_VALUE = 'value';
-export const TYPE_VALUE_BOOLEAN = 'boolean';
-export const TYPE_VALUE_NUMBER = 'number';
-export const TYPE_VALUE_STRING = 'string';
-
 export const crcaFirebaseRemoteConfigGet = (
   key,
   typeValue = TYPE_VALUE_VALUE
@@ -165,6 +167,8 @@ export const crcaFirebaseRemoteConfigGet = (
       return remoteConfig.getNumber(key);
     case TYPE_VALUE_STRING:
       return remoteConfig.getString(key);
+    case TYPE_VALUE_OBJECT:
+      return JSON.parse(remoteConfig.getString(key)) || {};
     default:
       return remoteConfig.getValue(key);
   }
