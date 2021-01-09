@@ -149,7 +149,7 @@ export const firebaseRemoteConfigLoadDefault = defaultConfig => (
         minimumFetchIntervalMillis: 3600000,
       };
     }
-    remoteConfig.defaultConfig(defaultConfig);
+    remoteConfig.defaultConfig = defaultConfig;
 
     dispatch(firebaseRemoteConfigActivate());
     dispatch(successRemoteConfig());
