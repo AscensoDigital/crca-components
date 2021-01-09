@@ -77,7 +77,13 @@ export const dataViewGenerate = (obj, struct) => {
   return vw;
 };
 
+export const isBoolean = b => typeof b === 'boolean';
+export const isFunction = f => typeof f === 'function';
+export const isNumber = num => typeof num === 'number';
+export const isNull = n => n === null;
 export const isObject = obj => obj !== null && typeof obj === 'object';
+export const isString = str => typeof str === 'string';
+export const isUndefined = und => typeof und === 'undefined';
 
 export const existDiffObject = (objA, objB) => {
   // eslint-disable-next-line no-restricted-syntax
