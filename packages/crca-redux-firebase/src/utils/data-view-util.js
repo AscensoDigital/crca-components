@@ -85,6 +85,22 @@ export const isObject = obj => obj !== null && typeof obj === 'object';
 export const isString = str => typeof str === 'string';
 export const isUndefined = und => typeof und === 'undefined';
 
+export const dataViewGet = (obj, prop) => {
+  if (!isObject(obj) || !isString(prop)) {
+    return false;
+  }
+  const parts = prop.split('.');
+  let ref = obj;
+  for (let index = 0; index < parts.length; index += 1) {
+    const part = parts[index];
+    if (!isDefined(ref[part])) {
+      return false;
+    }
+    ref = ref[part];
+  }
+  return ref;
+};
+
 export const existDiffObject = (objA, objB) => {
   // eslint-disable-next-line no-restricted-syntax
   for (const prop in objA) {

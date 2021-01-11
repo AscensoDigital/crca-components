@@ -25,6 +25,7 @@ export {
   ORDER_ASC,
   ORDER_DESC,
   dataViewGenerate,
+  dataViewGet,
   dateFirebase2Js,
   existDiffObject,
   filterData,
