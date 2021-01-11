@@ -172,3 +172,15 @@ export const sortData = (docs, order) => {
 
 export const filterAndSortData = (docs, order, filters) =>
   sortData(filterData(docs, filters), order);
+
+export const stringifyPropValue = obj => {
+  if (!isObject(obj)) {
+    return false;
+  }
+
+  const objRet = {};
+  Object.keys(obj).forEach(prop => {
+    objRet[prop] = JSON.stringify(obj[prop]);
+  });
+  return objRet;
+};

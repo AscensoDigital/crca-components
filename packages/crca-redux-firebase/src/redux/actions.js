@@ -17,6 +17,7 @@ import {
 import {
   isNull,
   isObject,
+  stringifyPropValue,
   TYPE_VALUE_BOOLEAN,
   TYPE_VALUE_NUMBER,
   TYPE_VALUE_OBJECT,
@@ -151,7 +152,8 @@ export const firebaseRemoteConfigLoadDefault = defaultConfig => (
         minimumFetchIntervalMillis: 3600000,
       };
     }
-    remoteConfig.defaultConfig = defaultConfig;
+
+    remoteConfig.defaultConfig = stringifyPropValue(defaultConfig) || {};
 
     dispatch(firebaseRemoteConfigActivate());
     dispatch(successRemoteConfig());

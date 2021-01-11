@@ -40,6 +40,7 @@ export {
   isUndefined,
   joinParts,
   sortData,
+  stringifyPropValue,
   TYPE_VALUE_BOOLEAN,
   TYPE_VALUE_NUMBER,
   TYPE_VALUE_STRING,
