@@ -180,7 +180,8 @@ export const stringifyPropValue = obj => {
 
   const objRet = {};
   Object.keys(obj).forEach(prop => {
-    objRet[prop] = JSON.stringify(obj[prop]);
+    objRet[prop] =
+      (isObject(obj[prop]) && JSON.stringify(obj[prop])) || obj[prop];
   });
   return objRet;
 };
