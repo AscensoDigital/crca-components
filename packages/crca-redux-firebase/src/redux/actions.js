@@ -17,7 +17,6 @@ import {
 import {
   isNull,
   isObject,
-  stringifyPropValue,
   TYPE_VALUE_BOOLEAN,
   TYPE_VALUE_NUMBER,
   TYPE_VALUE_OBJECT,
@@ -153,7 +152,9 @@ export const firebaseRemoteConfigLoadDefault = defaultConfig => (
       };
     }
 
-    remoteConfig.defaultConfig = stringifyPropValue(defaultConfig) || {};
+    remoteConfig.defaultConfig =
+      (isObject(defaultConfig) && JSON.stringify(defaultConfig)) ||
+      defaultConfig;
 
     dispatch(firebaseRemoteConfigActivate());
     dispatch(successRemoteConfig());
