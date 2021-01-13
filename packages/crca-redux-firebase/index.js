@@ -43,6 +43,7 @@ export {
   stringifyPropValue,
   TYPE_VALUE_BOOLEAN,
   TYPE_VALUE_NUMBER,
+  TYPE_VALUE_OBJECT,
   TYPE_VALUE_STRING,
   TYPE_VALUE_VALUE,
 } from './src/utils/data-view-util.js';
