@@ -27,6 +27,15 @@ export const dateFirebase2Js = date => {
   return timestamp.toDate();
 };
 
+export const decodeField = value => {
+  if (typeof value === 'string') {
+    const tmp = value.split('_');
+    return tmp[tmp.length - 1];
+  }
+
+  return value;
+};
+
 export const joinParts = (obj, struct) => {
   if (
     typeof struct === 'object' &&

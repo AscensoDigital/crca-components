@@ -27,6 +27,7 @@ export {
   dataViewGenerate,
   dataViewGet,
   dateFirebase2Js,
+  decodeField,
   existDiffObject,
   filterData,
   filterAndSortData,
