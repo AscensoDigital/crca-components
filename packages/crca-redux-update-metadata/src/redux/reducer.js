@@ -1,6 +1,6 @@
 import { UPDATE_METADATA } from "./actions";
 
-initialState = {
+const initialState = {
   metadata: null
 }
 
