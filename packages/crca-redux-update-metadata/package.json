@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-update-metadata",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Webcomponent crca-redux-update-metadata following open-wc recommendations",
   "author": "crca-redux-update-metadata",
   "license": "MIT",
