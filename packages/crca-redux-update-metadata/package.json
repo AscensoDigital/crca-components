@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-update-metadata",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Webcomponent crca-redux-update-metadata following open-wc recommendations",
   "author": "crca-redux-update-metadata",
   "license": "MIT",
@@ -14,22 +14,22 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "@ascenso/crca-redux-store": "^1.0.2",
+    "@ascenso/crca-redux-store": "^1.0.3",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "pwa-helpers": "^0.9.1",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
-    "@web/dev-server": "^0.1.1",
-    "eslint": "^6.1.0",
     "@open-wc/eslint-config": "^4.2.0",
-    "prettier": "^2.0.4",
+    "@open-wc/testing": "^2.0.0",
+    "@web/dev-server": "^0.1.1",
+    "@web/test-runner": "^0.11.5",
+    "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^1.0.0",
     "lint-staged": "^10.0.0",
-    "@web/test-runner": "^0.11.5",
-    "@open-wc/testing": "^2.0.0"
+    "prettier": "^2.0.4"
   },
   "eslintConfig": {
     "extends": [

@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-loading",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Webcomponent crca-redux-loading following open-wc recommendations",
   "author": "crca-redux-loading",
   "license": "MIT",
@@ -23,15 +23,15 @@
     "reselect": "^4.0.0"
   },
   "devDependencies": {
-    "@web/dev-server": "^0.1.1",
-    "eslint": "^6.1.0",
     "@open-wc/eslint-config": "^4.2.0",
-    "prettier": "^2.0.4",
+    "@open-wc/testing": "^2.0.0",
+    "@web/dev-server": "^0.1.1",
+    "@web/test-runner": "^0.11.5",
+    "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^1.0.0",
     "lint-staged": "^10.0.0",
-    "@web/test-runner": "^0.11.5",
-    "@open-wc/testing": "^2.0.0"
+    "prettier": "^2.0.4"
   },
   "eslintConfig": {
     "extends": [

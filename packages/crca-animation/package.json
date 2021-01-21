@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-animation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Webcomponent crca-animation following open-wc recommendations",
   "author": "crca-animation",
   "license": "MIT",
@@ -19,15 +19,15 @@
     "test:watch": "web-test-runner --watch"
   },
   "devDependencies": {
-    "@web/dev-server": "^0.1.1",
-    "eslint": "^6.1.0",
     "@open-wc/eslint-config": "^4.2.0",
-    "prettier": "^2.0.4",
+    "@open-wc/testing": "^2.0.0",
+    "@web/dev-server": "^0.1.1",
+    "@web/test-runner": "^0.11.5",
+    "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^1.0.0",
     "lint-staged": "^10.0.0",
-    "@web/test-runner": "^0.11.5",
-    "@open-wc/testing": "^2.0.0"
+    "prettier": "^2.0.4"
   },
   "eslintConfig": {
     "extends": [
