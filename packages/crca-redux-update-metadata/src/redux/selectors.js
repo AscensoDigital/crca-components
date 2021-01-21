@@ -4,5 +4,5 @@ const crcaMetadataStateSelector = state => state && state.crcaMetadata || {};
 
 export const crcaMetadataMetadataSelector = createSelector(
   crcaMetadataStateSelector,
-  meta => meta.metadata || {}
-)
+  meta => meta.metadata || null
+);

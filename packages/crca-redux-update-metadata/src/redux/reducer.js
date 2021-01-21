@@ -1,7 +1,7 @@
 import { UPDATE_METADATA } from "./actions";
 
 initialState = {
-  metadata: {}
+  metadata: null
 }
 
 export const crcaUrl = (state = initialState, action) => {
