@@ -4,7 +4,7 @@ initialState = {
   metadata: null
 }
 
-export const crcaUrl = (state = initialState, action) => {
+export const crcaMetadata = (state = initialState, action) => {
   switch(action.type) {
     case UPDATE_METADATA:
       return {
