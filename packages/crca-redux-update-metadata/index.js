@@ -6,4 +6,4 @@ export {
 
 export {
   crcaMetadataMetadataSelector
-} from './src/redux/selectors.js'
+} from './src/redux/selectors.js';
