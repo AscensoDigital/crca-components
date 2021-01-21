@@ -11,9 +11,7 @@
     "lint": "eslint --ext .js,.html . --ignore-path .gitignore && prettier \"**/*.js\" --check --ignore-path .gitignore",
     "format": "eslint --ext .js,.html . --fix --ignore-path .gitignore && prettier \"**/*.js\" --write --ignore-path .gitignore",
     "test": "web-test-runner --coverage",
-    "test:watch": "web-test-runner --watch",
-    "storybook": "web-dev-server -c .storybook/server.mjs",
-    "storybook:build": "build-storybook"
+    "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
     "@ascenso/crca-redux-store": "^1.0.2",
@@ -24,16 +22,15 @@
     "reselect": "^4.0.0"
   },
   "devDependencies": {
-    "@open-wc/eslint-config": "^4.2.0",
-    "@open-wc/testing": "^2.0.0",
     "@web/dev-server": "^0.1.1",
-    "@web/dev-server-storybook": "^0.3.2",
-    "@web/test-runner": "^0.11.5",
     "eslint": "^6.1.0",
+    "@open-wc/eslint-config": "^4.2.0",
+    "prettier": "^2.0.4",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^1.0.0",
     "lint-staged": "^10.0.0",
-    "prettier": "^2.0.4"
+    "@web/test-runner": "^0.11.5",
+    "@open-wc/testing": "^2.0.0"
   },
   "eslintConfig": {
     "extends": [
@@ -50,14 +47,14 @@
       "pre-commit": "lint-staged"
     }
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "lint-staged": {
     "*.js": [
       "eslint --fix",
       "prettier --write",
       "git add"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

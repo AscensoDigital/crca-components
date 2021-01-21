@@ -8,29 +8,20 @@
     "audit": "lerna-audit"
   },
   "devDependencies": {
-    "@open-wc/demoing-storybook": "^2.0.0",
-    "@open-wc/eslint-config": "^2.0.0",
-    "@open-wc/testing": "^2.0.0",
-    "@open-wc/testing-karma": "^3.0.0",
-    "@web/dev-server": "^0.0.12",
-    "@web/test-runner": "^0.7.41",
-    "deepmerge": "^3.2.0",
-    "es-dev-server": "^1.23.0",
-    "eslint": "^6.1.0",
-    "eslint-config-prettier": "^6.11.0",
-    "husky": "^1.0.0",
+    "es-dev-server": "^2.1.0",
     "lerna": "^3.22.1",
-    "lerna-audit": "^1.2.0",
-    "lint-staged": "^10.0.0",
-    "prettier": "^2.0.4"
+    "lerna-audit": "^1.2.0"
   },
   "dependencies": {
     "@ascenso/crca-animation": "file:packages/crca-animation",
     "@ascenso/crca-lazy-loader": "file:packages/crca-lazy-loader",
+    "@ascenso/crca-redux-feedback": "file:packages/crca-redux-feedback",
+    "@ascenso/crca-redux-firebase": "file:packages/crca-redux-firebase",
     "@ascenso/crca-redux-loading": "file:packages/crca-redux-loading",
     "@ascenso/crca-redux-store": "file:packages/crca-redux-store",
+    "@ascenso/crca-redux-update-metadata": "file:packages/crca-redux-update-metadata",
+    "@ascenso/crca-redux-url-parser": "file:packages/crca-redux-url-parser",
     "@ascenso/crca-status-light": "file:packages/crca-status-light",
-    "@ascenso/crca-stepper": "file:packages/crca-stepper",
-    "@ascenso/crca-redux-url-parser": "file:packages/crca-redux-url-parser"
+    "@ascenso/crca-stepper": "file:packages/crca-stepper"
   }
 }

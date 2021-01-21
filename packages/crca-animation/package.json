@@ -6,15 +6,50 @@
   "license": "MIT",
   "main": "index.js",
   "module": "index.js",
-  "scripts": {
-    "start": "es-dev-server --app-index demo/index.html --node-resolve --open --watch",
-    "storybook": "start-storybook --node-resolve --watch --open",
-    "storybook:build": "build-storybook"
-  },
   "dependencies": {
     "animate.css": "^3.7.2",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2"
+  },
+  "scripts": {
+    "start": "web-dev-server",
+    "lint": "eslint --ext .js,.html . --ignore-path .gitignore && prettier \"**/*.js\" --check --ignore-path .gitignore",
+    "format": "eslint --ext .js,.html . --fix --ignore-path .gitignore && prettier \"**/*.js\" --write --ignore-path .gitignore",
+    "test": "web-test-runner --coverage",
+    "test:watch": "web-test-runner --watch"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.1.1",
+    "eslint": "^6.1.0",
+    "@open-wc/eslint-config": "^4.2.0",
+    "prettier": "^2.0.4",
+    "eslint-config-prettier": "^6.11.0",
+    "husky": "^1.0.0",
+    "lint-staged": "^10.0.0",
+    "@web/test-runner": "^0.11.5",
+    "@open-wc/testing": "^2.0.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@open-wc/eslint-config",
+      "eslint-config-prettier"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
   },
   "gitHead": "8d4e513e4fd593ef15b7a28d9b55b3564f135361"
 }
