@@ -25,7 +25,7 @@ export class CrcaReduxUpdateMetadata extends connect(crcaStore)(LitElement) {
   updated(changedProperties) {
     if(changedProperties.has('metadata')) {
       if(this.metadata) {
-        updateMetadata(this.metadata)
+        updateMetadata(this.metadata);
       }
     }
   }
