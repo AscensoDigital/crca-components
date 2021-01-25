@@ -1,17 +1,17 @@
 /**
- * 
+ *
  * Mixin para detectar si un elemento se encuentra dentro del viewport
- * 
+ *
  * Inicialización:
  * Se invoca el método => detectFirstViewportAparition()
- * 
+ *
  * Detectar viewport aparition
  * Se escucha el evento => 'viewport-entering'
- * 
+ *
  * https://github.com/Polydile/isInViewportMixin
  */
 export const isInViewportMixin = (superClass) => class extends superClass {
-  
+
   static get properties() {
     return {
       _appear: { type: Boolean }
@@ -43,13 +43,12 @@ export const isInViewportMixin = (superClass) => class extends superClass {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    window.removeEventListener('scroll', this._IsInViewportHandlerBind);    
+    window.removeEventListener('scroll', this._IsInViewportHandlerBind);
   }
 
   // Inspired in https://vanillajstoolkit.com/helpers/isinviewport/
   _vanillaIsInViewport(elem) {
     var distance = elem.getBoundingClientRect();
-    console.log(distance);
     return (
       distance.top < (window.innerHeight || document.documentElement.clientHeight) &&
       distance.bottom >= 0
