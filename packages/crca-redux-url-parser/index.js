@@ -7,6 +7,11 @@ export {
 } from './src/page.js'
 
 export {
+  ENV_DEV,
+  ENV_PROD
+} from './src/consts.js'
+
+export {
   decodeAnchor,
   decodeHostname,
   decodeSearch,
