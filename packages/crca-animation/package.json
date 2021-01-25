@@ -51,5 +51,8 @@
       "git add"
     ]
   },
-  "gitHead": "8d4e513e4fd593ef15b7a28d9b55b3564f135361"
+  "gitHead": "8d4e513e4fd593ef15b7a28d9b55b3564f135361",
+  "publishConfig": {
+    "access": "public"
+  }
 }
