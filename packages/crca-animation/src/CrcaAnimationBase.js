@@ -1,7 +1,7 @@
 import { html, css, LitElement } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 
-import { isInViewportMixin } from './is-in-viewport-mixin';
+import { isInViewportMixin } from './is-in-viewport-mixin.js';
 
 export class CrcaAnimationBase extends isInViewportMixin(LitElement) {
 
@@ -34,14 +34,18 @@ export class CrcaAnimationBase extends isInViewportMixin(LitElement) {
       'hinge' | 'jackInTheBox' | 'rollIn' | 'rollOut' | 'zoomInDown' | 'zoomIn' | 'zoomInLeft' | 'zoomInRight' | 'zoomInUp' | 'zoomOutDown' | 'zoomOut' |
       'zoomOutLeft' | 'zoomOutRight' | 'zoomOutUp'  */
       animation: { type: String },
-      displayBlock: { type: Boolean }
+
+      /**
+       * Tipo de display del objeto a animar
+       */
+      displayInline: { type: Boolean }
     };
   }
 
   constructor() {
     super();
     this.animation = 'bounce';
-    this.displayBlock = false;
+    this.displayInline = false;
   }
 
   firstUpdated() {
@@ -51,9 +55,9 @@ export class CrcaAnimationBase extends isInViewportMixin(LitElement) {
 
   render() {
     return html`
-      ${ this.displayBlock
-        ? html`<div class="${classMap(this._getClassMap())}"><slot></slot></div>`
-        : html`<span class="${classMap(this._getClassMap())}"><slot></slot></span>`
+      ${ this.displayInline
+        ? html`<span class="${classMap(this._getClassMap())}"><slot></slot></span>`
+        : html`<div class="${classMap(this._getClassMap())}"><slot></slot></div>`
       }
     `;
   }

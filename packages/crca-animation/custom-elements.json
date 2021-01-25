@@ -12,9 +12,9 @@
           "default": "bounce"
         },
         {
-          "name": "displayBlock",
+          "name": "displayInline",
           "type": "Boolean",
-          "description": "Tipo de display del objeto a animar (true: block; false: inline)",
+          "description": "Tipo de display del objeto a animar (true: inline; false: block)",
           "default": false
         }
       ],
