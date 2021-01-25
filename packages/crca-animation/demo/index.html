@@ -6,6 +6,12 @@
     body {
       background: #fafafa;
     }
+    .duration {
+      --crca-animation-animation-duration: 5s;
+    }
+    .delay {
+      --crca-animation-animation-delay: 2s;
+    }
   </style>
 </head>
 <body>
@@ -14,7 +20,7 @@
   <script type="module">
     import { html, render } from 'lit-html';
     import '../crca-animation.js';
-
+    import '../crca-animation-bouncing-entrances.js';
     render(
       html`
       <p>
@@ -40,9 +46,12 @@ Esse fugit accusamus debitis quia perferendis mollitia ipsa sapiente commodi nes
 Perferendis amet quibusdam, vitae, saepe, vero maxime eum beatae quia placeat obcaecati tempora officia! Magnam odio voluptates dignissimos rem non corrupti eius facilis nesciunt, natus quasi eum nemo ratione voluptate!
 Autem quisquam qui est necessitatibus pariatur quibusdam obcaecati soluta nulla nihil, quos odit illum natus, rem amet doloremque blanditiis cumque in dolore et recusandae! Quam nemo deserunt ratione accusamus hic?</p>
 
+
+        <crca-animation-bouncing-entrances class="delay">bounceIn Group</crca-animation-bouncing-entrances>
+
         <crca-animation animation="flash">flash</crca-animation>
 
-        <crca-animation animation="rotateIn" displayBlock>rotate In</crca-animation>
+        <crca-animation animation="rotateIn" displayBlock class="duration">rotate In</crca-animation>
 
         <crca-animation animation="bounceIn">bounceIn</crca-animation>
 
