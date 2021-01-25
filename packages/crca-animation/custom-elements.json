@@ -6,25 +6,32 @@
       "description": "A component with a title and an action counter",
       "properties": [
         {
-          "name": "title",
+          "name": "animation",
           "type": "String",
-          "description": "The title of your component",
-          "default": "Hey there"
+          "description": "Nombre de animación",
+          "default": "bounce"
         },
         {
-          "name": "counter",
-          "type": "Number",
-          "description": "An action counter",
-          "default": 0
+          "name": "displayBlock",
+          "type": "Boolean",
+          "description": "Tipo de display del objeto a animar (true: block; false: inline)",
+          "default": false
         }
       ],
       "events": [],
       "slots": [],
       "cssProperties": [
         {
-          "name": "--crca-animation-text-color",
-          "description": "Main Text Color",
-          "type": "Color"
+          "name": "--crca-animation-animation-duration",
+          "description": "Tiempo de duración de la animación",
+          "type": "time",
+          "default": "1s"
+        },
+        {
+          "name": "--crca-animation-animation-delay",
+          "description": "Tiempo de espera en la ejecución de la animación",
+          "type": "time",
+          "default": "0"
         }
       ]
     }

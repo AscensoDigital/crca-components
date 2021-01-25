@@ -15,7 +15,6 @@
     import { html, render } from 'lit-html';
     import '../crca-animation.js';
 
-    const title = 'Hello owc World!';
     render(
       html`
       <p>
@@ -40,20 +39,18 @@ Sint vel ducimus aperiam, eius incidunt quisquam. Cupiditate modi nulla molestia
 Esse fugit accusamus debitis quia perferendis mollitia ipsa sapiente commodi nesciunt ex praesentium odit eaque tempore, dolorum hic quas officia quibusdam sed voluptas dignissimos. Fugiat aliquid minus dignissimos harum maiores?
 Perferendis amet quibusdam, vitae, saepe, vero maxime eum beatae quia placeat obcaecati tempora officia! Magnam odio voluptates dignissimos rem non corrupti eius facilis nesciunt, natus quasi eum nemo ratione voluptate!
 Autem quisquam qui est necessitatibus pariatur quibusdam obcaecati soluta nulla nihil, quos odit illum natus, rem amet doloremque blanditiis cumque in dolore et recusandae! Quam nemo deserunt ratione accusamus hic?</p>
-        <crca-animation animation="flash" duration="3s">
-          flash
-        </crca-animation>
 
-        <crca-animation animation="bounceIn" duration="3s">
-          bounceIn
-        </crca-animation>
+        <crca-animation animation="flash">flash</crca-animation>
 
-        <crca-animation animation="bounceOut" duration="3s">
-          bounceOut
-        </crca-animation>
+        <crca-animation animation="rotateIn" displayBlock>rotate In</crca-animation>
 
+        <crca-animation animation="bounceIn">bounceIn</crca-animation>
+
+        <p>
+          Algo Antes de <crca-animation animation="bounceOut">bounceOut</crca-animation> y algo Despues
+        </p>
         <crca-animation animation="fadeIn" duration="3s">
-          fadeIn
+          <div>fadeIn</div>
         </crca-animation>
 
         <crca-animation animation="fadeOut" duration="3s">
