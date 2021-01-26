@@ -41,6 +41,7 @@ export {
   crcaUrlDevSubdominioSelector,
   crcaUrlDominioSelector,
   crcaUrlDominiosProdSelector,
+  crcaUrlEnvSelector,
   crcaUrlHomepageSelector,
   crcaUrlIsDominioProdSelector,
   crcaUrlLastPageSelector,

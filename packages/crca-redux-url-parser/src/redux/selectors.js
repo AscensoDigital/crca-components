@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 import { PAGE_HOME } from "../page.js";
+import { ENV_DEV, ENV_PROD } from "../consts.js";
 
 const crcaUrlStateSelector = state => state && state.crcaUrl || {};
 
@@ -50,6 +51,11 @@ export const crcaUrlIsDominioProdSelector = createSelector (
   crcaUrlDominiosProdSelector,
   (dominio, dominiosProd) => isDomainProd(dominio, dominiosProd)
 );
+
+export const crcaUrlEnvSelector = createSelector (
+  crcaUrlIsDominioProdSelector,
+  isProd => isProd ? ENV_PROD : ENV_DEV
+)
 
 export const crcaUrlLastPageSelector = createSelector (
   crcaUrlStateSelector,
