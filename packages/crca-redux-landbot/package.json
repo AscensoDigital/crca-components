@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-landbot",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Webcomponent crca-redux-landbot following open-wc recommendations",
   "author": "crca-redux-landbot",
   "license": "MIT",
@@ -15,24 +15,24 @@
   },
   "dependencies": {
     "@ascenso/crca-redux-feedback": "^0.1.4",
-    "@ascenso/crca-redux-firebase": "^0.6.1",
+    "@ascenso/crca-redux-firebase": "^0.6.2",
     "@ascenso/crca-redux-store": "^1.0.3",
-    "@ascenso/crca-redux-url-parser": "^0.5.1",
+    "@ascenso/crca-redux-url-parser": "^0.6.0",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "pwa-helpers": "^0.9.1",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
-    "@web/dev-server": "^0.1.1",
-    "eslint": "^6.1.0",
     "@open-wc/eslint-config": "^4.2.0",
-    "prettier": "^2.0.4",
+    "@open-wc/testing": "^2.0.0",
+    "@web/dev-server": "^0.1.1",
+    "@web/test-runner": "^0.11.5",
+    "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^1.0.0",
     "lint-staged": "^10.0.0",
-    "@web/test-runner": "^0.11.5",
-    "@open-wc/testing": "^2.0.0"
+    "prettier": "^2.0.4"
   },
   "eslintConfig": {
     "extends": [
