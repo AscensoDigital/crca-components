@@ -68,7 +68,7 @@ export class CrcaReduxFirebase extends connect(crcaStore)(LitElement) {
     }
 
     if(this._firebaseInit) {
-      if(changedProperties.has('_firebaseInit') ){
+      if(changedProperties.has('_firebaseInit') && changedProperties.get('_firebaseInit')===false ){
 
         if(this.defaultRemoteConfig !== null) {
           crcaStore.dispatch(
