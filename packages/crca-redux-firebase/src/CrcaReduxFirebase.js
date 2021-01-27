@@ -8,10 +8,12 @@ import {
 
 import { crcaFirebase } from './redux/reducer.js';
 import {
+  firebaseAuthStateChanged,
   firebaseInitializeApp,
   firebaseRemoteConfigActivate,
   firebaseRemoteConfigFetch,
   firebaseRemoteConfigLoadDefault,
+  firebaseSignInAnonymously,
 } from './redux/actions.js';
 import {
   crcaFirebaseAuthHasMethodSelector,
