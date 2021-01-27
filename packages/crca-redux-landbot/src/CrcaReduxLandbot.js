@@ -14,6 +14,7 @@ import { crcaLandbot } from './redux/reducer.js';
 import {
   readyBot,
   closeBot,
+  openBot,
   updateBotCustomerId,
   activateBot,
   destroyBot,
@@ -50,7 +51,6 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     return {
       handleNodes: { type: Boolean },
       initVars: { type: Object },
-      loadFullLandbot: { type: Boolean },
       name: { type: String },
       type: { type: String },
       open: { type: Boolean },
@@ -72,7 +72,6 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     this.initVars = {};
     this.type = 'livechat';
     this.open = false;
-    this.loadFullLandbot = false;
   }
 
   stateChanged(state) {
@@ -104,11 +103,13 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
   _connectEventsOpenClose() {
     this._landbot.core.events.on('widget_open', () => {
       console.log('Landbot chat was opened!');
+      crcaStore.dispatch(openBot(this.name));
     });
 
-    this._landbot.core.events.on('widget_close', () =>
-      crcaStore.dispatch(closeBot(this.name))
-    );
+    this._landbot.core.events.on('widget_close', () => {
+      crcaStore.dispatch(closeBot(this.name));
+      console.log('Landbot chat was closed!');
+    });
 
     this._landbot.core.events.on('proactive_open', () => {
       console.log('Proactive message was opened!');
@@ -213,12 +214,9 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
 
   _loadLandbot() {
     const script = document.createElement('script');
-    script.src = this.loadFullLandbot
-      ? 'https://static.landbot.io/landbot-3/landbot-3.0.0.js'
-      : 'https://static.landbot.io/landbot-widget/landbot-widget-1.0.0.js';
-
-    script.onload = this._loadedLandbot;
+    script.src = 'https://static.landbot.io/landbot-3/landbot-3.0.0.js';
     script.SameSite = 'None; Secure';
+    script.onload = this._loadedLandbot;
     document.body.append(script);
   }
 

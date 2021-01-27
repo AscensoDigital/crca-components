@@ -1,5 +1,6 @@
 import { crcaUrlPageSelector } from '@ascenso/crca-redux-url-parser';
 import { infoFeedback, negativeFeedback } from '@ascenso/crca-redux-feedback';
+import { isDefined } from '@ascenso/crca-redux-firebase';
 import {
   crcaLandbotActiveSelector,
   crcaLandbotBotHandleNodesSelector,
@@ -168,17 +169,18 @@ const sendNode = (bot, node, customerId, botId, botToken) => () => {
  */
 };
 
-export const openBot = (bot, action, data = {}) => (dispatch, getState) => {
+export const openBot = (bot, action = '', data = {}) => (
+  dispatch,
+  getState
+) => {
   const state = getState();
   const page = crcaUrlPageSelector(state);
   const handleNodes = crcaLandbotBotHandleNodesSelector(bot, state);
 
   const botToken = crcaLandbotConfigBotTokenSelector(bot, state);
-  const node = crcaLandbotConfigBotNodeSelector(
-    bot,
-    `${page}_${action}`,
-    state
-  );
+  const node = isDefined(action)
+    ? crcaLandbotConfigBotNodeSelector(bot, `${page}_${action}`, state)
+    : '';
 
   if (handleNodes) {
     let error = false;
