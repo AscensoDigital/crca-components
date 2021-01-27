@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-firebase",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Webcomponent crca-redux-firebase following open-wc recommendations",
   "author": "crca-redux-firebase",
   "license": "MIT",
