@@ -22,6 +22,7 @@ import {
 } from '../utils/data-view-util.js';
 
 import {
+  FB_AUTH_ANONYMOUSLY,
   FB_RC_TYPE_VALUE_BOOLEAN,
   FB_RC_TYPE_VALUE_NUMBER,
   FB_RC_TYPE_VALUE_OBJECT,
