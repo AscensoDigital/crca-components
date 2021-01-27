@@ -14,7 +14,7 @@ import { crcaLandbot } from './redux/reducer.js';
 import {
   readyBot,
   closeBot,
-  openBot,
+  // openBot,
   updateBotCustomerId,
   activateBot,
   destroyBot,
@@ -102,8 +102,8 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
 
   _connectEventsOpenClose() {
     this._landbot.core.events.on('widget_open', () => {
+      // crcaStore.dispatch(openBot(this.name));
       console.log('Landbot chat was opened!');
-      crcaStore.dispatch(openBot(this.name));
     });
 
     this._landbot.core.events.on('widget_close', () => {
