@@ -88,8 +88,7 @@ export class CrcaReduxFirebase extends connect(crcaStore)(LitElement) {
       if( this._remoteConfigInit && changedProperties.has('_remoteConfigInit')) {
         crcaStore.dispatch(firebaseRemoteConfigActivate());
       }
-
-      if ( this._page && changedProperties.has('_page') ) {
+      else if ( this._page && changedProperties.has('_page') ) {
         crcaStore.dispatch(firebaseRemoteConfigActivate());
         crcaStore.dispatch(firebaseRemoteConfigFetch());
       }
