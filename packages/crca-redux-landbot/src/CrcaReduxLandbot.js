@@ -9,6 +9,8 @@ import {
   isUndefined,
 } from '@ascenso/crca-redux-firebase';
 
+import { crcaLandbot } from './redux/reducer.js';
+
 import {
   readyBot,
   closeBot,
@@ -38,6 +40,10 @@ import {
   BOT_TYPE_NATIVE,
   BOT_TYPE_POPUP,
 } from './consts.js';
+
+crcaStore.addReducers({
+  crcaLandbot,
+});
 
 export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
   static get properties() {
