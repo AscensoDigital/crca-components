@@ -7,11 +7,6 @@ export const FILTRO_TYPE_STRING = 'string';
 export const ORDER_ASC = 'asc';
 export const ORDER_DESC = 'desc';
 
-export const TYPE_VALUE_VALUE = 'value';
-export const TYPE_VALUE_BOOLEAN = 'boolean';
-export const TYPE_VALUE_NUMBER = 'number';
-export const TYPE_VALUE_STRING = 'string';
-export const TYPE_VALUE_OBJECT = 'object';
 
 export const isDefined = v => v !== undefined && v !== null && v !== '';
 
