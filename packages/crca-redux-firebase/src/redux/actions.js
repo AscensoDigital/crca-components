@@ -10,6 +10,7 @@ import 'firebase/remote-config';
 
 import { crcaUrlIsDominioProdSelector } from '@ascenso/crca-redux-url-parser';
 import {
+  crcaFirebaseAuthSignInSelector,
   crcaFirebaseConfigDevSelector,
   crcaFirebaseConfigProdSelector,
   crcaFirebaseInitSelector,
@@ -201,7 +202,7 @@ export const firebaseRemoteConfigLoadDefault = defaultConfig => (
 };
 
 export const firebaseSignInAnonymously = () => (dispatch, getState) => {
-  const signIn = crcaFirebaseSignInSelector(getState());
+  const signIn = crcaFirebaseAuthSignInSelector(getState());
 
   if(!signIn){
     firebase.auth().signInAnonymously()
