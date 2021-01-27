@@ -2,10 +2,9 @@ import { createSelector } from 'reselect';
 import { crcaUrlEnvSelector } from '@ascenso/crca-redux-url-parser';
 import { isDefined, isObject, isString } from '@ascenso/crca-redux-firebase';
 
-export const crcaLandbotStateSelector = state =>
-  (state && state.crcaLandbot) || {};
+const crcaLandbotStateSelector = state => (state && state.crcaLandbot) || {};
 
-export const crcaLandbotLoadSelector = createSelector(
+const crcaLandbotLoadSelector = createSelector(
   crcaLandbotStateSelector,
   lbot => lbot.load || {}
 );
@@ -25,7 +24,7 @@ export const crcaLandbotActiveSelector = createSelector(
   lbot => lbot.active || ''
 );
 
-export const crcaLandbotBotsSelector = createSelector(
+const crcaLandbotBotsSelector = createSelector(
   crcaLandbotStateSelector,
   lbot => lbot.bots || {}
 );
@@ -68,7 +67,7 @@ export const crcaLandbotBotIsReadySelector = (bot, state) => {
   return (bots[bot] && bots[bot].ready) || false;
 };
 
-export const crcaLandbotConfigSelector = createSelector(
+const crcaLandbotConfigSelector = createSelector(
   crcaLandbotStateSelector,
   lbot => lbot.config || {}
 );
@@ -86,6 +85,7 @@ const crcaLandbotConfigPropSelector = (bot, prop, state) => {
 
 export const crcaLandbotConfigBotIdSelector = (bot, state) =>
   crcaLandbotConfigPropSelector(bot, 'id', state);
+
 export const crcaLandbotConfigBotTokenSelector = (bot, state) =>
   crcaLandbotConfigPropSelector(bot, 'token', state);
 
