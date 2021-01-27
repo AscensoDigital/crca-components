@@ -28,7 +28,7 @@ export const crcaFirebaseAuthMethodsSelector = createSelector(
 );
 
 export const crcaFirebaseAuthHasMethodsSelector = createSelector(
-  crcaFirebaseAuthMethodSelector,
+  crcaFirebaseAuthMethodsSelector,
   methods => Object.keys(methods).length>0
 );
 
