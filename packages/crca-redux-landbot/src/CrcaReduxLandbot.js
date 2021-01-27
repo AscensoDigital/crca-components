@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement } from 'lit-element';
 import { connect } from 'pwa-helpers';
 
 import { crcaStore } from '@ascenso/crca-redux-store/crcaStore';
@@ -50,6 +50,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     return {
       handleNodes: { type: Boolean },
       initVars: { type: Object },
+      loadFullLandbot: { type: Boolean },
       name: { type: String },
       type: { type: String },
       open: { type: Boolean },
@@ -71,6 +72,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     this.initVars = {};
     this.type = 'livechat';
     this.open = false;
+    this.loadFullLandbot = false;
   }
 
   stateChanged(state) {
@@ -84,20 +86,6 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     this._botId = crcaLandbotConfigBotIdSelector(this.name, state);
     this._isReady = crcaLandbotBotIsReadySelector(this.name, state);
     // this._context = botContextSelector(state);
-  }
-
-  render() {
-    return html`
-      ${this._landbotLoadBy === this.name
-        ? html`<script
-            SameSite="None; Secure"
-            defer
-            async
-            @load=${this._loadedLandbot}
-            src="https://static.landbot.io/landbot-3/landbot-3.0.0.js"
-          ></script>`
-        : ''}
-    `;
   }
 
   _connectEvents() {
@@ -223,9 +211,21 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     crcaStore.dispatch(finishLandbotLoad());
   }
 
+  _loadLandbot() {
+    const script = document.createElement('script');
+    script.src = this.loadFullLandbot
+      ? 'https://static.landbot.io/landbot-3/landbot-3.0.0.js'
+      : 'https://static.landbot.io/landbot-widget/landbot-widget-1.0.0.js';
+
+    script.onload = this._loadedLandbot;
+    script.SameSite = 'None; Secure';
+    document.body.append(script);
+  }
+
   updated(changedProperties) {
     if (this._landbotLoadBy === '') {
       crcaStore.dispatch(startLandbotLoad(this.name));
+      this._loadLandbot();
     }
 
     if (
