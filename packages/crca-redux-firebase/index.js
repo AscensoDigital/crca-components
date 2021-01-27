@@ -1,8 +1,10 @@
 export { CrcaReduxFirebase } from './src/CrcaReduxFirebase.js';
 
 export {
+  setFirebaseAuthMethods,
   setFirebaseConfigDev,
   setFirebaseConfigProd,
+  successFirebaseSignIn,
   crcaFirebaseRemoteConfigGet,
   crcaFirebaseRemoteConfigGetAll,
   crcaFirebaseGet,
@@ -11,6 +13,14 @@ export {
 export { crcaFirebase } from './src/redux/reducer.js';
 
 export {
+  crcaFirebaseAuthHasMethodSelector,
+  crcaFirebaseAuthHasMethodsSelector,
+  crcaFirebaseAuthMethodSelector,
+  crcaFirebaseAuthMethodsSelector,
+  crcaFirebaseAuthSignInSelector,
+  crcaFirebaseAuthSignInMethodSelector,
+  crcaFirebaseAuthUserSelector,
+  crcaFirebaseAuthUserUidSelector,
   crcaFirebaseInitSelector,
   crcaFirebaseRemoteConfigInitSelector,
   crcaFirebaseRemoteConfigConfigSelector,
@@ -42,12 +52,27 @@ export {
   joinParts,
   sortData,
   stringifyPropValue,
-  TYPE_VALUE_BOOLEAN,
-  TYPE_VALUE_NUMBER,
-  TYPE_VALUE_OBJECT,
-  TYPE_VALUE_STRING,
-  TYPE_VALUE_VALUE,
 } from './src/utils/data-view-util.js';
+
+export {
+  FB_AUTH_EMAIL,
+  FB_AUTH_TELEFONO,
+  FB_AUTH_GOOGLE,
+  FB_AUTH_PLAY_JUEGOS,
+  FB_AUTH_GAME_CENTER,
+  FB_AUTH_FACEBOOK,
+  FB_AUTH_TWITTER,
+  FB_AUTH_GITHUB,
+  FB_AUTH_YAHO,
+  FB_AUTH_MICROSOFT,
+  FB_AUTH_APPLE,
+  FB_AUTH_ANONYMOUSLY,
+  FB_RC_TYPE_VALUE_BOOLEAN,
+  FB_RC_TYPE_VALUE_NUMBER,
+  FB_RC_TYPE_VALUE_OBJECT,
+  FB_RC_TYPE_VALUE_STRING,
+  FB_RC_TYPE_VALUE_VALUE,
+} from './src/consts.js';
 
 export {
   getQueryCollectionByProp,

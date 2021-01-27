@@ -14,9 +14,12 @@ import {
   firebaseRemoteConfigLoadDefault,
 } from './redux/actions.js';
 import {
+  crcaFirebaseAuthHasMethodSelector,
+  crcaFirebaseAuthHasMethodsSelector,
   crcaFirebaseInitSelector,
   crcaFirebaseRemoteConfigInitSelector,
 } from './redux/selectors.js';
+import { FB_AUTH_ANONYMOUSLY } from './consts.js';
 
 crcaStore.addReducers({
   crcaFirebase,
@@ -31,6 +34,8 @@ export class CrcaReduxFirebase extends connect(crcaStore)(LitElement) {
       _firebaseInit: { type: Boolean },
       _page: { type: String },
       _remoteConfigInit: { type: Boolean },
+      _hasAuthMethods: { type: Boolean },
+      _signInAnonymously: { type: Boolean }
     };
   }
 
@@ -44,6 +49,8 @@ export class CrcaReduxFirebase extends connect(crcaStore)(LitElement) {
     this._dominio = crcaUrlDominioSelector(state);
     this._firebaseInit = crcaFirebaseInitSelector(state);
     this._remoteConfigInit = crcaFirebaseRemoteConfigInitSelector(state);
+    this._signInAnonymously = crcaFirebaseAuthHasMethodSelector(FB_AUTH_ANONYMOUSLY, state);
+    this._hasAuthMethods = crcaFirebaseAuthHasMethodsSelector(state);
     if (this.activateConfigOnChangePage) {
       this._page = crcaUrlPageSelector(state);
     }
@@ -58,25 +65,30 @@ export class CrcaReduxFirebase extends connect(crcaStore)(LitElement) {
       crcaStore.dispatch(firebaseInitializeApp());
     }
 
-    if (
-      changedProperties.has('_firebaseInit') &&
-      this._firebaseInit &&
-      this.defaultRemoteConfig !== null
-    ) {
-      crcaStore.dispatch(
-        firebaseRemoteConfigLoadDefault(this.defaultRemoteConfig)
-      );
-    }
+    if(this._firebaseInit) {
+      if(changedProperties.has('_firebaseInit') ){
 
-    if (
-      this._firebaseInit &&
-      this._remoteConfigInit &&
-      this._page &&
-      (changedProperties.has('_remoteConfigInit') ||
-        changedProperties.has('_page'))
-    ) {
-      crcaStore.dispatch(firebaseRemoteConfigActivate());
-      crcaStore.dispatch(firebaseRemoteConfigFetch());
+        if(this.defaultRemoteConfig !== null) {
+          crcaStore.dispatch(
+            firebaseRemoteConfigLoadDefault(this.defaultRemoteConfig)
+          );
+        }
+
+        if(this._signInAnonymously) {
+          crcaStore.dispatch(firebaseSignInAnonymously());
+        }
+
+        if(this._hasAuthMethods) {
+          crcaStore.dispatch(firebaseAuthStateChanged());
+        }
+      }
+
+      if ( this._remoteConfigInit && this._page &&
+        (changedProperties.has('_remoteConfigInit') || changedProperties.has('_page'))
+      ) {
+        crcaStore.dispatch(firebaseRemoteConfigActivate());
+        crcaStore.dispatch(firebaseRemoteConfigFetch());
+      }
     }
   }
 }
