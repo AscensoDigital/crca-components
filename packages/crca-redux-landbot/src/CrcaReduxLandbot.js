@@ -229,6 +229,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     if (
       this._landbotLoaded &&
       this._config &&
+      isDefined(this._config.configUrl) &&
       (changedProperties.has('_landbotLoaded') ||
         changedProperties.has('_config'))
     ) {
