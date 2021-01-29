@@ -167,10 +167,7 @@ export const firebaseInitializeApp = (enabledAnalytics = true) => (
 export const firebaseRemoteConfigActivate = () => dispatch => {
   remoteConfig
     .activate()
-    .then(() =>  {
-      dispatch(setRemoteConfig(remoteConfig.getAll()));
-      dispatch(updateLastFetch(null));
-    })
+    .then(() => dispatch(setRemoteConfig(remoteConfig.getAll())))
     .catch(e => console.log('RemoteConfig: activate fail', e));
 };
 

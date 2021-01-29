@@ -90,6 +90,7 @@ export class CrcaReduxFirebase extends connect(crcaStore)(LitElement) {
       }
       else if ( changedProperties.has('_page') && this._page && this._lastFetch ) {
         crcaStore.dispatch(firebaseRemoteConfigActivate());
+        crcaStore.dispatch(updateLastFetch(null));
       }
     }
   }
