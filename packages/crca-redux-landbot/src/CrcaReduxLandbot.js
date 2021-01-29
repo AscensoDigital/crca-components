@@ -51,6 +51,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     return {
       handleNodes: { type: Boolean },
       initVars: { type: Object },
+      manualCreate: { type: Boolean },
       name: { type: String },
       type: { type: String },
       open: { type: Boolean },
@@ -72,6 +73,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     this.initVars = {};
     this.type = 'livechat';
     this.open = false;
+    this.manualCreate = false;
   }
 
   stateChanged(state) {
@@ -87,54 +89,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     // this._context = botContextSelector(state);
   }
 
-  _connectEvents() {
-    this._landbot.onLoad(() =>
-      crcaStore.dispatch(
-        readyBot(this.name, this._botId, this.open, this.handleNodes)
-      )
-    );
-
-    this._landbot.core.events.on('lb-send-customer-id', data => {
-      // console.log("LB_SEND_CUSTOMER_ID",data);
-      crcaStore.dispatch(updateBotCustomerId(this.name, data.customerId));
-    });
-  }
-
-  _connectEventsOpenClose() {
-    this._landbot.core.events.on('widget_open', () => {
-      // crcaStore.dispatch(openBot(this.name));
-      console.log('Landbot chat was opened!');
-    });
-
-    this._landbot.core.events.on('widget_close', () => {
-      crcaStore.dispatch(closeBot(this.name));
-      console.log('Landbot chat was closed!');
-    });
-
-    this._landbot.core.events.on('proactive_open', () => {
-      console.log('Proactive message was opened!');
-    });
-
-    this._landbot.core.events.on('proactive_close', () => {
-      console.log('Livechat proactive message was closed!');
-    });
-
-    this._landbot.core.events.on('lb-navigate', data => {
-      // console.log("LB_NAVIGATE",data);
-      this.dispatchEvent(
-        new CustomEvent('crca-redux-landbot-navigate', {
-          bubbles: true,
-          composed: true,
-          detail: {
-            url: data.url,
-          },
-        })
-      );
-      crcaStore.dispatch(closeBot(this.name));
-    });
-  }
-
-  _createBot() {
+  createBot() {
     if (isDefined(this._config.configUrl)) {
       const config = {
         ...this._config,
@@ -207,6 +162,53 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     }
   }
 
+  _connectEvents() {
+    this._landbot.onLoad(() =>
+      crcaStore.dispatch(
+        readyBot(this.name, this._botId, this.open, this.handleNodes)
+      )
+    );
+
+    this._landbot.core.events.on('lb-send-customer-id', data => {
+      // console.log("LB_SEND_CUSTOMER_ID",data);
+      crcaStore.dispatch(updateBotCustomerId(this.name, data.customerId));
+    });
+  }
+
+  _connectEventsOpenClose() {
+    this._landbot.core.events.on('widget_open', () => {
+      // crcaStore.dispatch(openBot(this.name));
+      console.log('Landbot chat was opened!');
+    });
+
+    this._landbot.core.events.on('widget_close', () => {
+      crcaStore.dispatch(closeBot(this.name));
+      console.log('Landbot chat was closed!');
+    });
+
+    this._landbot.core.events.on('proactive_open', () => {
+      console.log('Proactive message was opened!');
+    });
+
+    this._landbot.core.events.on('proactive_close', () => {
+      console.log('Livechat proactive message was closed!');
+    });
+
+    this._landbot.core.events.on('lb-navigate', data => {
+      // console.log("LB_NAVIGATE",data);
+      this.dispatchEvent(
+        new CustomEvent('crca-redux-landbot-navigate', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            url: data.url,
+          },
+        })
+      );
+      crcaStore.dispatch(closeBot(this.name));
+    });
+  }
+
   // eslint-disable-next-line class-methods-use-this
   _loadedLandbot() {
     crcaStore.dispatch(finishLandbotLoad());
@@ -227,13 +229,14 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     }
 
     if (
+      this.manualCreate === false &&
       this._landbotLoaded &&
       this._config &&
       isDefined(this._config.configUrl) &&
       (changedProperties.has('_landbotLoaded') ||
         changedProperties.has('_config'))
     ) {
-      this._createBot();
+      this.createBot();
     }
 
     if (changedProperties.has('_isReady') && this._isReady && this.open) {
