@@ -20,6 +20,7 @@ import {
   crcaFirebaseAuthHasMethodsSelector,
   crcaFirebaseInitSelector,
   crcaFirebaseRemoteConfigInitSelector,
+  crcaFirebaseRemoteConfigLastFetchSelector
 } from './redux/selectors.js';
 import { FB_AUTH_ANONYMOUSLY } from './consts.js';
 
