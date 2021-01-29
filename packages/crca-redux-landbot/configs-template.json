@@ -1,0 +1,42 @@
+{
+  "nameBot1": {
+    "name": "Name Bot 1",
+    "config": {
+      "configUrl": "https://chats.landbot.io/v3/CODIGO_DE_TU_BOT/index.json",
+      "container": "#SELECTOR_CONTENEDOR_TU_BOT_TYPE_CONTAINER_OR_CONTAINER_POPUP"
+    }
+  },
+  "nameBot2": {
+    "name": "Name Bot 2",
+    "config": {
+      "prod": {
+        "configUrl": "https://chats.landbot.io/v3/CODIGO_DE_TU_BOT_PRODUCCION/index.json"
+      },
+      "dev": {
+        "configUrl": "https://chats.landbot.io/v3/CODIGO_DE_TU_BOT_DESARROLLO/index.json"
+      }
+    },
+    "id": {
+      "prod": "ID_LANDBOT_BOT_PRODUCCION",
+      "dev": "ID_LANDBOT_BOT_OTRO_DESARROLLO"
+    },
+    "token": {
+      "prod": "TOKEN_LANDBOT_PRODUCCION",
+      "dev": "TOKEN_LANDBOT_DESARROLLO"
+    },
+    "nodes": {
+      "PAGE1_ACTION1": {
+        "prod": "NODE_ID_PAGE1_ACTION1_LANBOT_PRODUCCION",
+        "dev": "NODE_ID_PAGE1_ACTION1_LANDBOT_DESARROLLO"
+      },
+      "PAGE1_ACTION2": {
+        "prod": "NODE_ID_PAGE1_ACTION2_LANBOT_PRODUCCION",
+        "dev": "NODE_ID_PAGE1_ACTION2_LANDBOT_DESARROLLO"
+      },
+      "PAGE2_ACTION1": {
+        "prod": "NODE_ID_PAGE2_ACTION1_LANBOT_PRODUCCION",
+        "dev": "NODE_ID_PAGE2_ACTION1_LANDBOT_DESARROLLO"
+      }
+    }
+  }
+}
