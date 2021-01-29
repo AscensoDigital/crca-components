@@ -84,20 +84,20 @@ const crcaFirebaseRemoteConfigSelector = createSelector(
 
 export const crcaFirebaseRemoteConfigInitSelector = createSelector(
   crcaFirebaseRemoteConfigSelector,
-  rc => (rc && rc.init) || false
+  rc => rc.init || false
 );
 
 export const crcaFirebaseRemoteConfigConfigSelector = createSelector(
   crcaFirebaseRemoteConfigSelector,
   rc =>
-    (rc && isString(rc.config) && JSON.parse(rc.config)) ||
-    (rc && isObject(rc.config) && rc.config) ||
+    (isString(rc.config) && JSON.parse(rc.config)) ||
+    (isObject(rc.config) && rc.config) ||
     {}
 );
 
 export const crcaFirebaseRemoteConfigLastFetchSelector = createSelector(
   crcaFirebaseRemoteConfigSelector,
-  rc => (rc && rc.lastFetch) || false
+  rc => rc.lastFetch || false
 );
 
 export const crcaFirebaseRemoteConfigGetSelector = (

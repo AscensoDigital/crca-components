@@ -30,20 +30,19 @@ crcaStore.addReducers({
 export class CrcaReduxFirebase extends connect(crcaStore)(LitElement) {
   static get properties() {
     return {
-      activateConfigOnChangePage: { type: Boolean },
       defaultRemoteConfig: { type: Object },
       _dominio: { type: String },
       _firebaseInit: { type: Boolean },
       _page: { type: String },
       _remoteConfigInit: { type: Boolean },
       _hasAuthMethods: { type: Boolean },
-      _signInAnonymously: { type: Boolean }
+      _signInAnonymously: { type: Boolean },
+      _lastFetch: { type: String }
     };
   }
 
   constructor() {
     super();
-    this.activateConfigOnChangePage = false;
     this.defaultRemoteConfig = null;
   }
 
@@ -53,9 +52,8 @@ export class CrcaReduxFirebase extends connect(crcaStore)(LitElement) {
     this._remoteConfigInit = crcaFirebaseRemoteConfigInitSelector(state);
     this._signInAnonymously = crcaFirebaseAuthHasMethodSelector(FB_AUTH_ANONYMOUSLY, state);
     this._hasAuthMethods = crcaFirebaseAuthHasMethodsSelector(state);
-    if (this.activateConfigOnChangePage) {
-      this._page = crcaUrlPageSelector(state);
-    }
+    this._page = crcaUrlPageSelector(state);
+    this._lastFetch = crcaFirebaseRemoteConfigLastFetchSelector(state);
   }
 
   updated(changedProperties) {
@@ -87,10 +85,10 @@ export class CrcaReduxFirebase extends connect(crcaStore)(LitElement) {
 
       if( this._remoteConfigInit && changedProperties.has('_remoteConfigInit')) {
         crcaStore.dispatch(firebaseRemoteConfigActivate());
-      }
-      else if ( this._page && changedProperties.has('_page') ) {
-        crcaStore.dispatch(firebaseRemoteConfigActivate());
         crcaStore.dispatch(firebaseRemoteConfigFetch());
+      }
+      else if ( changedProperties.has('_page') && this._page && this._lastFetch ) {
+        crcaStore.dispatch(firebaseRemoteConfigActivate());
       }
     }
   }
