@@ -63,13 +63,12 @@ const updateFirebaseUser = user => ({
   user
 });
 
-const updateLastFetch = lastFetch => ({
+let remoteConfig;
+
+export const updateLastFetch = lastFetch => ({
   type: UPDATE_LAST_FETCH,
   lastFetch,
 });
-
-let remoteConfig;
-
 
 export const setFirebaseAuthMethods = methods => ({
   type: SET_FIREBASE_AUTH_METHODS,

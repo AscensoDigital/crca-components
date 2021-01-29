@@ -14,6 +14,7 @@ import {
   firebaseRemoteConfigFetch,
   firebaseRemoteConfigLoadDefault,
   firebaseSignInAnonymously,
+  updateLastFetch
 } from './redux/actions.js';
 import {
   crcaFirebaseAuthHasMethodSelector,
