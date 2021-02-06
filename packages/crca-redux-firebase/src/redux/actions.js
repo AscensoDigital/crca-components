@@ -8,7 +8,7 @@ import 'firebase/analytics';
 import 'firebase/auth';
 import 'firebase/remote-config';
 
-import { crcaUrlIsDominioProdSelector } from '@ascenso/crca-redux-url-parser';
+import { crcaUrlIsHostProdSelector } from '@ascenso/crca-redux-url-parser';
 import {
   crcaFirebaseAuthSignInSelector,
   crcaFirebaseConfigDevSelector,
@@ -115,7 +115,7 @@ export const firebaseInitializeApp = (enabledAnalytics = true) => (
   getState
 ) => {
   const state = getState();
-  const isDominioProd = crcaUrlIsDominioProdSelector(state);
+  const isDominioProd = crcaUrlIsHostProdSelector(state);
 
   let config = null;
   if (isDominioProd) {
@@ -182,7 +182,7 @@ export const firebaseRemoteConfigLoadDefault = defaultConfig => (
   getState
 ) => {
   const state = getState();
-  const isDominioProd = crcaUrlIsDominioProdSelector(state);
+  const isDominioProd = crcaUrlIsHostProdSelector(state);
   const initFirebase = crcaFirebaseInitSelector(state);
 
   if (initFirebase) {
