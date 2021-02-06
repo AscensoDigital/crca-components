@@ -16,6 +16,18 @@ export const isDomainProd = (domain, dominiosProd) => {
   return false;
 };
 
+export const isSubdomainDev = (subdominio, subdominiosDev) => {
+  for (const sub of subdominiosDev) {
+    const pos = subdominio.indexOf(sub);
+    const len = subdominio.length;
+    // existe en el subdominio al comienzo o al final.
+    if (pos !== -1 && (pos=== 0 || len - sub.length === pos)) {
+      return true;
+    }
+  }
+  return false;
+};
+
 export const crcaUrlAnchorSelector = createSelector (
   crcaUrlStateSelector,
   url => url.anchor || ''
@@ -51,11 +63,6 @@ export const crcaUrlIsDominioProdSelector = createSelector (
   crcaUrlDominiosProdSelector,
   (dominio, dominiosProd) => isDomainProd(dominio, dominiosProd)
 );
-
-export const crcaUrlEnvSelector = createSelector (
-  crcaUrlIsDominioProdSelector,
-  isProd => isProd ? ENV_PROD : ENV_DEV
-)
 
 export const crcaUrlLastPageSelector = createSelector (
   crcaUrlStateSelector,
@@ -97,17 +104,6 @@ export const crcaUrlSubdominioSelector = createSelector (
   url => url.subdominio || ''
 );
 
-export const isSubdomainDev = (subdominio, subdominiosDev) => {
-  for (const sub of subdominiosDev) {
-    const pos = subdominio.indexOf(sub);
-    const len = subdominio.length;
-    // existe en el subdominio al comienzo o al final.
-    if (pos !== -1 && (pos=== 0 || len - sub.length === pos)) {
-      return true;
-    }
-  }
-  return false;
-}
 export const crcaUrlIsSubdominioDevSelector = createSelector (
   crcaUrlSubdominioSelector,
   crcaUrlSubdominiosDevSelector,
@@ -118,4 +114,9 @@ export const crcaUrlIsHostProdSelector = createSelector (
   crcaUrlIsDominioProdSelector,
   crcaUrlIsSubdominioDevSelector,
   (domainProd, subdomainDev) => (domainProd && !subdomainDev)
-)
+);
+
+export const crcaUrlEnvSelector = createSelector (
+  crcaUrlIsHostProdSelector,
+  isProd => isProd ? ENV_PROD : ENV_DEV
+);
