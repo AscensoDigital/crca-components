@@ -96,3 +96,26 @@ export const crcaUrlSubdominioSelector = createSelector (
   crcaUrlStateSelector,
   url => url.subdominio || ''
 );
+
+export const isSubdomainDev = (subdominio, subdominiosDev) => {
+  for (const sub of subdominiosDev) {
+    const pos = subdominio.indexOf(sub);
+    const len = subdominio.length;
+    // existe en el subdominio al comienzo o al final.
+    if (pos !== -1 && (pos=== 0 || len - sub.length === pos)) {
+      return true;
+    }
+  }
+  return false;
+}
+export const crcaUrlIsSubdominioDevSelector = createSelector (
+  crcaUrlSubdominioSelector,
+  crcaUrlSubdominiosDevSelector,
+  (subdominio, subdominiosDev) => isSubdomainDev(subdominio, subdominiosDev)
+);
+
+export const crcaUrlIsHostProdSelector = createSelector (
+  crcaUrlIsDominioProdSelector,
+  crcaUrlIsSubdominioDevSelector,
+  (domainProd, subdomainDev) => (domainProd && !subdomainDev)
+)

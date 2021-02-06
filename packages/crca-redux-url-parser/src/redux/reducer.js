@@ -5,6 +5,7 @@ import {
   SET_HOMEPAGE,
   SET_MANUAL_UPDATE,
   SET_PAGE_NOT_LAST,
+  SET_SUBDOMINIOS_DEV,
   UPDATE_ANCHOR,
   UPDATE_DOMINIO,
   UPDATE_LAST_PAGE,
@@ -18,6 +19,7 @@ import {
 const initialConfigState = {
   devSubdominio: '',
   dominiosProd: [],
+  subdominiosDev: ['test', 'dev'],
   homepage: PAGE_HOME,
   manualUpdate: {
     anchor: false,
@@ -57,6 +59,11 @@ const crcaUrlConfig = (state = initialConfigState, action) => {
         ...state,
         pageNotLast: action.pageNotLast
       };
+    case SET_SUBDOMINIOS_DEV:
+      return {
+        ...state,
+        subdominiosDev: action.subdominiosDev
+      };
     default:
       return state;
   }
@@ -81,6 +88,7 @@ export const crcaUrl = (state = initialState, action) => {
     case SET_HOMEPAGE:
     case SET_MANUAL_UPDATE:
     case SET_PAGE_NOT_LAST:
+    case SET_SUBDOMINIOS_DEV:
       return {
         ...state,
         config: { ...crcaUrlConfig(state.config, action) }

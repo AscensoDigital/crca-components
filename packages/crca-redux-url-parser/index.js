@@ -22,6 +22,7 @@ export {
   setHomepage,
   setManualUpdate,
   setPageNotLast,
+  setSubdominiosDev,
 
   updateAnchor,
   updateDominio,
@@ -44,6 +45,8 @@ export {
   crcaUrlEnvSelector,
   crcaUrlHomepageSelector,
   crcaUrlIsDominioProdSelector,
+  crcaUrlIsHostProdSelector,
+  crcaUrlIsSubdominioDevSelector,
   crcaUrlLastPageSelector,
   crcaUrlManualUpdateSelector,
   crcaUrlPageSelector,
@@ -52,7 +55,8 @@ export {
   crcaUrlSearchSelector,
   crcaUrlSectionParamsSelector,
   crcaUrlSubdominioSelector,
-  isDomainProd
+  isDomainProd,
+  isSubdomainDev
 } from './src/redux/selectors.js';
 
 export {

@@ -12,6 +12,7 @@ export const SET_DOMINIOS_PROD = "SET_DOMINIOS_PROD";
 export const SET_HOMEPAGE = "SET_HOMEPAGE";
 export const SET_MANUAL_UPDATE = "SET_MANUAL_UPDATE";
 export const SET_PAGE_NOT_LAST = "SET_PAGE_NOT_LAST";
+export const SET_SUBDOMINIOS_DEV = "SET_SUBDOMINIOS_DEV";
 
 export const UPDATE_ANCHOR = "UPDATE_ANCHOR";
 export const UPDATE_DOMINIO = "UPDATE_DOMINIO";
@@ -97,6 +98,13 @@ export const setPageNotLast = pageNotLast => (
   {
     type: SET_PAGE_NOT_LAST,
     pageNotLast
+  }
+);
+
+export const setSubdominiosDev = subdominiosDev => (
+  {
+    type: SET_SUBDOMINIOS_DEV,
+    subdominiosDev
   }
 );
 
