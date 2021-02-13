@@ -55,6 +55,7 @@ export {
   crcaUrlSearchSelector,
   crcaUrlSectionParamsSelector,
   crcaUrlSubdominioSelector,
+  crcaUrlSubdominiosDevSelector,
   isDomainProd,
   isSubdomainDev
 } from './src/redux/selectors.js';

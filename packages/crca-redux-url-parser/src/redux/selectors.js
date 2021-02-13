@@ -104,6 +104,11 @@ export const crcaUrlSubdominioSelector = createSelector (
   url => url.subdominio || ''
 );
 
+export const crcaUrlSubdominiosDevSelector = createSelector (
+  crcaUrlStateSelector,
+  url => url.subdominiosDev || []
+);
+
 export const crcaUrlIsSubdominioDevSelector = createSelector (
   crcaUrlSubdominioSelector,
   crcaUrlSubdominiosDevSelector,
