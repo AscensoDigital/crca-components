@@ -13,9 +13,10 @@ export class CrcaStaticStore {
   static set store(store) {
     if(CrcaStaticStore.privateStore === undefined) {
       CrcaStaticStore.privateStore = store;
+      console.log('CrcaStaticStore: Usando store por defecto: crcaStore');
     }
     else {
-      console.log('store ya definido');
+      console.log('CrcaStaticStore: Ya Inicializado');
     }
   }
 }
