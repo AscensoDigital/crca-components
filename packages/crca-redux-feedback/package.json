@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-feedback",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Webcomponent crca-redux-feedback following open-wc recommendations",
   "author": "crca-redux-feedback",
   "license": "MIT",
