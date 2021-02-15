@@ -1,7 +1,7 @@
 import { html, css, LitElement } from 'lit-element';
 import { connect } from 'pwa-helpers/connect-mixin';
 import { installRouter } from 'pwa-helpers/router';
-import { crcaStaticStore } from '@ascenso/crca-redux-store';
+import { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import { crcaUrl } from './redux/reducer.js';
 import {
   crcaUrlAnchorSelector,
@@ -21,11 +21,11 @@ import {
 
 import { crcaUrlHandleNavigation } from './redux/actions.js';
 
-crcaStaticStore.store.addReducers({
+CrcaStaticStore.store.addReducers({
   crcaUrl
 });
 
-export class CrcaReduxUrlParser extends connect(crcaStaticStore.store)(LitElement) {
+export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElement) {
   static get styles() {
     return css`
       :host {
@@ -62,7 +62,7 @@ export class CrcaReduxUrlParser extends connect(crcaStaticStore.store)(LitElemen
       if (event && event.type === 'click') {
         window.scrollTo(0, 0);
       }
-      crcaStore.dispatch(crcaUrlHandleNavigation(location));
+      CrcaStaticStore.store.dispatch(crcaUrlHandleNavigation(location));
     });
   }
 

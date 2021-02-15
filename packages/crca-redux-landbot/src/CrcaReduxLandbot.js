@@ -1,7 +1,7 @@
 import { LitElement } from 'lit-element';
 import { connect } from 'pwa-helpers';
 
-import { crcaStore } from '@ascenso/crca-redux-store/crcaStore';
+import { CrcaStaticStore } from '@ascenso/crca-redux-store/crcaStore';
 import { negativeFeedback } from '@ascenso/crca-redux-feedback';
 import {
   existDiffObject,
@@ -42,11 +42,13 @@ import {
   BOT_TYPE_POPUP,
 } from './consts.js';
 
-crcaStore.addReducers({
+CrcaStaticStore.store.addReducers({
   crcaLandbot,
 });
 
-export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
+export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
+  LitElement
+) {
   static get properties() {
     return {
       handleNodes: { type: Boolean },
@@ -101,7 +103,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
             // eslint-disable-next-line no-undef
             this._landbot = new Landbot.Container(config);
           } else {
-            crcaStore.dispatch(
+            CrcaStaticStore.store.dispatch(
               negativeFeedback(
                 `Config "Container" es Obligatorio para bot ${this.name}`
               )
@@ -114,7 +116,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
             // eslint-disable-next-line no-undef
             this._landbot = new Landbot.ContainerPopup(config);
           } else {
-            crcaStore.dispatch(
+            CrcaStaticStore.store.dispatch(
               negativeFeedback(
                 `Config "Container" es Obligatorio para bot ${this.name}`
               )
@@ -145,7 +147,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
           break;
 
         default:
-          crcaStore.dispatch(
+          CrcaStaticStore.store.dispatch(
             negativeFeedback(
               `Type: "${this.type}" no disponible para bot ${this.name}`
             )
@@ -156,7 +158,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
         this._connectEvents();
       }
     } else {
-      crcaStore.dispatch(
+      CrcaStaticStore.store.dispatch(
         negativeFeedback(`No configurado configUrl para bot ${this.name}`)
       );
     }
@@ -164,25 +166,27 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
 
   _connectEvents() {
     this._landbot.onLoad(() =>
-      crcaStore.dispatch(
+      CrcaStaticStore.store.dispatch(
         readyBot(this.name, this._botId, this.open, this.handleNodes)
       )
     );
 
     this._landbot.core.events.on('lb-send-customer-id', data => {
       // console.log("LB_SEND_CUSTOMER_ID",data);
-      crcaStore.dispatch(updateBotCustomerId(this.name, data.customerId));
+      CrcaStaticStore.store.dispatch(
+        updateBotCustomerId(this.name, data.customerId)
+      );
     });
   }
 
   _connectEventsOpenClose() {
     this._landbot.core.events.on('widget_open', () => {
-      // crcaStore.dispatch(openBot(this.name));
+      // CrcaStaticStore.store.dispatch(openBot(this.name));
       console.log('Landbot chat was opened!');
     });
 
     this._landbot.core.events.on('widget_close', () => {
-      crcaStore.dispatch(closeBot(this.name));
+      CrcaStaticStore.store.dispatch(closeBot(this.name));
       console.log('Landbot chat was closed!');
     });
 
@@ -205,13 +209,13 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
           },
         })
       );
-      crcaStore.dispatch(closeBot(this.name));
+      CrcaStaticStore.store.dispatch(closeBot(this.name));
     });
   }
 
   // eslint-disable-next-line class-methods-use-this
   _loadedLandbot() {
-    crcaStore.dispatch(finishLandbotLoad());
+    CrcaStaticStore.store.dispatch(finishLandbotLoad());
   }
 
   _loadLandbot() {
@@ -224,7 +228,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
 
   updated(changedProperties) {
     if (this._landbotLoadBy === '') {
-      crcaStore.dispatch(startLandbotLoad(this.name));
+      CrcaStaticStore.store.dispatch(startLandbotLoad(this.name));
       this._loadLandbot();
     }
 
@@ -240,7 +244,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
     }
 
     if (changedProperties.has('_isReady') && this._isReady && this.open) {
-      crcaStore.dispatch(activateBot(this.name));
+      CrcaStaticStore.store.dispatch(activateBot(this.name));
     }
 
     /* if( this._isReady &&
@@ -289,7 +293,7 @@ export class CrcaReduxLandbot extends connect(crcaStore)(LitElement) {
   disconnectedCallback() {
     super.disconnectedCallback();
     this._landbot.destroy();
-    crcaStore.dispatch(destroyBot(this.name));
+    CrcaStaticStore.store.dispatch(destroyBot(this.name));
     this._landbot = undefined;
   }
 }

@@ -1,5 +1,5 @@
 import { html, css, LitElement } from 'lit-element';
-import  { crcaStore } from '@ascenso/crca-redux-store';
+import  { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import { connect } from 'pwa-helpers/connect-mixin';
 
 import { crcaLoadingElementSelector } from './redux/selectors.js';
@@ -7,7 +7,7 @@ import { crcaLoadingElementSelector } from './redux/selectors.js';
 import '@dile/dile-spinner/dile-spinner-modal';
 import '@material/mwc-circular-progress';
 
-export class CrcaReduxLoading extends connect(crcaStore)(LitElement) {
+export class CrcaReduxLoading extends connect(CrcaStaticStore.store)(LitElement) {
   static get styles() {
     return css`
       :host {

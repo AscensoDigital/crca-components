@@ -1,17 +1,17 @@
 import { LitElement, html, css } from 'lit-element';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
-import { crcaStore } from '@ascenso/crca-redux-store/crcaStore';
+import { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import { crcaFeedback } from './redux/reducer.js';
 
 import '@dile/dile-toast/dile-toast';
 import { crcaFeedbackFeedbackSelector } from './redux/selectors.js';
 
-crcaStore.addReducers({
+CrcaStaticStore.store.addReducers({
   crcaFeedback,
 });
 
-export class CrcaReduxFeedback extends connect(crcaStore)(LitElement) {
+export class CrcaReduxFeedback extends connect(CrcaStaticStore.store)(LitElement) {
   static get styles() {
     return css`
       :host {
