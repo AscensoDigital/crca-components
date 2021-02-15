@@ -1,7 +1,7 @@
 import { LitElement } from 'lit-element';
 import { connect } from 'pwa-helpers';
 
-import { CrcaStaticStore } from '@ascenso/crca-redux-store/crcaStore';
+import { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import { negativeFeedback } from '@ascenso/crca-redux-feedback';
 import {
   existDiffObject,
