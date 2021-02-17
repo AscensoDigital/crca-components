@@ -1,3 +1,5 @@
+export { CrcaUrlLoader } from './src/CrcaUrlLoader.js';
+
 export { CrcaReduxUrlParser } from './src/CrcaReduxUrlParser.js';
 
 export {
@@ -49,6 +51,7 @@ export {
   crcaUrlIsSubdominioDevSelector,
   crcaUrlLastPageSelector,
   crcaUrlManualUpdateSelector,
+  crcaUrlOfflineSelector,
   crcaUrlPageSelector,
   crcaUrlPageNotLastSelector,
   crcaUrlPageSectionSelector,

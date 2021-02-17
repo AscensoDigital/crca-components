@@ -1,25 +1,18 @@
 import { html, css, LitElement } from 'lit-element';
 import { connect } from 'pwa-helpers/connect-mixin';
 import { installRouter } from 'pwa-helpers/router';
+import { installOfflineWatcher } from 'pwa-helpers/network';
 import { CrcaStaticStore } from '@ascenso/crca-redux-store';
+
 import { crcaUrl } from './redux/reducer.js';
 import {
-  crcaUrlAnchorSelector,
-  crcaUrlDominioSelector,
-  crcaUrlLastPageSelector,
-  crcaUrlPageSectionSelector,
-  crcaUrlPageSelector,
-  crcaUrlSearchSelector,
-  crcaUrlSubdominioSelector,
-  crcaUrlSectionParamsSelector,
-  crcaUrlDominiosProdSelector,
-  crcaUrlPageNotLastSelector,
-  crcaUrlDevSubdominioSelector,
-  crcaUrlManualUpdateSelector,
-  crcaUrlHomepageSelector
+  crcaUrlIsHostProdSelector,
+  crcaUrlOfflineSelector
 } from './redux/selectors.js';
-
-import { crcaUrlHandleNavigation } from './redux/actions.js';
+import {
+  crcaUrlHandleNavigation,
+  updateOffline
+} from './redux/actions.js';
 
 CrcaStaticStore.store.addReducers({
   crcaUrl
@@ -28,29 +21,37 @@ CrcaStaticStore.store.addReducers({
 export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElement) {
   static get styles() {
     return css`
-      :host {
-        display: block;
-        padding: 25px;
-        color: var(--crca-redux-url-parser-text-color, #000);
-      }
+    .offline {
+      width: var(--crca-url-offline-width, 95vw);
+      background-color: var(--crca-url-offline-background-color, red);
+      color: var(--crca-url-offline-color, #fff);
+      padding: var(--crca-url-offline-padding, 10px);
+      border-bottom-left-radius: var(--crca-url-offline-border-bottom-left-radius, 5px);
+      border-bottom-right-radius: var(--crca-url-offline-border-bottom-right-radius, 5px);
+      margin: var(--crca-url-offline-margin, 0 auto);
+      text-align: var(--crca-url-offline-text-align, center);
+    }
+
+    .env-dev {
+      width: var(--crca-url-env-dev-width, 95vw);
+      background-color: var(--crca-url-env-dev-background-color, yellow);
+      color: var(--crca-url-env-dev-color, red);
+      padding: var(--crca-url-env-dev-padding, 10px);
+      border-bottom-left-radius: var(--crca-url-env-dev-border-bottom-left-radius, 5px);
+      border-bottom-right-radius: var(--crca-url-env-dev-border-bottom-right-radius, 5px);
+      margin: var(--crca-url-env-dev-margin, 0 auto);
+      text-align: var(--crca-url-env-dev-text-align, center);
+    }
     `;
   }
 
   static get properties() {
     return {
-      anchor: { type: String },
-      dominio: { type: String },
-      lastPage: { type: String },
-      page: { type: String },
-      pageSection: { type: String },
-      search: { type: Object },
-      sectionParams: { type: Array },
-      subdominio: { type: String },
-      devSubdominio: { type: String },
-      dominiosProd: { type: Array },
-      homepage: { type: String },
-      manualUpdate: { type: Object },
-      pageNotLast: { type: Array },
+      handleOffline: { type: Boolean },
+      showEnvDev: { type: Boolean },
+      showOffline: { type: Boolean },
+      _isDev: { type: Boolean },
+      _offline: { type: Boolean }
     };
   }
 
@@ -64,68 +65,33 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
       }
       CrcaStaticStore.store.dispatch(crcaUrlHandleNavigation(location));
     });
+
+    this.handleOffline = false;
+    this.showEnvDev = false;
+    this.showOffline = false;
+  }
+
+  firstUpdated() {
+    if(this.handleOffline) {
+      installOfflineWatcher(offline =>
+        CrcaStaticStore.store.dispatch(updateOffline(offline))
+      );
+    }
   }
 
   stateChanged(state) {
-    this.anchor = crcaUrlAnchorSelector(state);
-    this.dominio = crcaUrlDominioSelector(state);
-    this.lastPage = crcaUrlLastPageSelector(state);
-    this.page = crcaUrlPageSelector(state);
-    this.pageSection = crcaUrlPageSectionSelector(state);
-    this.search = crcaUrlSearchSelector(state);
-    this.sectionParams = crcaUrlSectionParamsSelector(state);
-    this.subdominio = crcaUrlSubdominioSelector(state);
-
-    this.devSubdominio = crcaUrlDevSubdominioSelector(state);
-    this.dominiosProd = crcaUrlDominiosProdSelector(state);
-    this.homepage = crcaUrlHomepageSelector(state);
-    this.manualUpdate = crcaUrlManualUpdateSelector(state);
-    this.pageNotLast = crcaUrlPageNotLastSelector(state);
+    this._offline = crcaUrlOfflineSelector(state);
+    this._isDev = !crcaUrlIsHostProdSelector(state);
   }
 
   render() {
     return html`
-      <h1>crca-redux-url-parser</h1>
-      <h2>Datos Url Parseada</h2>
-      <ul>
-        <li><b>subdominio:</b> ${this.subdominio}</li>
-        <li><b>dominio:</b> ${this.dominio}</li>
-        <li><b>page:</b> ${this.page}</li>
-        <li><b>pageSection:</b> ${this.pageSection}</li>
-        <li><b>sectionParams:</b>
-          <ul>
-            ${this.sectionParams.map((sp, idx) => html`<li>${idx} => ${sp}</li>`)}
-          </ul>
-        </li>
-        <li><b>anchor:</b> ${this.anchor}</li>
-        <li><b>search:</b>
-          <ul>
-            ${Object.keys(this.search).map( idx => html`<li>${idx} => ${this.search[idx]}</li>`)}
-          </ul>
-        </li>
-      </ul>
-      <a href="section/param1/param2?query_id=1&query_2=false#anchor1">Url demo con todas las partes</a>
-
-      <h2>Parámetros Configurables (valores por defecto)</h2>
-      <ul>
-        <li><b>devSubdominio:</b> ${this.devSubdominio}</li>
-        <li><b>dominiosProd:</b>
-          <ul>
-            ${this.dominiosProd.map((sp, idx) => html`<li>${idx} => ${sp}</li>`)}
-          </ul>
-        </li>
-        <li><b>homepage:</b> ${this.homepage}</li>
-        <li><b>manualUpdate:</b>
-          <ul>
-            ${Object.keys(this.manualUpdate).map( idx => html`<li>${idx} => ${this.manualUpdate[idx] ? 'true' : 'false'}</li>`)}
-          </ul>
-        </li>
-        <li><b>pageNotLast:</b>
-          <ul>
-            ${this.pageNotLast.map((sp, idx) => html`<li>${idx} => ${sp}</li>`)}
-          </ul>
-        </li>
-      </ul>
+      ${this.showOffline && this._offline
+          ? html`<div class="offline"><slot name="offline">Estás sin conexión a internet</slot></div>`
+          : ''}
+        ${this.showEnvDev && this._isDev
+          ? html`<div class="env-dev"><slot name="env-dev">Estás en un entorno de Desarrollo</slot></div>`
+          : ''}
     `;
   }
 }

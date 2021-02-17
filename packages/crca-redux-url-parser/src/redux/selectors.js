@@ -74,6 +74,11 @@ export const crcaUrlManualUpdateSelector = createSelector (
   config => config.manualUpdate || {}
 );
 
+export const crcaUrlOfflineSelector = createSelector(
+  crcaUrlStateSelector,
+  url => url.offline || false
+);
+
 export const crcaUrlPageSelector = createSelector (
   crcaUrlStateSelector,
   url => url.page || ''

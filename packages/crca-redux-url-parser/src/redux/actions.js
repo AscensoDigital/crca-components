@@ -1,3 +1,4 @@
+import { CrcaUrlLoader } from "../CrcaUrlLoader.js";
 import {
   crcaUrlConfigSelector,
   crcaUrlDominioSelector,
@@ -17,6 +18,7 @@ export const SET_SUBDOMINIOS_DEV = "SET_SUBDOMINIOS_DEV";
 export const UPDATE_ANCHOR = "UPDATE_ANCHOR";
 export const UPDATE_DOMINIO = "UPDATE_DOMINIO";
 export const UPDATE_LAST_PAGE = 'UPDATE_LAST_PAGE';
+export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const UPDATE_SEARCH = 'UPDATE_SEARCH';
 export const UPDATE_SECTION = 'UPDATE_SECTION';
@@ -129,6 +131,11 @@ export const updateLastPage = lastPage => (
   }
 );
 
+export const updateOffline = offline => ({
+  type: UPDATE_OFFLINE,
+  offline,
+});
+
 export const updatePage = page => (
   {
     type: UPDATE_PAGE,
@@ -225,33 +232,20 @@ export const crcaLoadPage = (page, loaderAction = null, manualUpdate = false) =>
   }
 };
 
-const defaultLoaders = {
-  subdominio: null,
-  dominio: null,
-  page : null,
-  section : null,
-  search: null,
-  anchor: null
-}
-
-const defaultConfig = {
-  loaders: defaultLoaders
-};
-
-export const crcaUrlHandleNavigation = (location, config = {}) => (dispatch, getState) => {
+export const crcaUrlHandleNavigation = location => (dispatch, getState) => {
   const state = getState();
 
-  const conf = {...defaultConfig, ...crcaUrlConfigSelector(state), ...config};
+  const conf = crcaUrlConfigSelector(state);
 
   const decodedHostname = decodeHostname(location.hostname);
 
   if ( decodedHostname.dominio !== crcaUrlDominioSelector(state) ) {
-    dispatch(crcaLoadDominio(decodedHostname.dominio, conf.loaders.dominio, conf.manualUpdate.dominio));
+    dispatch(crcaLoadDominio(decodedHostname.dominio, CrcaUrlLoader.dominio, conf.manualUpdate.dominio));
   }
 
   const subdominio = isDomainProd(decodedHostname.dominio, conf.dominiosProd) ? decodedHostname.subdominio : conf.devSubdominio;
   if (subdominio !== crcaUrlSubdominioSelector(state)) {
-    dispatch(crcaLoadSubdominio(subdominio, conf.loaders.subdominio, conf.manualUpdate.subdominio));
+    dispatch(crcaLoadSubdominio(subdominio, CrcaUrlLoader.subdominio, conf.manualUpdate.subdominio));
   }
 
   const path = decodeURIComponent(location.pathname);
@@ -259,19 +253,19 @@ export const crcaUrlHandleNavigation = (location, config = {}) => (dispatch, get
 
   const decodedUrl = decodeUrl(url);
   if(decodedUrl.page !== crcaUrlPageSelector(state)){
-    dispatch(crcaLoadPage(decodedUrl.page, conf.loaders.page, conf.manualUpdate.page));
+    dispatch(crcaLoadPage(decodedUrl.page, CrcaUrlLoader.page, conf.manualUpdate.page));
   }
 
-  dispatch(crcaLoadSection(decodedUrl.page, decodedUrl.segments, conf.loaders.section, conf.manualUpdate.section));
+  dispatch(crcaLoadSection(decodedUrl.page, decodedUrl.segments, CrcaUrlLoader.section, conf.manualUpdate.section));
 
   const decodedAnchor = decodeAnchor(location.hash);
-  dispatch(crcaLoadAnchor(decodedAnchor, conf.loaders.anchor, conf.manualUpdate.anchor));
+  dispatch(crcaLoadAnchor(decodedAnchor, CrcaUrlLoader.anchor, conf.manualUpdate.anchor));
 
   const decodedSearch = decodeSearch(location.search);
-  dispatch(crcaLoadSearch(decodedSearch, conf.loaders.search, conf.manualUpdate.search));
+  dispatch(crcaLoadSearch(decodedSearch, CrcaUrlLoader.search, conf.manualUpdate.search));
 };
 
-export const crcaUrlNavigate = (url, config = {}) => dispatch => {
+export const crcaUrlNavigate = url => dispatch => {
   window.history.pushState({}, '', url);
-  dispatch(crcaUrlHandleNavigation(window.location, config));
+  dispatch(crcaUrlHandleNavigation(window.location));
 };

@@ -9,6 +9,7 @@ import {
   UPDATE_ANCHOR,
   UPDATE_DOMINIO,
   UPDATE_LAST_PAGE,
+  UPDATE_OFFLINE,
   UPDATE_PAGE,
   UPDATE_SEARCH,
   UPDATE_SECTION,
@@ -74,6 +75,7 @@ const initialState = {
   dominio: '',
   config: initialConfigState,
   lastPage: null,
+  offline: false,
   page: '',
   pageSection: '',
   sectionParams: [],
@@ -107,6 +109,11 @@ export const crcaUrl = (state = initialState, action) => {
       return {
         ...state,
         search: action.search
+      };
+    case UPDATE_OFFLINE:
+      return {
+        ...state,
+        offline: action.offline,
       };
     case UPDATE_PAGE:
       return {

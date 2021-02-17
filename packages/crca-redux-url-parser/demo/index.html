@@ -20,13 +20,24 @@
 
   <script type="module">
     import { html, render } from 'lit-html';
+    import '../crca-redux-url-parser-demo.js';
     import '../crca-redux-url-parser.js';
 
     render(
       html`
-        <crca-redux-url-parser>
+      <crca-redux-url-parser-demo>
           some more light-dom
+        </crca-redux-url-parser-demo>
+
+        <h2>crca-redux-url-parser: Uso Básico</h2>
+        <crca-redux-url-parser handleOffline showOffline showEnvDev></crca-redux-url-parser>
+
+        <h2>crca-redux-url-parser: personalización con slots</h2>
+        <crca-redux-url-parser handleOffline showOffline showEnvDev>
+          <div slot="offline">Offline</div>
+          <div slot="env-dev">Desarrollo</div>
         </crca-redux-url-parser>
+
       `,
       document.querySelector('#demo')
     );
