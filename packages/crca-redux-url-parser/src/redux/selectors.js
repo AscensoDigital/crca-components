@@ -21,6 +21,7 @@ export const isSubdomainDev = (subdominio, subdominiosDev) => {
     const pos = subdominio.indexOf(sub);
     const len = subdominio.length;
     // existe en el subdominio al comienzo o al final.
+    // console.log(`sub: ${sub}, subdomain: ${subdominio}, pos: ${pos}, len: ${len}, Resta: ${len-sub.length}`);
     if (pos !== -1 && (pos=== 0 || len - sub.length === pos)) {
       return true;
     }
@@ -110,8 +111,8 @@ export const crcaUrlSubdominioSelector = createSelector (
 );
 
 export const crcaUrlSubdominiosDevSelector = createSelector (
-  crcaUrlStateSelector,
-  url => url.subdominiosDev || []
+  crcaUrlConfigSelector,
+  config => config.subdominiosDev || []
 );
 
 export const crcaUrlIsSubdominioDevSelector = createSelector (
