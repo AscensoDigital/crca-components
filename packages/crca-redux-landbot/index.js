@@ -18,4 +18,5 @@ export {
   crcaLandbotLoadedSelector,
   crcaLandbotActiveSelector,
   crcaLandbotBotActive,
+  crcaLandbotBotIsReadySelector,
 } from './src/redux/selectors.js';
