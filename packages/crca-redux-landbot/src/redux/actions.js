@@ -105,7 +105,7 @@ export const closeBot = bot => (dispatch, getState) => {
   }
 };
 
-const sendNode = (bot, node, customerId, botId, botToken) => () => {
+const sendNode = (bot, node, customerId, botId, botToken) => dispatch => {
   console.log('TODO: sendNode', bot, node, customerId, botId, botToken);
   // const url = `https://api.landbot.io/v1/customers/${customerId}/assign_bot/${botId}/`;
   /* const dataNode = {
@@ -134,7 +134,7 @@ const sendNode = (bot, node, customerId, botId, botToken) => () => {
   }); */
 
   // PARCHE
-  /* console.log(botToken);
+  console.log(botToken);
   const url = `https://restu.cl/ep/lb/nodo.php`;
   const dataNode = {
     lb_id: customerId,
@@ -166,7 +166,6 @@ const sendNode = (bot, node, customerId, botId, botToken) => () => {
   // Reactivacion header Authentication en axios
   // eslint-disable-next-line no-undef
   axios.defaults.headers.common = tmp;
- */
 };
 
 export const openBot = (bot, action = '', data = {}) => (
