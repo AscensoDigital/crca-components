@@ -189,7 +189,7 @@ export const firebaseRemoteConfigLoadDefault = defaultConfig => (
     remoteConfig = firebase.remoteConfig();
     if (!isDominioProd) {
       remoteConfig.settings = {
-        minimumFetchIntervalMillis: 3600000,
+        minimumFetchIntervalMillis: 300000,
       };
     }
 
