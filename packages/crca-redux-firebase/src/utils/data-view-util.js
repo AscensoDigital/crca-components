@@ -106,6 +106,10 @@ export const dataViewGet = (obj, prop) => {
 };
 
 export const existDiffObject = (objA, objB) => {
+  if(Object.keys(objA).length!==Object.keys(objB).length) {
+    return true;
+  }
+
   // eslint-disable-next-line no-restricted-syntax
   for (const prop in objA) {
     if (isObject(objA[prop]) && objB[prop] !== undefined) {
