@@ -11,6 +11,8 @@ import {
   DESTROY_BOT,
   START_LANDBOT_LOAD,
   FINISH_LANDBOT_LOAD,
+  UPDATE_BOT_CONTEXT_VARS,
+  UPDATE_BOT_KEYWORD,
 } from './actions.js';
 
 const initialState = {
@@ -51,6 +53,8 @@ export const crcaLandbot = (state = initialState, action) => {
             id: action.detail.id,
             opened: action.detail.opened,
             handleNodes: action.detail.handleNodes,
+            handleKeywords: action.detail.handleKeywords,
+            contextVars: action.detail.contextVars,
           },
         },
       };
@@ -102,6 +106,18 @@ export const crcaLandbot = (state = initialState, action) => {
         },
       };
     }
+    case UPDATE_BOT_CONTEXT_VARS: {
+      return {
+        ...state,
+        bots: {
+          ...state.bots,
+          [action.detail.bot]: {
+            ...state.bots[action.detail.bot],
+            contextVars: action.detail.contextVars,
+          },
+        },
+      };
+    }
     case UPDATE_BOT_CUSTOMER_ID: {
       return {
         ...state,
@@ -110,6 +126,18 @@ export const crcaLandbot = (state = initialState, action) => {
           [action.detail.bot]: {
             ...state.bots[action.detail.bot],
             customerId: action.detail.customerId,
+          },
+        },
+      };
+    }
+    case UPDATE_BOT_KEYWORD: {
+      return {
+        ...state,
+        bots: {
+          ...state.bots,
+          [action.detail.bot]: {
+            ...state.bots[action.detail.bot],
+            keyword: action.detail.keyword,
           },
         },
       };

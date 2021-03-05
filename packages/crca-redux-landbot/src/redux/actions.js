@@ -8,6 +8,9 @@ import {
   crcaLandbotConfigBotIdSelector,
   crcaLandbotConfigBotNodeSelector,
   crcaLandbotConfigBotTokenSelector,
+  crcaLandbotBotHandleKeywordsSelector,
+  crcaLandbotConfigBotKeywordSelector,
+  crcaLandbotBotContextVarsSelector,
 } from './selectors.js';
 
 export const START_LANDBOT_LOAD = 'START_LANDBOT_LOAD';
@@ -22,6 +25,8 @@ export const OPEN_BOT = 'OPEN_BOT';
 export const CLOSE_BOT = 'CLOSE_BOT';
 export const SET_BOTS_CONFIG = 'SET_BOTS_CONFIG';
 export const DESTROY_BOT = 'DESTROY_BOT';
+export const UPDATE_BOT_CONTEXT_VARS = 'UPDATE_CONTEXT_VARS';
+export const UPDATE_BOT_KEYWORD = 'UPDATE_BOT_KEYWORD';
 
 const _openBot = bot => ({
   type: OPEN_BOT,
@@ -52,13 +57,22 @@ export const finishLandbotLoad = () => ({
   type: FINISH_LANDBOT_LOAD,
 });
 
-export const readyBot = (bot, id, opened, handleNodes) => ({
+export const readyBot = (
+  bot,
+  id,
+  opened,
+  handleNodes,
+  handleKeywords,
+  contextVars
+) => ({
   type: READY_BOT,
   detail: {
     bot,
     id,
     opened,
     handleNodes,
+    handleKeywords,
+    contextVars,
   },
 });
 
@@ -80,11 +94,27 @@ export const startLandbotLoad = bot => ({
   bot,
 });
 
+export const updateBotContextVars = (bot, contextVars) => ({
+  type: UPDATE_BOT_CONTEXT_VARS,
+  detail: {
+    bot,
+    contextVars,
+  },
+});
+
 export const updateBotCustomerId = (bot, customerId) => ({
   type: UPDATE_BOT_CUSTOMER_ID,
   detail: {
     bot,
     customerId,
+  },
+});
+
+export const updateBotKeyword = (bot, keyword) => ({
+  type: UPDATE_BOT_KEYWORD,
+  detail: {
+    bot,
+    keyword,
   },
 });
 
@@ -175,23 +205,45 @@ export const openBot = (bot, action = '', data = {}) => (
   const state = getState();
   const page = crcaUrlPageSelector(state);
   const handleNodes = crcaLandbotBotHandleNodesSelector(bot, state);
-
+  const handleKeywords = crcaLandbotBotHandleKeywordsSelector(bot, state);
   const botToken = crcaLandbotConfigBotTokenSelector(bot, state);
-  const node = isDefined(action)
-    ? crcaLandbotConfigBotNodeSelector(bot, `${page}_${action}`, state)
-    : '';
+  const contextVars = crcaLandbotBotContextVarsSelector(bot, state);
 
-  if (handleNodes) {
+  let node = false;
+  let keyword = false;
+
+  if (isDefined(action)) {
     let error = false;
+    if (handleNodes) {
+      node = crcaLandbotConfigBotNodeSelector(bot, `${page}_${action}`, state);
 
-    if (botToken === false) {
-      dispatch(infoFeedback(`No existe autenticacion para el bot ${bot}`));
-      error = true;
+      if (botToken === false) {
+        dispatch(infoFeedback(`Token para el bot ${bot}, no configurado`));
+        error = true;
+      }
+
+      if (node === false) {
+        dispatch(
+          infoFeedback(`Bot asistente para: ${page} ${action}, no configurado`)
+        );
+        error = true;
+      }
     }
 
-    if (node === false) {
-      dispatch(infoFeedback(`No hay bot asistente para ${page} ${action}`));
-      error = true;
+    if (handleKeywords && isDefined(action)) {
+      keyword = `${page}_${action}`;
+      const keywordLabel = crcaLandbotConfigBotKeywordSelector(
+        bot,
+        `${keyword}`,
+        state
+      );
+
+      if (keywordLabel === false) {
+        dispatch(
+          infoFeedback(`Bot asistente para: ${page} ${action}, no configurado`)
+        );
+        error = true;
+      }
     }
 
     if (error) {
@@ -200,6 +252,7 @@ export const openBot = (bot, action = '', data = {}) => (
   }
 
   const vars = {
+    ...contextVars,
     payload: {
       ...data,
     },
@@ -210,7 +263,7 @@ export const openBot = (bot, action = '', data = {}) => (
     dispatch(activateBot(bot));
   }
 
-  if (handleNodes) {
+  if (isDefined(action) && handleNodes) {
     const customerId = crcaLandbotBotCustomerIdSelector(bot, state);
     const botId = crcaLandbotConfigBotIdSelector(bot, state);
     if (customerId) {
@@ -223,6 +276,9 @@ export const openBot = (bot, action = '', data = {}) => (
         )
       );
     }
+  } else if (isDefined(action) && handleKeywords) {
+    dispatch(_openBot(bot));
+    dispatch(updateBotKeyword(bot, keyword));
   } else {
     dispatch(_openBot(bot));
   }

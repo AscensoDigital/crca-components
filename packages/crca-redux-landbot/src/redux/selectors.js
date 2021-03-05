@@ -35,10 +35,10 @@ export const crcaLandbotBotActive = createSelector(
   (bots, active) => ({ ...bots[active], bot: active } || {})
 );
 
-export const crcaLandbotBotActiveVarsSelector = createSelector(
+export const crcaLandbotBotActiveKeywordSelector = createSelector(
   crcaLandbotBotActive,
   botActive =>
-    (botActive.bot && { bot: botActive.bot, vars: botActive.vars }) || {}
+    (botActive.bot && { bot: botActive.bot, keyword: botActive.keyword }) || {}
 );
 
 export const crcaLandbotBotActiveOpenedSelector = createSelector(
@@ -46,6 +46,17 @@ export const crcaLandbotBotActiveOpenedSelector = createSelector(
   botActive =>
     (botActive.bot && { bot: botActive.bot, opened: botActive.opened }) || {}
 );
+
+export const crcaLandbotBotActiveVarsSelector = createSelector(
+  crcaLandbotBotActive,
+  botActive =>
+    (botActive.bot && { bot: botActive.bot, vars: botActive.vars }) || {}
+);
+
+export const crcaLandbotBotContextVarsSelector = (bot, state) => {
+  const bots = crcaLandbotBotsSelector(state);
+  return (bots[bot] && bots[bot].contextVars) || {};
+};
 
 export const crcaLandbotBotCustomerIdSelector = (bot, state) => {
   const bots = crcaLandbotBotsSelector(state);
@@ -55,6 +66,11 @@ export const crcaLandbotBotCustomerIdSelector = (bot, state) => {
 export const crcaLandbotBotHandleNodesSelector = (bot, state) => {
   const bots = crcaLandbotBotsSelector(state);
   return (bots[bot] && bots[bot].handleNodes) || false;
+};
+
+export const crcaLandbotBotHandleKeywordsSelector = (bot, state) => {
+  const bots = crcaLandbotBotsSelector(state);
+  return (bots[bot] && bots[bot].handleKeywords) || false;
 };
 
 export const crcaLandbotBotIdSelector = (bot, state) => {
@@ -85,6 +101,14 @@ const crcaLandbotConfigPropSelector = (bot, prop, state) => {
 
 export const crcaLandbotConfigBotIdSelector = (bot, state) =>
   crcaLandbotConfigPropSelector(bot, 'id', state);
+
+export const crcaLandbotConfigBotKeywordSelector = (bot, keyword, state) => {
+  const config = crcaLandbotConfigSelector(state);
+  return (
+    (config[bot] && config[bot].keywords && config[bot].keywords[keyword]) ||
+    false
+  );
+};
 
 export const crcaLandbotConfigBotTokenSelector = (bot, state) =>
   crcaLandbotConfigPropSelector(bot, 'token', state);

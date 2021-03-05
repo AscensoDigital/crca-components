@@ -38,5 +38,21 @@
         "dev": "NODE_ID_PAGE2_ACTION1_LANDBOT_DESARROLLO"
       }
     }
+  },
+  "nameBot3": {
+    "name": "Name Bot 3",
+    "config": {
+      "prod": {
+        "configUrl": "https://chats.landbot.io/v3/CODIGO_DE_TU_BOT_PRODUCCION/index.json"
+      },
+      "dev": {
+        "configUrl": "https://chats.landbot.io/v3/CODIGO_DE_TU_BOT_DESARROLLO/index.json"
+      }
+    },
+    "keywords": {
+      "PAGE1_ACTION1": "LABEL_PAGE1_ACTION1",
+      "PAGE1_ACTION2": "LABEL_PAGE1_ACTION2",
+      "PAGE2_ACTION1": "LABEL_PAGE2_ACTION1"
+    }
   }
 }
