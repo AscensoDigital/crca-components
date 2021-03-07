@@ -188,6 +188,10 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
         updateBotCustomerId(this.name, data.customerId)
       );
     });
+
+    this._landbot.core.events.on('new_message', function (message) {
+      console.log('Message: ', message);
+    });
   }
 
   _connectEventsOpenClose() {
@@ -274,29 +278,6 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       );
     }
 
-    if (this.handleKeywords && changedProperties.has('_activeKeyword')) {
-      const preActiveKeyword = changedProperties.get('_activeKeyword');
-      // console.log('CHANGE _activeKeyword ',preActiveKeyword, this._activeKeyword);
-      if (
-        this._activeKeyword.bot === this.name &&
-        isDefined(this._activeKeyword.keyword) &&
-        existDiffObject(preActiveKeyword, this._activeKeyword)
-      ) {
-        const botConfig = crcaFirebaseRemoteConfigGet(
-          'bots',
-          FB_RC_TYPE_VALUE_OBJECT
-        )[this.name];
-        const keywordLabel =
-          botConfig.keywords[this._activeKeyword.keyword] ||
-          this._activeKeyword.keyword;
-        this._landbot.sendMessage({
-          type: 'button',
-          message: `ir a ${keywordLabel}`,
-          payload: this._activeKeyword.keyword,
-        });
-      }
-    }
-
     if (changedProperties.has('_activeVars')) {
       const preActiveVars = changedProperties.get('_activeVars');
       // console.log('CHANGE _activeVars ',preActiveVars, this._activeVars);
@@ -326,6 +307,35 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       if (preActiveOpened.bot === this.name) {
         if (preActiveOpened.opened && isUndefined(this._activeOpened.opened)) {
           this._landbot.close();
+        }
+      }
+    }
+
+    if (this.handleKeywords && changedProperties.has('_activeKeyword')) {
+      const preActiveKeyword = changedProperties.get('_activeKeyword');
+      // console.log('CHANGE _activeKeyword ',preActiveKeyword, this._activeKeyword);
+      if (
+        this._activeKeyword.bot === this.name &&
+        isDefined(this._activeKeyword.keyword) &&
+        existDiffObject(preActiveKeyword, this._activeKeyword)
+      ) {
+        const botConfig = crcaFirebaseRemoteConfigGet(
+          'bots',
+          FB_RC_TYPE_VALUE_OBJECT
+        )[this.name];
+        const keywordLabel =
+          botConfig.keywords[this._activeKeyword.keyword] ||
+          this._activeKeyword.keyword;
+        if (this._activeOpened.opened) {
+          const msg = {
+            type: 'button',
+            message: `ir a ${keywordLabel}`,
+            payload: `${this._activeKeyword.keyword}`,
+          };
+          this._landbot.sendMessage(msg);
+          console.log(msg);
+        } else {
+          console.log('_activeKeyword: bot aun cerrado');
         }
       }
     }
