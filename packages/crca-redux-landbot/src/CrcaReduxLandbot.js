@@ -61,6 +61,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       name: { type: String },
       type: { type: String },
       open: { type: Boolean },
+      config: { type: Object },
       _activeKeyword: { type: Object },
       _activeOpened: { type: Object },
       _activeVars: { type: Object },
@@ -81,6 +82,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this.type = 'livechat';
     this.open = false;
     this.manualCreate = false;
+    this.config = null;
   }
 
   stateChanged(state) {
@@ -90,7 +92,8 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this._activeOpened = crcaLandbotBotActiveOpenedSelector(state);
     this._activeVars = crcaLandbotBotActiveVarsSelector(state);
     this._activeKeyword = crcaLandbotBotActiveKeywordSelector(state);
-    this._config = crcaLandbotConfigBotConfigSelector(this.name, state);
+    this._config =
+      this.config || crcaLandbotConfigBotConfigSelector(this.name, state);
     this._botId = crcaLandbotConfigBotIdSelector(this.name, state);
     this._isReady = crcaLandbotBotIsReadySelector(this.name, state);
   }
@@ -330,7 +333,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           const msg = {
             type: 'button',
             message: `ir a ${keywordLabel}`,
-            payload: `${this._activeKeyword.keyword}`,
+            payload: `#${this._activeKeyword.keyword}`,
           };
           this._landbot.sendMessage(msg);
           console.log(msg);
