@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #fafafa;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+</head>
+<body>
+  <div id="demo"></div>
+
+  <script type="module">
+    import { html, render } from 'lit-html';
+    import '../crca-notification-sound.js';
+
+    const counter = 20;
+    render(
+      html`
+        <crca-notification-sound id="notification" .counter=${counter}></crca-notification-sound>
+        <br>
+        <button @click=${() => {
+          const not = document.getElementById('notification');
+          not.incoming();
+        }}>Incoming Notification</button>
+      `,
+      document.querySelector('#demo')
+    );
+
+
+  </script>
+</body>
+</html>
