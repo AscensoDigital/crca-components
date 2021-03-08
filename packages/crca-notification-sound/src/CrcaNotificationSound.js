@@ -69,7 +69,6 @@ export class CrcaNotificationSound extends LitElement {
         class="${classMap(this._getClassMap())}"
         icon=${ this._incoming ? this.iconIncoming : this.icon}
         @click=${ this._click}
-        ?disabled=${ this.counter===0 }
       ></mwc-icon-button>
       ${ !this._incoming && this.counter ? html `<div class="circle small">${this.counter}</div>` : ''}
       ${this.soundSrc.length
