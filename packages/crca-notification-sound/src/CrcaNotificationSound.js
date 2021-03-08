@@ -60,7 +60,7 @@ export class CrcaNotificationSound extends LitElement {
   }
 
   firstUpdated() {
-    this.sound = document.getElementById('sound');
+    this.sound = this.shadowRoot.getElementById('sound');
   }
 
   render() {
@@ -72,8 +72,8 @@ export class CrcaNotificationSound extends LitElement {
         ?disabled=${ this.counter===0 }
       ></mwc-icon-button>
       ${ !this._incoming && this.counter ? html `<div class="circle small">${this.counter}</div>` : ''}
-      ${this.soundSrc.lenght
-        ? html`<embed src="${this.soundSrc}" autostart="false" width="0" height="0" id="sound" enablejavascript="true">`
+      ${this.soundSrc.length
+        ? html`<audio src="${this.soundSrc}" id="sound">`
         : ''}
     `;
   }
@@ -81,7 +81,7 @@ export class CrcaNotificationSound extends LitElement {
   incoming() {
     this._incoming=true;
     if(this.sound) {
-      this.sound.onplay();
+      this.sound.play();
     }
     setTimeout(() => { this._incoming=false }, this.incomingDuration);
   }
