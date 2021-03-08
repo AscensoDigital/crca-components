@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-update-metadata",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Webcomponent crca-redux-update-metadata following open-wc recommendations",
   "author": "crca-redux-update-metadata",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "@ascenso/crca-redux-store": "^1.1.1",
+    "@ascenso/crca-redux-store": "^1.1.2",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "pwa-helpers": "^0.9.1",

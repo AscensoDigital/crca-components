@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-url-parser",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Webcomponent crca-redux-url-parser following open-wc recommendations",
   "author": "crca-redux-url-parser",
   "homepage": "https://github.com/AscensoDigital/crca-components#readme",
@@ -22,7 +22,7 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "@ascenso/crca-redux-store": "^1.1.1",
+    "@ascenso/crca-redux-store": "^1.1.2",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "pwa-helpers": "^0.9.1",
