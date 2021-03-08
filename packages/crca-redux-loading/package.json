@@ -16,7 +16,7 @@
   "dependencies": {
     "@ascenso/crca-redux-store": "file:../crca-redux-store",
     "@dile/dile-spinner": "^1.0.0",
-    "@material/mwc-circular-progress": "^0.18.0",
+    "@material/mwc-circular-progress": "^0.20.0",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "pwa-helpers": "^0.9.1",
