@@ -61,7 +61,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       name: { type: String },
       type: { type: String },
       open: { type: Boolean },
-      config: { type: Object },
+      botConfig: { type: Object },
       _activeKeyword: { type: Object },
       _activeOpened: { type: Object },
       _activeVars: { type: Object },
@@ -82,7 +82,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this.type = 'livechat';
     this.open = false;
     this.manualCreate = false;
-    this.config = null;
+    this.botConfig = null;
   }
 
   stateChanged(state) {
@@ -93,7 +93,8 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this._activeVars = crcaLandbotBotActiveVarsSelector(state);
     this._activeKeyword = crcaLandbotBotActiveKeywordSelector(state);
     this._config =
-      this.config || crcaLandbotConfigBotConfigSelector(this.name, state);
+      (this.botConfig && this.botConfig.config) ||
+      crcaLandbotConfigBotConfigSelector(this.name, state);
     this._botId = crcaLandbotConfigBotIdSelector(this.name, state);
     this._isReady = crcaLandbotBotIsReadySelector(this.name, state);
   }
@@ -192,13 +193,33 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       );
     });
 
-    this._landbot.core.events.on('new_message', function (message) {
+    this._landbot.core.events.on('new_message', message => {
       console.log('Message: ', message);
+      this.dispatchEvent(
+        new CustomEvent('crca-redux-landbot-new-message', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            name: this.name,
+            message,
+          },
+        })
+      );
     });
   }
 
   _connectEventsOpenClose() {
-    this._landbot.core.events.on('widget_open', () => {
+    this._landbot.core.events.on('widget_open', e => {
+      console.log(e);
+      this.dispatchEvent(
+        new CustomEvent('crca-redux-landbot-open', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            name: this.name,
+          },
+        })
+      );
       console.log(`Landbot chat "${this.name}" was opened!`);
       if (
         this._activeOpened.bot === undefined ||
@@ -213,16 +234,46 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       }
     });
 
-    this._landbot.core.events.on('widget_close', () => {
+    this._landbot.core.events.on('widget_close', e => {
+      console.log(e);
+      this.dispatchEvent(
+        new CustomEvent('crca-redux-landbot-close', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            name: this.name,
+          },
+        })
+      );
       console.log(`Landbot chat "${this.name}" was closed!`);
       CrcaStaticStore.store.dispatch(closeBot(this.name));
     });
 
-    this._landbot.core.events.on('proactive_open', () => {
+    this._landbot.core.events.on('proactive_open', e => {
+      console.log(e);
+      this.dispatchEvent(
+        new CustomEvent('crca-redux-landbot-proactive-open', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            name: this.name,
+          },
+        })
+      );
       console.log(`Proactive message chat "${this.name}" was opened!`);
     });
 
-    this._landbot.core.events.on('proactive_close', () => {
+    this._landbot.core.events.on('proactive_close', e => {
+      console.log(e);
+      this.dispatchEvent(
+        new CustomEvent('crca-redux-landbot-proactive-close', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            name: this.name,
+          },
+        })
+      );
       console.log(`Proactive message chat "${this.name}" was closed!`);
     });
 
@@ -233,6 +284,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           bubbles: true,
           composed: true,
           detail: {
+            name: this.name,
             url: data.url,
           },
         })
