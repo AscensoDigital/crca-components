@@ -6,13 +6,20 @@ import { CrcaStaticStore } from '@ascenso/crca-redux-store';
 
 import { crcaUrl } from './redux/reducer.js';
 import {
+  crcaUrlHomepageSelector,
   crcaUrlIsHostProdSelector,
-  crcaUrlOfflineSelector
+  crcaUrlIsStatusMaintenanceSelector,
+  crcaUrlIsStatusSuspendedSelector,
+  crcaUrlLastPageSelector,
+  crcaUrlOfflineSelector,
+  crcaUrlPageSelector
 } from './redux/selectors.js';
 import {
   crcaUrlHandleNavigation,
-  updateOffline
+  crcaUrlNavigate,
+  crcaUrlUpdateOffline
 } from './redux/actions.js';
+import { CRCA_URL_PAGE_MAINTENANCE, CRCA_URL_PAGE_SUSPENDED, CRCA_URL_PAGE_BLOCKED } from './page.js';
 
 CrcaStaticStore.store.addReducers({
   crcaUrl
@@ -51,7 +58,11 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
       showEnvDev: { type: Boolean },
       showOffline: { type: Boolean },
       _isDev: { type: Boolean },
-      _offline: { type: Boolean }
+      _offline: { type: Boolean },
+      _suspended: { type: Boolean },
+      _maintenance: { type: Boolean },
+      _lastPage: { type: Boolean },
+      _page: { type: String }
     };
   }
 
@@ -74,7 +85,7 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
   firstUpdated() {
     if(this.handleOffline) {
       installOfflineWatcher(offline =>
-        CrcaStaticStore.store.dispatch(updateOffline(offline))
+        CrcaStaticStore.store.dispatch(crcaUrlUpdateOffline(offline))
       );
     }
   }
@@ -82,6 +93,10 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
   stateChanged(state) {
     this._offline = crcaUrlOfflineSelector(state);
     this._isDev = !crcaUrlIsHostProdSelector(state);
+    this._suspended = crcaUrlIsStatusSuspendedSelector(state);
+    this._maintenance = crcaUrlIsStatusMaintenanceSelector(state);
+    this._lastPage = crcaUrlLastPageSelector(state) || crcaUrlHomepageSelector(state);
+    this._page = crcaUrlPageSelector(state);
   }
 
   render() {
@@ -93,5 +108,21 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
           ? html`<div class="env-dev"><slot name="env-dev">Estás en un entorno de Desarrollo</slot></div>`
           : ''}
     `;
+  }
+
+  updated(changedProperties) {
+    if(changedProperties('_suspended') && this._suspended) {
+      CrcaStaticStore.store.dispatch(crcaUrlNavigate(CRCA_URL_PAGE_SUSPENDED));
+    }
+
+    if(changedProperties('_maintenance') && this._maintenance) {
+      CrcaStaticStore.store.dispatch(crcaUrlNavigate(CRCA_URL_PAGE_MAINTENANCE));
+    }
+    if( (changedProperties('_suspended') || changedProperties('_maintenance')) &&
+      this._suspended===false && this._maintenance===false &&
+      CRCA_URL_PAGE_BLOCKED.includes(this._page)
+    ) {
+      CrcaStaticStore.store.dispatch(crcaUrlNavigate(this._lastPage));
+    }
   }
 }

@@ -1,10 +1,10 @@
 import { createSelector } from "reselect";
-import { PAGE_HOME } from "../page.js";
-import { ENV_DEV, ENV_PROD } from "../consts.js";
+import { CRCA_URL_PAGE_HOME } from "../page.js";
+import { CRCA_URL_ENV_DEV, CRCA_URL_ENV_PROD, CRCA_URL_STATUS_MAINTENANCE, CRCA_URL_STATUS_SUSPENDED } from "../consts.js";
 
 const crcaUrlStateSelector = state => state && state.crcaUrl || {};
 
-export const isDomainProd = (domain, dominiosProd) => {
+export const crcaUrlIsDomainProd = (domain, dominiosProd) => {
   for (const dom of dominiosProd) {
     const pos = domain.indexOf(dom);
     const len = domain.length;
@@ -16,7 +16,7 @@ export const isDomainProd = (domain, dominiosProd) => {
   return false;
 };
 
-export const isSubdomainDev = (subdominio, subdominiosDev) => {
+export const crcaUrlIsSubdomainDev = (subdominio, subdominiosDev) => {
   for (const sub of subdominiosDev) {
     const pos = subdominio.indexOf(sub);
     const len = subdominio.length;
@@ -56,13 +56,13 @@ export const crcaUrlDominiosProdSelector = createSelector (
 
 export const crcaUrlHomepageSelector = createSelector (
   crcaUrlConfigSelector,
-  config => config.homepage || PAGE_HOME
+  config => config.homepage || CRCA_URL_PAGE_HOME
 );
 
 export const crcaUrlIsDominioProdSelector = createSelector (
   crcaUrlDominioSelector,
   crcaUrlDominiosProdSelector,
-  (dominio, dominiosProd) => isDomainProd(dominio, dominiosProd)
+  (dominio, dominiosProd) => crcaUrlIsDomainProd(dominio, dominiosProd)
 );
 
 export const crcaUrlLastPageSelector = createSelector (
@@ -105,6 +105,21 @@ export const crcaUrlSectionParamsSelector = createSelector (
   url => url.sectionParams || []
 );
 
+export const crcaUrlStatusSelector = createSelector (
+  crcaUrlStateSelector,
+  url => url.status || ''
+);
+
+export const crcaUrlIsStatusMaintenanceSelector = createSelector (
+  crcaUrlStatusSelector,
+  status => status === CRCA_URL_STATUS_MAINTENANCE
+);
+
+export const crcaUrlIsStatusSuspendedSelector = createSelector (
+  crcaUrlStatusSelector,
+  status => status === CRCA_URL_STATUS_SUSPENDED
+);
+
 export const crcaUrlSubdominioSelector = createSelector (
   crcaUrlStateSelector,
   url => url.subdominio || ''
@@ -118,7 +133,7 @@ export const crcaUrlSubdominiosDevSelector = createSelector (
 export const crcaUrlIsSubdominioDevSelector = createSelector (
   crcaUrlSubdominioSelector,
   crcaUrlSubdominiosDevSelector,
-  (subdominio, subdominiosDev) => isSubdomainDev(subdominio, subdominiosDev)
+  (subdominio, subdominiosDev) => crcaUrlIsSubdomainDev(subdominio, subdominiosDev)
 );
 
 export const crcaUrlIsHostProdSelector = createSelector (
@@ -129,5 +144,5 @@ export const crcaUrlIsHostProdSelector = createSelector (
 
 export const crcaUrlEnvSelector = createSelector (
   crcaUrlIsHostProdSelector,
-  isProd => isProd ? ENV_PROD : ENV_DEV
+  isProd => isProd ? CRCA_URL_ENV_PROD : CRCA_URL_ENV_DEV
 );

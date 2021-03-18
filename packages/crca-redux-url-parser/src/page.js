@@ -1,5 +1,17 @@
-export const PAGE_404 = '404';
-export const PAGE_HOME = 'home';
-export const PAGE_LOGIN = 'login';
+export const CRCA_URL_PAGE_404 = '404';
+export const CRCA_URL_PAGE_HOME = 'home';
+export const CRCA_URL_PAGE_LOGIN = 'login';
+export const CRCA_URL_PAGE_SUSPENDED = 'suspended';
+export const CRCA_URL_PAGE_MAINTENANCE = 'maintenance';
 
-export const PAGE_NOT_LAST = [PAGE_LOGIN, PAGE_404];
+export const CRCA_URL_PAGE_NOT_LAST = [
+  CRCA_URL_PAGE_LOGIN,
+  CRCA_URL_PAGE_404,
+  CRCA_URL_PAGE_MAINTENANCE,
+  CRCA_URL_PAGE_SUSPENDED
+];
+
+export const CRCA_URL_PAGE_BLOCKED = [
+  CRCA_URL_PAGE_MAINTENANCE,
+  CRCA_URL_PAGE_SUSPENDED
+];

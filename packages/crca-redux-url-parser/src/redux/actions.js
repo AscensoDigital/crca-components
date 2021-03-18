@@ -1,37 +1,41 @@
 import { CrcaUrlLoader } from "../CrcaUrlLoader.js";
+import { CRCA_URL_PAGE_MAINTENANCE, CRCA_URL_PAGE_SUSPENDED } from "../page.js";
 import {
   crcaUrlConfigSelector,
   crcaUrlDominioSelector,
   crcaUrlPageNotLastSelector,
   crcaUrlPageSelector,
   crcaUrlSubdominioSelector,
-  isDomainProd
+  crcaUrlIsDomainProd,
+  crcaUrlIsStatusSuspendedSelector,
+  crcaUrlIsStatusMaintenanceSelector
 } from "./selectors.js";
 
-export const SET_DEV_SUBDOMINIO = "SET_DEV_SUBDOMINIO";
-export const SET_DOMINIOS_PROD = "SET_DOMINIOS_PROD";
-export const SET_HOMEPAGE = "SET_HOMEPAGE";
-export const SET_MANUAL_UPDATE = "SET_MANUAL_UPDATE";
-export const SET_PAGE_NOT_LAST = "SET_PAGE_NOT_LAST";
-export const SET_SUBDOMINIOS_DEV = "SET_SUBDOMINIOS_DEV";
+export const CRCA_URL_ADD_PAGE_NOT_LAST = "CRCA_URL_ADD_PAGE_NOT_LAST";
+export const CRCA_URL_SET_DEV_SUBDOMINIO = "CRCA_URL_SET_DEV_SUBDOMINIO";
+export const CRCA_URL_SET_DOMINIOS_PROD = "CRCA_URL_SET_DOMINIOS_PROD";
+export const CRCA_URL_SET_HOMEPAGE = "CRCA_URL_SET_HOMEPAGE";
+export const CRCA_URL_SET_MANUAL_UPDATE = "CRCA_URL_SET_MANUAL_UPDATE";
+export const CRCA_URL_SET_PAGE_NOT_LAST = "CRCA_URL_SET_PAGE_NOT_LAST";
+export const CRCA_URL_SET_SUBDOMINIOS_DEV = "SET_SUBDOMINIOS_DEV";
 
-export const UPDATE_ANCHOR = "UPDATE_ANCHOR";
-export const UPDATE_DOMINIO = "UPDATE_DOMINIO";
-export const UPDATE_LAST_PAGE = 'UPDATE_LAST_PAGE';
-export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
-export const UPDATE_PAGE = 'UPDATE_PAGE';
-export const UPDATE_SEARCH = 'UPDATE_SEARCH';
-export const UPDATE_SECTION = 'UPDATE_SECTION';
-export const UPDATE_SUBDOMINIO = "UPDATE_SUBDOMINIO";
+export const CRCA_URL_UPDATE_ANCHOR = "CRCA_URL_UPDATE_ANCHOR";
+export const CRCA_URL_UPDATE_DOMINIO = "CRCA_URL_UPDATE_DOMINIO";
+export const CRCA_URL_UPDATE_LAST_PAGE = 'CRCA_URL_UPDATE_LAST_PAGE';
+export const CRCA_URL_UPDATE_OFFLINE = 'CRCA_URL_UPDATE_OFFLINE';
+export const CRCA_URL_UPDATE_PAGE = 'CRCA_URL_UPDATE_PAGE';
+export const CRCA_URL_UPDATE_SEARCH = 'CRCA_URL_UPDATE_SEARCH';
+export const CRCA_URL_UPDATE_SECTION = 'CRCA_URL_UPDATE_SECTION';
+export const CRCA_URL_UPDATE_SUBDOMINIO = "CRCA_URL_UPDATE_SUBDOMINIO";
+export const CRCA_URL_UPDATE_STATUS = "CRCA_URL_UPDATE_STATUS";
 
-
-export const decodeAnchor = hash => {
+export const crcaUrlDecodeAnchor = hash => {
   // anchor is extracted from the hash string: /santiago?q={query} /santiago#{acnhor}
   const match = RegExp('[#&]([^&]*)').exec(hash);
   return match && match[1] && decodeURIComponent(match[1]) || '';
 }
 
-export const decodeHostname = hostname => {
+export const crcaUrlDecodeHostname = hostname => {
   const segments = hostname.split('.');
 
   let subdominio = '';
@@ -45,7 +49,7 @@ export const decodeHostname = hostname => {
   };
 };
 
-export const decodeSearch = search => {
+export const crcaUrlDecodeSearch = search => {
   if (search === '') {
     return {};
   }
@@ -59,7 +63,7 @@ export const decodeSearch = search => {
   return ret;
 };
 
-export const decodeUrl = url => {
+export const crcaUrlDecodeUrl = url => {
   const segments = url.split('/');
   const page = segments.shift();
   return {
@@ -68,100 +72,115 @@ export const decodeUrl = url => {
   };
 };
 
-export const setDevSubdominio = devSubdominio => (
+// ACTIONS FUNCTIONS
+export const crcaUrlAddPageNotLast = pageNotLast => (
   {
-    type: SET_DEV_SUBDOMINIO,
+    type: CRCA_URL_ADD_PAGE_NOT_LAST,
+    pageNotLast: typeof pageNotLast === "string" ? [pageNotLast] : pageNotLast
+  }
+);
+
+export const crcaUrlSetDevSubdominio = devSubdominio => (
+  {
+    type: CRCA_URL_SET_DEV_SUBDOMINIO,
     devSubdominio
   }
 );
 
-export const setDominiosProd = dominiosProd => (
+export const crcaUrlSetDominiosProd = dominiosProd => (
   {
-    type: SET_DOMINIOS_PROD,
+    type: CRCA_URL_SET_DOMINIOS_PROD,
     dominiosProd
   }
 );
 
-export const setHomepage = homepage => (
+export const crcaUrlSetHomepage = homepage => (
   {
-    type: SET_HOMEPAGE,
+    type: CRCA_URL_SET_HOMEPAGE,
     homepage
   }
 );
 
-export const setManualUpdate = manualUpdate => (
+export const crcaUrlSetManualUpdate = manualUpdate => (
   {
-    type: SET_MANUAL_UPDATE,
+    type: CRCA_URL_SET_MANUAL_UPDATE,
     manualUpdate
   }
 );
 
-export const setPageNotLast = pageNotLast => (
+export const crcaUrlSetPageNotLast = pageNotLast => (
   {
-    type: SET_PAGE_NOT_LAST,
+    type: CRCA_URL_SET_PAGE_NOT_LAST,
     pageNotLast
   }
 );
 
-export const setSubdominiosDev = subdominiosDev => (
+export const crcaUrlSetSubdominiosDev = subdominiosDev => (
   {
-    type: SET_SUBDOMINIOS_DEV,
+    type: CRCA_URL_SET_SUBDOMINIOS_DEV,
     subdominiosDev
   }
 );
 
-export const updateAnchor = anchor => (
+export const crcaUrlUpdateAnchor = anchor => (
   {
-    type: UPDATE_ANCHOR,
+    type: CRCA_URL_UPDATE_ANCHOR,
     anchor,
   }
 );
 
-export const updateDominio = dominio => (
+export const crcaUrlUpdateDominio = dominio => (
   {
-    type: UPDATE_DOMINIO,
+    type: CRCA_URL_UPDATE_DOMINIO,
     dominio,
   }
 );
 
-export const updateLastPage = lastPage => (
+export const crcaUrlUpdateLastPage = lastPage => (
   {
-    type: UPDATE_LAST_PAGE,
+    type: CRCA_URL_UPDATE_LAST_PAGE,
     lastPage,
   }
 );
 
-export const updateOffline = offline => ({
-  type: UPDATE_OFFLINE,
+export const crcaUrlUpdateOffline = offline => ({
+  type: CRCA_URL_UPDATE_OFFLINE,
   offline,
 });
 
-export const updatePage = page => (
+export const crcaUrlUpdatePage = page => (
   {
-    type: UPDATE_PAGE,
+    type: CRCA_URL_UPDATE_PAGE,
     page,
   }
 );
 
-export const updateSearch = (search) => (
+export const crcaUrlUpdateSearch = (search) => (
   {
-    type: UPDATE_SEARCH,
+    type: CRCA_URL_UPDATE_SEARCH,
     search
   }
 );
 
-export const updateSection = (pageSection, sectionParams) => (
+export const crcaUrlUpdateSection = (pageSection, sectionParams) => (
   {
-    type: UPDATE_SECTION,
+    type: CRCA_URL_UPDATE_SECTION,
     pageSection,
     sectionParams,
   }
 );
 
-export const updateSubdominio = subdominio => (
+export const crcaUrlUpdateSubdominio = subdominio => (
   {
-    type: UPDATE_SUBDOMINIO,
+    type: CRCA_URL_UPDATE_SUBDOMINIO,
     subdominio,
+  }
+);
+
+export const crcaUrlUpdateStatus = status => (
+  {
+    type: CRCA_URL_UPDATE_STATUS,
+    status
   }
 );
 
@@ -170,7 +189,7 @@ const crcaLoadAnchor = (anchor, loaderAction = null, manualUpdate = false) => (d
     dispatch(loaderAction(anchor));
   }
   if(!manualUpdate) {
-    dispatch(updateAnchor(anchor));
+    dispatch(crcaUrlUpdateAnchor(anchor));
   }
 };
 
@@ -179,7 +198,7 @@ const crcaLoadDominio = (dominio, loaderAction = null, manualUpdate = false) => 
     dispatch(loaderAction(dominio));
   }
   if(!manualUpdate) {
-    dispatch(updateDominio(dominio));
+    dispatch(crcaUrlUpdateDominio(dominio));
   }
 };
 
@@ -188,7 +207,7 @@ const crcaLoadSearch = (search, loaderAction = null, manualUpdate = false) => (d
     dispatch(loaderAction(search));
   }
   if(!manualUpdate) {
-    dispatch(updateSearch(search));
+    dispatch(crcaUrlUpdateSearch(search));
   }
 };
 
@@ -204,7 +223,7 @@ const crcaLoadSection = (page, segments, loaderAction = null, manualUpdate = fal
     dispatch(loaderAction(page, pageSection, sectionParams));
   }
   if(!manualUpdate) {
-    dispatch(updateSection(pageSection, sectionParams));
+    dispatch(crcaUrlUpdateSection(pageSection, sectionParams));
   }
 };
 
@@ -214,21 +233,33 @@ const crcaLoadSubdominio = (subdominio, loaderAction = null, manualUpdate = fals
     dispatch(loaderAction(subdominio));
   }
   if(!manualUpdate) {
-    dispatch(updateSubdominio(subdominio));
+    dispatch(crcaUrlUpdateSubdominio(subdominio));
   }
 };
 
-export const crcaLoadPage = (page, loaderAction = null, manualUpdate = false) => (dispatch, getState) => {
+export const crcaUrlLoadPage = (page, loaderAction = null, manualUpdate = false) => (dispatch, getState) => {
   const pageNotLast = crcaUrlPageNotLastSelector(getState());
+  const actualPage = crcaUrlPageSelector(state);
+  const isSuspended = crcaUrlIsStatusSuspendedSelector(state);
+  const isMaintenance = crcaUrlIsStatusMaintenanceSelector(state);
 
   if (pageNotLast.indexOf(page) === -1) {
-    dispatch(updateLastPage(page));
+    dispatch(crcaUrlUpdateLastPage(page));
   }
+
+  if(actualPage===CRCA_URL_PAGE_MAINTENANCE && isMaintenance) {
+    return;
+  }
+
+  if(actualPage===CRCA_URL_PAGE_SUSPENDED && isSuspended) {
+    return;
+  }
+
   if(typeof loaderAction === 'function') {
     dispatch(loaderAction(page));
   }
   if(!manualUpdate) {
-    dispatch(updatePage(page));
+    dispatch(crcaUrlUpdatePage(page));
   }
 };
 
@@ -237,13 +268,13 @@ export const crcaUrlHandleNavigation = location => (dispatch, getState) => {
 
   const conf = crcaUrlConfigSelector(state);
 
-  const decodedHostname = decodeHostname(location.hostname);
+  const decodedHostname = crcaUrlDecodeHostname(location.hostname);
 
   if ( decodedHostname.dominio !== crcaUrlDominioSelector(state) ) {
     dispatch(crcaLoadDominio(decodedHostname.dominio, CrcaUrlLoader.dominio, conf.manualUpdate.dominio));
   }
 
-  const subdominio = isDomainProd(decodedHostname.dominio, conf.dominiosProd) ? decodedHostname.subdominio : conf.devSubdominio;
+  const subdominio = crcaUrlIsDomainProd(decodedHostname.dominio, conf.dominiosProd) ? decodedHostname.subdominio : conf.devSubdominio;
   if (subdominio !== crcaUrlSubdominioSelector(state)) {
     dispatch(crcaLoadSubdominio(subdominio, CrcaUrlLoader.subdominio, conf.manualUpdate.subdominio));
   }
@@ -251,17 +282,17 @@ export const crcaUrlHandleNavigation = location => (dispatch, getState) => {
   const path = decodeURIComponent(location.pathname);
   const url = path === '/' ? conf.homepage : path.slice(1);
 
-  const decodedUrl = decodeUrl(url);
+  const decodedUrl = crcaUrlDecodeUrl(url);
   if(decodedUrl.page !== crcaUrlPageSelector(state)){
     dispatch(crcaLoadPage(decodedUrl.page, CrcaUrlLoader.page, conf.manualUpdate.page));
   }
 
   dispatch(crcaLoadSection(decodedUrl.page, decodedUrl.segments, CrcaUrlLoader.section, conf.manualUpdate.section));
 
-  const decodedAnchor = decodeAnchor(location.hash);
+  const decodedAnchor = crcaUrlDecodeAnchor(location.hash);
   dispatch(crcaLoadAnchor(decodedAnchor, CrcaUrlLoader.anchor, conf.manualUpdate.anchor));
 
-  const decodedSearch = decodeSearch(location.search);
+  const decodedSearch = crcaUrlDecodeSearch(location.search);
   dispatch(crcaLoadSearch(decodedSearch, CrcaUrlLoader.search, conf.manualUpdate.search));
 };
 
