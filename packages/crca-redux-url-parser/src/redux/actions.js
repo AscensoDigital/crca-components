@@ -1,5 +1,5 @@
 import { CrcaUrlLoader } from "../CrcaUrlLoader.js";
-import { CRCA_URL_PAGE_MAINTENANCE, CRCA_URL_PAGE_SUSPENDED } from "../page.js";
+import { CRCA_URL_PAGES_BLOCKED, CRCA_URL_PAGE_404, CRCA_URL_PAGE_MAINTENANCE, CRCA_URL_PAGE_SUSPENDED } from "../page.js";
 import {
   crcaUrlConfigSelector,
   crcaUrlDominioSelector,
@@ -8,7 +8,8 @@ import {
   crcaUrlSubdominioSelector,
   crcaUrlIsDomainProd,
   crcaUrlIsStatusSuspendedSelector,
-  crcaUrlIsStatusMaintenanceSelector
+  crcaUrlIsStatusMaintenanceSelector,
+  crcaUrlStatusSelector
 } from "./selectors.js";
 
 export const CRCA_URL_ADD_PAGES_NOT_LAST = "CRCA_URL_ADD_PAGES_NOT_LAST";
@@ -248,12 +249,13 @@ export const crcaUrlLoadPage = (page, loaderAction = null, manualUpdate = false)
     dispatch(crcaUrlUpdateLastPage(page));
   }
 
-  if(actualPage===CRCA_URL_PAGE_MAINTENANCE && isMaintenance) {
-    return;
-  }
-
-  if(actualPage===CRCA_URL_PAGE_SUSPENDED && isSuspended) {
-    return;
+  if(isSuspended || isMaintenance) {
+    if(CRCA_URL_PAGES_BLOCKED.includes(actualPage)) {
+      return;
+    }
+    else if(page!==CRCA_URL_PAGE_404 && !CRCA_URL_PAGES_BLOCKED.includes(page)) {
+      dispatch(crcaUrlNavigate(crcaUrlStatusSelector(state)));
+    }
   }
 
   if(typeof loaderAction === 'function') {
