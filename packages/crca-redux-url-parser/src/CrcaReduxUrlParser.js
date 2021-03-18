@@ -111,14 +111,14 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
   }
 
   updated(changedProperties) {
-    if(changedProperties('_suspended') && this._suspended) {
+    if(changedProperties.has('_suspended') && this._suspended) {
       CrcaStaticStore.store.dispatch(crcaUrlNavigate(CRCA_URL_PAGE_SUSPENDED));
     }
 
-    if(changedProperties('_maintenance') && this._maintenance) {
+    if(changedProperties.has('_maintenance') && this._maintenance) {
       CrcaStaticStore.store.dispatch(crcaUrlNavigate(CRCA_URL_PAGE_MAINTENANCE));
     }
-    if( (changedProperties('_suspended') || changedProperties('_maintenance')) &&
+    if( (changedProperties.has('_suspended') || changedProperties.has('_maintenance')) &&
       this._suspended===false && this._maintenance===false &&
       CRCA_URL_PAGES_BLOCKED.includes(this._page)
     ) {
