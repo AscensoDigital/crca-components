@@ -238,7 +238,8 @@ const crcaUrlLoadSubdominio = (subdominio, loaderAction = null, manualUpdate = f
 };
 
 export const crcaUrlLoadPage = (page, loaderAction = null, manualUpdate = false) => (dispatch, getState) => {
-  const pagesNotLast = crcaUrlPagesNotLastSelector(getState());
+  const state = getState();
+  const pagesNotLast = crcaUrlPagesNotLastSelector(state);
   const actualPage = crcaUrlPageSelector(state);
   const isSuspended = crcaUrlIsStatusSuspendedSelector(state);
   const isMaintenance = crcaUrlIsStatusMaintenanceSelector(state);
