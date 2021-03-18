@@ -1,11 +1,11 @@
-import { CRCA_URL_PAGE_HOME, CRCA_URL_PAGE_NOT_LAST } from '../page.js';
+import { CRCA_URL_PAGE_HOME, CRCA_URL_PAGES_NOT_LAST } from '../page.js';
 import {
-  CRCA_URL_ADD_PAGE_NOT_LAST,
+  CRCA_URL_ADD_PAGES_NOT_LAST,
   CRCA_URL_SET_DEV_SUBDOMINIO,
   CRCA_URL_SET_DOMINIOS_PROD,
   CRCA_URL_SET_HOMEPAGE,
   CRCA_URL_SET_MANUAL_UPDATE,
-  CRCA_URL_SET_PAGE_NOT_LAST,
+  CRCA_URL_SET_PAGES_NOT_LAST,
   CRCA_URL_SET_SUBDOMINIOS_DEV,
   CRCA_URL_UPDATE_ANCHOR,
   CRCA_URL_UPDATE_DOMINIO,
@@ -32,17 +32,17 @@ const initialConfigState = {
     search: false,
     subdominio: false,
   },
-  pageNotLast: CRCA_URL_PAGE_NOT_LAST,
+  pagesNotLast: CRCA_URL_PAGES_NOT_LAST,
 };
 
 const crcaUrlConfig = (state = initialConfigState, action) => {
   switch(action.type) {
-    case CRCA_URL_ADD_PAGE_NOT_LAST:
+    case CRCA_URL_ADD_PAGES_NOT_LAST:
       return {
         ...state,
-        pageNotLast: {
-          ...state.pageNotLast,
-          ...action.pageNotLast
+        pagesNotLast: {
+          ...state.pagesNotLast,
+          ...action.pagesNotLast
         }
       }
     case CRCA_URL_SET_DEV_SUBDOMINIO:
@@ -65,10 +65,10 @@ const crcaUrlConfig = (state = initialConfigState, action) => {
         ...state,
         manualUpdate: action.manualUpdate
       };
-    case CRCA_URL_SET_PAGE_NOT_LAST:
+    case CRCA_URL_SET_PAGES_NOT_LAST:
       return {
         ...state,
-        pageNotLast: action.pageNotLast
+        pagesNotLast: action.pagesNotLast
       };
     case CRCA_URL_SET_SUBDOMINIOS_DEV:
       return {
@@ -96,12 +96,12 @@ const initialState = {
 
 export const crcaUrl = (state = initialState, action) => {
   switch(action.type) {
-    case CRCA_URL_ADD_PAGE_NOT_LAST:
+    case CRCA_URL_ADD_PAGES_NOT_LAST:
     case CRCA_URL_SET_DEV_SUBDOMINIO:
     case CRCA_URL_SET_DOMINIOS_PROD:
     case CRCA_URL_SET_HOMEPAGE:
     case CRCA_URL_SET_MANUAL_UPDATE:
-    case CRCA_URL_SET_PAGE_NOT_LAST:
+    case CRCA_URL_SET_PAGES_NOT_LAST:
     case CRCA_URL_SET_SUBDOMINIOS_DEV:
       return {
         ...state,

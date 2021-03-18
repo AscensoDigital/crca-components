@@ -3,7 +3,7 @@ import { CRCA_URL_PAGE_MAINTENANCE, CRCA_URL_PAGE_SUSPENDED } from "../page.js";
 import {
   crcaUrlConfigSelector,
   crcaUrlDominioSelector,
-  crcaUrlPageNotLastSelector,
+  crcaUrlPagesNotLastSelector,
   crcaUrlPageSelector,
   crcaUrlSubdominioSelector,
   crcaUrlIsDomainProd,
@@ -11,12 +11,12 @@ import {
   crcaUrlIsStatusMaintenanceSelector
 } from "./selectors.js";
 
-export const CRCA_URL_ADD_PAGE_NOT_LAST = "CRCA_URL_ADD_PAGE_NOT_LAST";
+export const CRCA_URL_ADD_PAGES_NOT_LAST = "CRCA_URL_ADD_PAGES_NOT_LAST";
 export const CRCA_URL_SET_DEV_SUBDOMINIO = "CRCA_URL_SET_DEV_SUBDOMINIO";
 export const CRCA_URL_SET_DOMINIOS_PROD = "CRCA_URL_SET_DOMINIOS_PROD";
 export const CRCA_URL_SET_HOMEPAGE = "CRCA_URL_SET_HOMEPAGE";
 export const CRCA_URL_SET_MANUAL_UPDATE = "CRCA_URL_SET_MANUAL_UPDATE";
-export const CRCA_URL_SET_PAGE_NOT_LAST = "CRCA_URL_SET_PAGE_NOT_LAST";
+export const CRCA_URL_SET_PAGES_NOT_LAST = "CRCA_URL_SET_PAGES_NOT_LAST";
 export const CRCA_URL_SET_SUBDOMINIOS_DEV = "SET_SUBDOMINIOS_DEV";
 
 export const CRCA_URL_UPDATE_ANCHOR = "CRCA_URL_UPDATE_ANCHOR";
@@ -73,10 +73,10 @@ export const crcaUrlDecodeUrl = url => {
 };
 
 // ACTIONS FUNCTIONS
-export const crcaUrlAddPageNotLast = pageNotLast => (
+export const crcaUrlAddPagesNotLast = pagesNotLast => (
   {
-    type: CRCA_URL_ADD_PAGE_NOT_LAST,
-    pageNotLast: typeof pageNotLast === "string" ? [pageNotLast] : pageNotLast
+    type: CRCA_URL_ADD_PAGES_NOT_LAST,
+    pagesNotLast: typeof pagesNotLast === "string" ? [pagesNotLast] : pagesNotLast
   }
 );
 
@@ -108,10 +108,10 @@ export const crcaUrlSetManualUpdate = manualUpdate => (
   }
 );
 
-export const crcaUrlSetPageNotLast = pageNotLast => (
+export const crcaUrlSetPagesNotLast = pagesNotLast => (
   {
-    type: CRCA_URL_SET_PAGE_NOT_LAST,
-    pageNotLast
+    type: CRCA_URL_SET_PAGES_NOT_LAST,
+    pagesNotLast
   }
 );
 
@@ -238,12 +238,12 @@ const crcaLoadSubdominio = (subdominio, loaderAction = null, manualUpdate = fals
 };
 
 export const crcaUrlLoadPage = (page, loaderAction = null, manualUpdate = false) => (dispatch, getState) => {
-  const pageNotLast = crcaUrlPageNotLastSelector(getState());
+  const pagesNotLast = crcaUrlPagesNotLastSelector(getState());
   const actualPage = crcaUrlPageSelector(state);
   const isSuspended = crcaUrlIsStatusSuspendedSelector(state);
   const isMaintenance = crcaUrlIsStatusMaintenanceSelector(state);
 
-  if (pageNotLast.indexOf(page) === -1) {
+  if (pagesNotLast.indexOf(page) === -1) {
     dispatch(crcaUrlUpdateLastPage(page));
   }
 

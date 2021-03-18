@@ -85,9 +85,9 @@ export const crcaUrlPageSelector = createSelector (
   url => url.page || ''
 );
 
-export const crcaUrlPageNotLastSelector = createSelector (
+export const crcaUrlPagesNotLastSelector = createSelector (
   crcaUrlConfigSelector,
-  config => config.pageNotLast || []
+  config => config.pagesNotLast || []
 );
 
 export const crcaUrlPageSectionSelector = createSelector (

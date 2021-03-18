@@ -19,7 +19,7 @@ import {
   crcaUrlNavigate,
   crcaUrlUpdateOffline
 } from './redux/actions.js';
-import { CRCA_URL_PAGE_MAINTENANCE, CRCA_URL_PAGE_SUSPENDED, CRCA_URL_PAGE_BLOCKED } from './page.js';
+import { CRCA_URL_PAGE_MAINTENANCE, CRCA_URL_PAGE_SUSPENDED, CRCA_URL_PAGES_BLOCKED } from './page.js';
 
 CrcaStaticStore.store.addReducers({
   crcaUrl
@@ -120,7 +120,7 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
     }
     if( (changedProperties('_suspended') || changedProperties('_maintenance')) &&
       this._suspended===false && this._maintenance===false &&
-      CRCA_URL_PAGE_BLOCKED.includes(this._page)
+      CRCA_URL_PAGES_BLOCKED.includes(this._page)
     ) {
       CrcaStaticStore.store.dispatch(crcaUrlNavigate(this._lastPage));
     }

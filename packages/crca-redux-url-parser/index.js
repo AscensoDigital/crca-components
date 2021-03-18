@@ -8,7 +8,8 @@ export {
   CRCA_URL_PAGE_404,
   CRCA_URL_PAGE_SUSPENDED,
   CRCA_URL_PAGE_MAINTENANCE,
-  CRCA_URL_PAGE_NOT_LAST
+  CRCA_URL_PAGES_NOT_LAST,
+  CRCA_URL_PAGES_BLOCKED
 } from './src/page.js'
 
 export {
@@ -28,7 +29,7 @@ export {
   crcaUrlSetDominiosProd,
   crcaUrlSetHomepage,
   crcaUrlSetManualUpdate,
-  crcaUrlSetPageNotLast,
+  crcaUrlSetPagesNotLast,
   crcaUrlSetSubdominiosDev,
 
   crcaUrlUpdateAnchor,
@@ -59,7 +60,7 @@ export {
   crcaUrlManualUpdateSelector,
   crcaUrlOfflineSelector,
   crcaUrlPageSelector,
-  crcaUrlPageNotLastSelector,
+  crcaUrlPagesNotLastSelector,
   crcaUrlPageSectionSelector,
   crcaUrlSearchSelector,
   crcaUrlSectionParamsSelector,

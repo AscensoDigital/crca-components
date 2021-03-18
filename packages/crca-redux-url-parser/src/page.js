@@ -4,14 +4,14 @@ export const CRCA_URL_PAGE_LOGIN = 'login';
 export const CRCA_URL_PAGE_SUSPENDED = 'suspended';
 export const CRCA_URL_PAGE_MAINTENANCE = 'maintenance';
 
-export const CRCA_URL_PAGE_NOT_LAST = [
+export const CRCA_URL_PAGES_NOT_LAST = [
   CRCA_URL_PAGE_LOGIN,
   CRCA_URL_PAGE_404,
   CRCA_URL_PAGE_MAINTENANCE,
   CRCA_URL_PAGE_SUSPENDED
 ];
 
-export const CRCA_URL_PAGE_BLOCKED = [
+export const CRCA_URL_PAGES_BLOCKED = [
   CRCA_URL_PAGE_MAINTENANCE,
   CRCA_URL_PAGE_SUSPENDED
 ];

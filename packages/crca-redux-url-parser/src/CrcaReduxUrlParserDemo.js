@@ -13,7 +13,7 @@ import {
   crcaUrlSubdominioSelector,
   crcaUrlSectionParamsSelector,
   crcaUrlDominiosProdSelector,
-  crcaUrlPageNotLastSelector,
+  crcaUrlPagesNotLastSelector,
   crcaUrlDevSubdominioSelector,
   crcaUrlManualUpdateSelector,
   crcaUrlHomepageSelector
@@ -50,7 +50,7 @@ export class CrcaReduxUrlParserDemo extends connect(CrcaStaticStore.store)(LitEl
       dominiosProd: { type: Array },
       homepage: { type: String },
       manualUpdate: { type: Object },
-      pageNotLast: { type: Array },
+      pagesNotLast: { type: Array },
     };
   }
 
@@ -80,7 +80,7 @@ export class CrcaReduxUrlParserDemo extends connect(CrcaStaticStore.store)(LitEl
     this.dominiosProd = crcaUrlDominiosProdSelector(state);
     this.homepage = crcaUrlHomepageSelector(state);
     this.manualUpdate = crcaUrlManualUpdateSelector(state);
-    this.pageNotLast = crcaUrlPageNotLastSelector(state);
+    this.pagesNotLast = crcaUrlPagesNotLastSelector(state);
   }
 
   render() {
@@ -120,9 +120,9 @@ export class CrcaReduxUrlParserDemo extends connect(CrcaStaticStore.store)(LitEl
             ${Object.keys(this.manualUpdate).map( idx => html`<li>${idx} => ${this.manualUpdate[idx] ? 'true' : 'false'}</li>`)}
           </ul>
         </li>
-        <li><b>pageNotLast:</b>
+        <li><b>pagesNotLast:</b>
           <ul>
-            ${this.pageNotLast.map((sp, idx) => html`<li>${idx} => ${sp}</li>`)}
+            ${this.pagesNotLast.map((sp, idx) => html`<li>${idx} => ${sp}</li>`)}
           </ul>
         </li>
       </ul>
