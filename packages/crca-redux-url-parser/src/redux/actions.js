@@ -255,6 +255,7 @@ export const crcaUrlLoadPage = (page, loaderAction = null, manualUpdate = false)
     }
     else if(page!==CRCA_URL_PAGE_404 && !CRCA_URL_PAGES_BLOCKED.includes(page)) {
       dispatch(crcaUrlNavigate(crcaUrlStatusSelector(state)));
+      return;
     }
   }
 
