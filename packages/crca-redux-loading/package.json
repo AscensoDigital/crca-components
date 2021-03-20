@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-loading",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "Webcomponent crca-redux-loading following open-wc recommendations",
   "author": "crca-redux-loading",
   "license": "MIT",
