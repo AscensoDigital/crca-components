@@ -17,25 +17,62 @@ export class CrcaReduxLoadingPage extends connect(CrcaStaticStore.store)(LitElem
       :host {
         display: block;
       }
+      div {
+        display: flex;
+        position: fixed;
+        background-color: var(
+          --crca-redux-loading-page-background-color,
+          rgba(255, 255, 255, 0.8)
+        );
+        height: 100vh;
+        width: 100vw;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        z-index: 999999999999999;
+      }
+      blockquote {
+        width: 120px;
+        height: 120px;
+        border-radius: 60px;
+        background-color: var(
+          --crca-redux-loading-page-box-color,
+          rgba(0, 0, 0, 0.9)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     `;
   }
 
   static get properties() {
     return {
-      loading: { type: Boolean }
+      img: { type: String },
+      _loading: { type: Boolean }
     };
   }
 
   constructor() {
     super();
-    this.loading = false;
+    this.img=null;
+    this._loading = false;
   }
 
   stateChanged(state) {
-    this.loading=crcaLoadingPageSelector(state);
+    this._loading=crcaLoadingPageSelector(state);
   }
 
   render() {
-    return html`<dile-spinner-modal ?active="${this.loading}"></dile-spinner-modal>`;
+    return this.img
+      ? html`${this._loading
+        ? html` <div>
+            <blockquote class="box">
+              <img src="${this.img}" alt="Loading..." title="Loading...">
+            </blockquote>
+          </div>`
+        : ""}`
+      : html`<dile-spinner-modal ?active="${this._loading}"></dile-spinner-modal>`;
   }
 }

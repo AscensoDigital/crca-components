@@ -8,3 +8,7 @@ export const generateProcessTag = (process, vars) => {
   }
   return [process, ...arr].join(" ");
 }
+
+export const CRCA_LOADING_TYPE_INTERNAL = 'internal';
+export const CRCA_LOADING_TYPE_ELEMENT = 'element';
+export const CRCA_LOADING_TYPE_PAGE = 'page';
