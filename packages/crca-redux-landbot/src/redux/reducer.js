@@ -13,6 +13,7 @@ import {
   FINISH_LANDBOT_LOAD,
   UPDATE_BOT_CONTEXT_VARS,
   UPDATE_BOT_KEYWORD,
+  ADD_BOT_CONFIG,
 } from './actions.js';
 
 const initialState = {
@@ -158,6 +159,14 @@ export const crcaLandbot = (state = initialState, action) => {
       return {
         ...state,
         config: action.config,
+      };
+    case ADD_BOT_CONFIG:
+      return {
+        ...state,
+        config: {
+          ...action.config,
+          [action.payload.bot]: action.payload.config,
+        },
       };
     case DESTROY_BOT:
       return {

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { crcaUrlEnvSelector } from '@ascenso/crca-redux-url-parser';
-import { isDefined, isObject, isString } from '@ascenso/crca-redux-firebase';
+import { isDefined, isObject, isString } from '@ascenso/crca-utils';
 
 const crcaLandbotStateSelector = state => (state && state.crcaLandbot) || {};
 
@@ -88,13 +88,18 @@ const crcaLandbotConfigSelector = createSelector(
   lbot => lbot.config || {}
 );
 
-const crcaLandbotConfigPropSelector = (bot, prop, state) => {
+export const crcaLandbotConfigBotSelector = (bot, state) => {
   const config = crcaLandbotConfigSelector(state);
+  return (config && config[bot]) || {};
+};
+
+const crcaLandbotConfigPropSelector = (bot, prop, state) => {
+  const config = crcaLandbotConfigBotSelector(bot, state);
   const env = crcaUrlEnvSelector(state);
 
   return (
-    (config[bot] && isString(config[bot][prop]) && config[bot][prop]) ||
-    (config[bot] && isObject(config[bot][prop]) && config[bot][prop][env]) ||
+    (isString(config[prop]) && config[prop]) ||
+    (isObject(config[prop]) && config[prop][env]) ||
     false
   );
 };
@@ -103,43 +108,36 @@ export const crcaLandbotConfigBotIdSelector = (bot, state) =>
   crcaLandbotConfigPropSelector(bot, 'id', state);
 
 export const crcaLandbotConfigBotKeywordSelector = (bot, keyword, state) => {
-  const config = crcaLandbotConfigSelector(state);
-  return (
-    (config[bot] && config[bot].keywords && config[bot].keywords[keyword]) ||
-    false
-  );
+  const config = crcaLandbotConfigBotSelector(bot, state);
+  return (config.keywords && config.keywords[keyword]) || false;
+};
+
+export const crcaLandbotConfigBotKeywordsSelector = (bot, state) => {
+  const config = crcaLandbotConfigBotSelector(bot, state);
+  return config.keywords || false;
 };
 
 export const crcaLandbotConfigBotTokenSelector = (bot, state) =>
   crcaLandbotConfigPropSelector(bot, 'token', state);
 
 export const crcaLandbotConfigBotNodeSelector = (bot, slug, state) => {
-  const config = crcaLandbotConfigSelector(state);
+  const config = crcaLandbotConfigBotSelector(bot, state);
   const env = crcaUrlEnvSelector(state);
 
   return (
-    (config[bot] &&
-      config[bot].nodes &&
-      isString(config[bot].nodes[slug]) &&
-      config[bot].nodes[slug]) ||
-    (config[bot] &&
-      config[bot].nodes &&
-      isObject(config[bot].nodes[slug]) &&
-      config[bot].nodes[slug][env]) ||
+    (config.nodes && isString(config.nodes[slug]) && config.nodes[slug]) ||
+    (config.nodes && isObject(config.nodes[slug]) && config.nodes[slug][env]) ||
     false
   );
 };
 
 export const crcaLandbotConfigBotConfigSelector = (bot, state) => {
-  const config = crcaLandbotConfigSelector(state);
+  const config = crcaLandbotConfigBotSelector(bot, state);
   const env = crcaUrlEnvSelector(state);
 
   return (
-    (config[bot] &&
-      config[bot].config &&
-      isDefined(config[bot].config.configUrl) &&
-      config[bot].config) ||
-    (config[bot] && config[bot].config && config[bot].config[env]) ||
+    (config.config && isDefined(config.config.configUrl) && config.config) ||
+    (config.config && config.config[env]) ||
     false
   );
 };

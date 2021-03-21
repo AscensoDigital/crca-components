@@ -3,25 +3,21 @@ import { connect } from 'pwa-helpers';
 
 import { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import { negativeFeedback } from '@ascenso/crca-redux-feedback';
-import {
-  crcaFirebaseRemoteConfigGet,
-  existDiffObject,
-  isDefined,
-  isUndefined,
-} from '@ascenso/crca-redux-firebase';
+import { existDiffObject, isDefined, isUndefined } from '@ascenso/crca-utils';
 
 import { crcaLandbot } from './redux/reducer.js';
 
 import {
   readyBot,
-  closeBot,
-  openBot,
+  crcaLandbotClose,
+  crcaLandbotOpen,
   updateBotCustomerId,
   activateBot,
   destroyBot,
   startLandbotLoad,
   finishLandbotLoad,
   updateBotContextVars,
+  crcaLandbotAddBotConfig,
 } from './redux/actions.js';
 
 import {
@@ -31,19 +27,19 @@ import {
   crcaLandbotBotIsReadySelector,
   crcaLandbotConfigBotConfigSelector,
   crcaLandbotConfigBotIdSelector,
+  crcaLandbotConfigBotKeywordsSelector,
   crcaLandbotLoadBySelector,
   crcaLandbotLoadedSelector,
 } from './redux/selectors.js';
 
 import {
-  BOT_TYPE_CONTAINER,
-  BOT_TYPE_CONTAINER_POPUP,
-  BOT_TYPE_FULLPAGE,
-  BOT_TYPE_LIVECHAT,
-  BOT_TYPE_NATIVE,
-  BOT_TYPE_POPUP,
+  CRCA_LANDBOT_TYPE_CONTAINER,
+  CRCA_LANDBOT_TYPE_CONTAINER_POPUP,
+  CRCA_LANDBOT_TYPE_FULLPAGE,
+  CRCA_LANDBOT_TYPE_LIVECHAT,
+  CRCA_LANDBOT_TYPE_NATIVE,
+  CRCA_LANDBOT_TYPE_POPUP,
 } from './consts.js';
-import { FB_RC_TYPE_VALUE_OBJECT } from '../../crca-redux-firebase/index.js';
 
 CrcaStaticStore.store.addReducers({
   crcaLandbot,
@@ -67,6 +63,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       _activeVars: { type: Object },
       _config: { type: Object },
       _botId: { type: String },
+      _kewords: { type: Array },
       _landbot: { type: Object },
       _isReady: { type: Boolean },
       _landbotLoadBy: { type: String },
@@ -79,7 +76,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this.handleNodes = false;
     this.handleKeywords = false;
     this.contextVars = {};
-    this.type = 'livechat';
+    this.type = CRCA_LANDBOT_TYPE_LIVECHAT;
     this.open = false;
     this.manualCreate = false;
     this.botConfig = null;
@@ -88,14 +85,12 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
   stateChanged(state) {
     this._landbotLoadBy = crcaLandbotLoadBySelector(state);
     this._landbotLoaded = crcaLandbotLoadedSelector(state);
-
     this._activeOpened = crcaLandbotBotActiveOpenedSelector(state);
     this._activeVars = crcaLandbotBotActiveVarsSelector(state);
     this._activeKeyword = crcaLandbotBotActiveKeywordSelector(state);
-    this._config =
-      (this.botConfig && this.botConfig.config) ||
-      crcaLandbotConfigBotConfigSelector(this.name, state);
+    this._config = crcaLandbotConfigBotConfigSelector(this.name, state);
     this._botId = crcaLandbotConfigBotIdSelector(this.name, state);
+    this._keywords = crcaLandbotConfigBotKeywordsSelector(this.name, state);
     this._isReady = crcaLandbotBotIsReadySelector(this.name, state);
   }
 
@@ -106,7 +101,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
         customData: this.contextVars,
       };
       switch (this.type) {
-        case BOT_TYPE_CONTAINER:
+        case CRCA_LANDBOT_TYPE_CONTAINER:
           if (isDefined(config.container)) {
             // eslint-disable-next-line no-undef
             this._landbot = new Landbot.Container(config);
@@ -119,7 +114,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           }
           break;
 
-        case BOT_TYPE_CONTAINER_POPUP:
+        case CRCA_LANDBOT_TYPE_CONTAINER_POPUP:
           if (isDefined(config.container)) {
             // eslint-disable-next-line no-undef
             this._landbot = new Landbot.ContainerPopup(config);
@@ -132,23 +127,23 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           }
           break;
 
-        case BOT_TYPE_FULLPAGE:
+        case CRCA_LANDBOT_TYPE_FULLPAGE:
           // eslint-disable-next-line no-undef
           this._landbot = new Landbot.Fullpage(config);
           break;
 
-        case BOT_TYPE_LIVECHAT:
+        case CRCA_LANDBOT_TYPE_LIVECHAT:
           // eslint-disable-next-line no-undef
           this._landbot = new Landbot.Livechat(config);
           this._connectEventsOpenClose();
           break;
 
-        case BOT_TYPE_NATIVE:
+        case CRCA_LANDBOT_TYPE_NATIVE:
           // eslint-disable-next-line no-undef
           this._landbot = new Landbot.Native(config);
           break;
 
-        case BOT_TYPE_POPUP:
+        case CRCA_LANDBOT_TYPE_POPUP:
           // eslint-disable-next-line no-undef
           this._landbot = new Landbot.Popup(config);
           this._connectEventsOpenClose();
@@ -229,7 +224,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           this._activeOpened.opened === undefined ||
           !this._activeOpened.opened
         ) {
-          CrcaStaticStore.store.dispatch(openBot(this.name));
+          CrcaStaticStore.store.dispatch(crcaLandbotOpen(this.name));
         }
       }
     });
@@ -246,7 +241,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
         })
       );
       console.log(`Landbot chat "${this.name}" was closed!`);
-      CrcaStaticStore.store.dispatch(closeBot(this.name));
+      CrcaStaticStore.store.dispatch(crcaLandbotClose(this.name));
     });
 
     this._landbot.core.events.on('proactive_open', e => {
@@ -289,7 +284,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           },
         })
       );
-      CrcaStaticStore.store.dispatch(closeBot(this.name));
+      CrcaStaticStore.store.dispatch(crcaLandbotClose(this.name));
     });
   }
 
@@ -310,6 +305,16 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     if (this._landbotLoadBy === '') {
       CrcaStaticStore.store.dispatch(startLandbotLoad(this.name));
       this._loadLandbot();
+    }
+
+    if (
+      (changedProperties.has('botConfig') || changedProperties.has('name')) &&
+      isDefined(this.name) &&
+      isDefined(this.botConfig)
+    ) {
+      CrcaStaticStore.store.dispatch(
+        crcaLandbotAddBotConfig(this.name, this.botConfig)
+      );
     }
 
     if (
@@ -374,12 +379,8 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
         isDefined(this._activeKeyword.keyword) &&
         existDiffObject(preActiveKeyword, this._activeKeyword)
       ) {
-        const botConfig = crcaFirebaseRemoteConfigGet(
-          'bots',
-          FB_RC_TYPE_VALUE_OBJECT
-        )[this.name];
         const keywordLabel =
-          botConfig.keywords[this._activeKeyword.keyword] ||
+          this._keywords[this._activeKeyword.keyword] ||
           this._activeKeyword.keyword;
         if (this._activeOpened.opened) {
           const msg = {

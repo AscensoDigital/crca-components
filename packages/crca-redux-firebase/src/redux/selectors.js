@@ -5,7 +5,7 @@ import {
   isNumber,
   isObject,
   isString,
-} from '../utils/data-view-util.js';
+} from '@ascenso/crca-utils';
 
 import {
   FB_RC_TYPE_VALUE_BOOLEAN,

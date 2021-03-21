@@ -1,17 +1,17 @@
 export { CrcaReduxLandbot } from './src/CrcaReduxLandbot.js';
 
 export {
-  BOT_TYPE_CONTAINER,
-  BOT_TYPE_CONTAINER_POPUP,
-  BOT_TYPE_FULLPAGE,
-  BOT_TYPE_LIVECHAT,
-  BOT_TYPE_NATIVE,
-  BOT_TYPE_POPUP,
+  CRCA_LANDBOT_TYPE_CONTAINER,
+  CRCA_LANDBOT_TYPE_CONTAINER_POPUP,
+  CRCA_LANDBOT_TYPE_FULLPAGE,
+  CRCA_LANDBOT_TYPE_LIVECHAT,
+  CRCA_LANDBOT_TYPE_NATIVE,
+  CRCA_LANDBOT_TYPE_POPUP,
 } from './src/consts.js';
 
 export { crcaLandbot } from './src/redux/reducer.js';
 
-export { closeBot, openBot, setBotsConfig } from './src/redux/actions.js';
+export { crcaLandbotClose, crcaLandbotOpen } from './src/redux/actions.js';
 
 export {
   crcaLandbotLoadBySelector,

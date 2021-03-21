@@ -29,29 +29,7 @@ export {
 } from './src/redux/selectors.js';
 
 export {
-  FILTRO_TYPE_BOOLEAN,
-  FILTRO_TYPE_ENTITY,
-  FILTRO_TYPE_STRING,
-  ORDER_ASC,
-  ORDER_DESC,
-  dataViewGenerate,
-  dataViewGet,
-  dateFirebase2Js,
-  decodeField,
-  existDiffObject,
-  filterData,
-  filterAndSortData,
-  isBoolean,
-  isDefined,
-  isFunction,
-  isNull,
-  isNumber,
-  isObject,
-  isString,
-  isUndefined,
-  joinParts,
-  sortData,
-  stringifyPropValue,
+  dateFirebase2Js
 } from './src/utils/data-view-util.js';
 
 export {

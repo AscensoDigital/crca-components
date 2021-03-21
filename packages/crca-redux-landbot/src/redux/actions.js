@@ -1,6 +1,6 @@
 import { crcaUrlPageSelector } from '@ascenso/crca-redux-url-parser';
 import { infoFeedback, negativeFeedback } from '@ascenso/crca-redux-feedback';
-import { isDefined } from '@ascenso/crca-redux-firebase';
+import { isDefined } from '@ascenso/crca-utils';
 import {
   crcaLandbotActiveSelector,
   crcaLandbotBotHandleNodesSelector,
@@ -23,23 +23,19 @@ export const UPDATE_BOT_CUSTOMER_ID = 'UPDATE_BOT_CUSTOMER_ID';
 export const UPDATE_BOT_NODE = 'UPDATE_BOT_NODE';
 export const OPEN_BOT = 'OPEN_BOT';
 export const CLOSE_BOT = 'CLOSE_BOT';
+export const ADD_BOT_CONFIG = 'ADD_BOT_CONFIG';
 export const SET_BOTS_CONFIG = 'SET_BOTS_CONFIG';
 export const DESTROY_BOT = 'DESTROY_BOT';
 export const UPDATE_BOT_CONTEXT_VARS = 'UPDATE_CONTEXT_VARS';
 export const UPDATE_BOT_KEYWORD = 'UPDATE_BOT_KEYWORD';
 
-const _openBot = bot => ({
-  type: OPEN_BOT,
-  bot,
-});
-
-const _closeBot = bot => ({
-  type: CLOSE_BOT,
-  bot,
-});
-
 export const activateBot = bot => ({
   type: ACTIVATE_BOT,
+  bot,
+});
+
+const closeBot = bot => ({
+  type: CLOSE_BOT,
   bot,
 });
 
@@ -55,6 +51,11 @@ export const destroyBot = bot => ({
 
 export const finishLandbotLoad = () => ({
   type: FINISH_LANDBOT_LOAD,
+});
+
+const openBot = bot => ({
+  type: OPEN_BOT,
+  bot,
 });
 
 export const readyBot = (
@@ -82,11 +83,6 @@ export const sendVarBot = (bot, vars) => ({
     bot,
     vars,
   },
-});
-
-export const setBotsConfig = config => ({
-  type: SET_BOTS_CONFIG,
-  config,
 });
 
 export const startLandbotLoad = bot => ({
@@ -125,15 +121,6 @@ export const updateBotNode = (bot, node) => ({
     node,
   },
 });
-
-export const closeBot = bot => (dispatch, getState) => {
-  const state = getState();
-  if (crcaLandbotActiveSelector(state) === bot) {
-    dispatch(_closeBot(bot));
-    dispatch(desactivateBot(bot));
-    dispatch(sendVarBot(bot, {}));
-  }
-};
 
 const sendNode = (bot, node, customerId, botId, botToken) => dispatch => {
   console.log('TODO: sendNode', bot, node, customerId, botId, botToken);
@@ -186,7 +173,7 @@ const sendNode = (bot, node, customerId, botId, botToken) => dispatch => {
     .then(() => {
       // console.log(rs);
       dispatch(updateBotNode(bot, node));
-      dispatch(_openBot(bot));
+      dispatch(openBot(bot));
     })
     .catch(e => {
       console.log(e);
@@ -198,7 +185,24 @@ const sendNode = (bot, node, customerId, botId, botToken) => dispatch => {
   axios.defaults.headers.common = tmp;
 };
 
-export const openBot = (bot, action = '', data = {}) => (
+export const crcaLandbotAddBotConfig = (bot, config) => ({
+  type: ADD_BOT_CONFIG,
+  payload: {
+    bot,
+    config,
+  },
+});
+
+export const crcaLandbotClose = bot => (dispatch, getState) => {
+  const state = getState();
+  if (crcaLandbotActiveSelector(state) === bot) {
+    dispatch(closeBot(bot));
+    dispatch(desactivateBot(bot));
+    dispatch(sendVarBot(bot, {}));
+  }
+};
+
+export const crcaLandbotOpen = (bot, action = '', data = {}) => (
   dispatch,
   getState
 ) => {
@@ -277,9 +281,14 @@ export const openBot = (bot, action = '', data = {}) => (
       );
     }
   } else if (isDefined(action) && handleKeywords) {
-    dispatch(_openBot(bot));
+    dispatch(openBot(bot));
     dispatch(updateBotKeyword(bot, keyword));
   } else {
-    dispatch(_openBot(bot));
+    dispatch(openBot(bot));
   }
 };
+
+export const crcaLandbotSetBotsConfig = config => ({
+  type: SET_BOTS_CONFIG,
+  config,
+});

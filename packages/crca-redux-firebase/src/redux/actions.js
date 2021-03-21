@@ -10,16 +10,17 @@ import 'firebase/remote-config';
 
 import { crcaUrlIsHostProdSelector } from '@ascenso/crca-redux-url-parser';
 import {
+  isNull,
+  isObject,
+  stringifyPropValue,
+} from '@ascenso/crca-utils';
+
+import {
   crcaFirebaseAuthSignInSelector,
   crcaFirebaseConfigDevSelector,
   crcaFirebaseConfigProdSelector,
   crcaFirebaseInitSelector,
 } from './selectors.js';
-import {
-  isNull,
-  isObject,
-  stringifyPropValue,
-} from '../utils/data-view-util.js';
 
 import {
   FB_AUTH_ANONYMOUSLY,
