@@ -240,21 +240,21 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           this._activeOpened.opened === undefined ||
           this._activeOpened.opened
         ) {
+          console.log('Cierro bot de widget_close');
           CrcaStaticStore.store.dispatch(crcaLandbotClose(this.name));
-        } else {
-          console.log(`Landbot chat "${this.name}" was closed!`);
-          this.dispatchEvent(
-            new CustomEvent('crca-redux-landbot-close', {
-              bubbles: true,
-              composed: true,
-              detail: {
-                name: this.name,
-              },
-            })
-          );
         }
+        console.log(`Landbot chat "${this.name}" was closed!`);
+        this.dispatchEvent(
+          new CustomEvent('crca-redux-landbot-close', {
+            bubbles: true,
+            composed: true,
+            detail: {
+              name: this.name,
+            },
+          })
+        );
       } else {
-        console.log('evento open no procesado', this.name);
+        console.log('evento close no procesado', this.name);
       }
     });
 
@@ -375,12 +375,14 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
         if (this._activeOpened.opened) {
           this._landbot.open();
         } else if (preActiveOpened.opened) {
+          console.log('Cierro bot desde UPDATED activeOpened');
           this._landbot.close();
         }
       }
       if (preActiveOpened.bot === this.name) {
         if (preActiveOpened.opened && isUndefined(this._activeOpened.opened)) {
           this._landbot.close();
+          console.log('Cierro bot desde UPDATED PREactiveOpened');
         }
       }
     }
