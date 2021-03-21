@@ -204,18 +204,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
   }
 
   _connectEventsOpenClose() {
-    this._landbot.core.events.on('widget_open', e => {
-      console.log(e);
-      this.dispatchEvent(
-        new CustomEvent('crca-redux-landbot-open', {
-          bubbles: true,
-          composed: true,
-          detail: {
-            name: this.name,
-          },
-        })
-      );
-      console.log(`Landbot chat "${this.name}" was opened!`);
+    this._landbot.core.events.on('widget_open', () => {
       if (
         this._activeOpened.bot === undefined ||
         this._activeOpened.bot === this.name
@@ -225,23 +214,48 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           !this._activeOpened.opened
         ) {
           CrcaStaticStore.store.dispatch(crcaLandbotOpen(this.name));
+        } else {
+          console.log(`Landbot chat "${this.name}" was opened!`);
+          this.dispatchEvent(
+            new CustomEvent('crca-redux-landbot-open', {
+              bubbles: true,
+              composed: true,
+              detail: {
+                name: this.name,
+              },
+            })
+          );
         }
+      } else {
+        console.log('evento open no procesado', this.name);
       }
     });
 
-    this._landbot.core.events.on('widget_close', e => {
-      console.log(e);
-      this.dispatchEvent(
-        new CustomEvent('crca-redux-landbot-close', {
-          bubbles: true,
-          composed: true,
-          detail: {
-            name: this.name,
-          },
-        })
-      );
-      console.log(`Landbot chat "${this.name}" was closed!`);
-      CrcaStaticStore.store.dispatch(crcaLandbotClose(this.name));
+    this._landbot.core.events.on('widget_close', () => {
+      if (
+        this._activeOpened.bot === undefined ||
+        this._activeOpened.bot === this.name
+      ) {
+        if (
+          this._activeOpened.opened === undefined ||
+          this._activeOpened.opened
+        ) {
+          CrcaStaticStore.store.dispatch(crcaLandbotClose(this.name));
+        } else {
+          console.log(`Landbot chat "${this.name}" was closed!`);
+          this.dispatchEvent(
+            new CustomEvent('crca-redux-landbot-close', {
+              bubbles: true,
+              composed: true,
+              detail: {
+                name: this.name,
+              },
+            })
+          );
+        }
+      } else {
+        console.log('evento open no procesado', this.name);
+      }
     });
 
     this._landbot.core.events.on('proactive_open', e => {
