@@ -1,0 +1,24 @@
+export {
+FILTRO_TYPE_BOOLEAN,
+FILTRO_TYPE_ENTITY,
+FILTRO_TYPE_STRING,
+ORDER_ASC,
+ORDER_DESC,
+
+dataViewGenerate,
+dataViewGet,
+decodeField,
+existDiffObject,
+filterAndSortData,
+filterData,
+isBoolean,
+isDefined,
+isFunction,
+isNumber,
+isNull,
+isObject,
+isString,
+isUndefined,
+joinParts,
+sortData
+} from './src/data-utils.js';
