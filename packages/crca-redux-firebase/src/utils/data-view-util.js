@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+import { isDefined } from '@ascenso/crca-utils';
 
 export const dateFirebase2Js = date => {
   if (!isDefined(date)) {
