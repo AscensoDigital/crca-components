@@ -57,6 +57,7 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
       handleOffline: { type: Boolean },
       showEnvDev: { type: Boolean },
       showOffline: { type: Boolean },
+      reloadMaintenanceOff: { type: Boolean },
       _isDev: { type: Boolean },
       _offline: { type: Boolean },
       _suspended: { type: Boolean },
@@ -80,6 +81,7 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
     this.handleOffline = false;
     this.showEnvDev = false;
     this.showOffline = false;
+    this.reloadMaintenanceOff = false;
   }
 
   firstUpdated() {
@@ -114,15 +116,22 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
     if(changedProperties.has('_suspended') && this._suspended) {
       CrcaStaticStore.store.dispatch(crcaUrlNavigate(CRCA_URL_PAGE_SUSPENDED));
     }
+    if( changedProperties.has('_suspended') && this._suspended===false &&
+      CRCA_URL_PAGES_BLOCKED.includes(this._page)
+    ) {
+      CrcaStaticStore.store.dispatch(crcaUrlNavigate(this._lastPage));
+    }
 
     if(changedProperties.has('_maintenance') && this._maintenance) {
       CrcaStaticStore.store.dispatch(crcaUrlNavigate(CRCA_URL_PAGE_MAINTENANCE));
     }
-    if( (changedProperties.has('_suspended') || changedProperties.has('_maintenance')) &&
-      this._suspended===false && this._maintenance===false &&
+    if( changedProperties.has('_maintenance') && this._maintenance===false &&
       CRCA_URL_PAGES_BLOCKED.includes(this._page)
     ) {
-      CrcaStaticStore.store.dispatch(crcaUrlNavigate(this._lastPage));
+        CrcaStaticStore.store.dispatch(crcaUrlNavigate(this._lastPage));
+        if(this.reloadMaintenanceOff) {
+          location.reload();
+        }
     }
   }
 }
