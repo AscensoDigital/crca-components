@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-landbot",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "Webcomponent crca-redux-landbot following open-wc recommendations",
   "author": "crca-redux-landbot",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "@ascenso/crca-redux-feedback": "^0.2.2",
     "@ascenso/crca-redux-store": "^1.1.2",
     "@ascenso/crca-redux-url-parser": "^0.11.2",
-    "@ascenso/crca-utils": "^0.2.0",
+    "@ascenso/crca-utils": "^0.2.1",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "pwa-helpers": "^0.9.1",
