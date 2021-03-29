@@ -38,6 +38,23 @@ export const joinParts = (obj, struct) => {
   return null;
 };
 
+const getPropProfunda = (obj, path) => {
+  const parts = path.split('.');
+  if(isObject(obj)) {
+    const part = parts.shift();
+    if(isDefined(obj[part])) {
+      if(isObject(obj[part]) && parts.length>=1) {
+        return getPropProfunda(obj[part], parts.join('.'));
+      }
+      else if(parts.length>=1){
+        return undefined;
+      }
+      return obj[part];
+    }
+  }
+  return undefined;
+};
+
 export const dataViewGenerate = (obj, struct) => {
   const vw = {};
   // eslint-disable-next-line no-restricted-syntax
@@ -61,6 +78,11 @@ export const dataViewGenerate = (obj, struct) => {
         vw[key] = obj[prop.prop] !== undefined ? obj[prop.prop] : prop.default;
       } else if (obj[prop] !== undefined) {
         vw[key] = obj[prop];
+      } else if( prop.split('.').length > 1) {
+        const tmp = getPropProfunda(obj, prop);
+        if(tmp!==undefined) {
+          vw[key] = tmp;
+        }
       }
     }
   }
