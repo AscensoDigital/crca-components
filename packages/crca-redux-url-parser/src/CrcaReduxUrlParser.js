@@ -130,7 +130,8 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
     ) {
         CrcaStaticStore.store.dispatch(crcaUrlNavigate(this._lastPage));
         if(this.reloadMaintenanceOff) {
-          location.reload();
+          CrcaStaticStore.store.dispatch(infoFeedback('Se Recargará el sitio en 3 segundos, por actualización de versión'));
+          setTimeout(() => location.reload(), 3000);
         }
     }
   }
