@@ -23,3 +23,7 @@ joinParts,
 sortData,
 stringifyPropValue
 } from './src/data-utils.js';
+
+export {
+  generateUrl
+} from './src/endpoint-utils.js'

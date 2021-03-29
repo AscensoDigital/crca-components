@@ -1,0 +1,1 @@
+export const generateUrl = (urlParts, getVars) => `${urlParts.join('/')}?${getVars.join('&')}`;
