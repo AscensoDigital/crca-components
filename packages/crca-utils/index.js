@@ -26,4 +26,4 @@ stringifyPropValue
 
 export {
   generateUrl
-} from './src/endpoint-utils.js'
+} from './src/endpoint-utils.js';
