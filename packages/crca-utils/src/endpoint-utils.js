@@ -1,1 +1,1 @@
-export const generateUrl = (urlParts, getVars) => `${urlParts.join('/')}?${getVars.join('&')}`;
+export const generateUrl = (urlParts, getVars = null) => `${urlParts.join('/')}${!isNull(getVars) ? `?${getVars.join('&')}` : ''}`;
