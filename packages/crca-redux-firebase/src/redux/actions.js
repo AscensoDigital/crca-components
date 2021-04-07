@@ -30,6 +30,7 @@ import {
   FB_RC_TYPE_VALUE_STRING,
   FB_RC_TYPE_VALUE_VALUE
 } from '../consts.js';
+import { CrcaFirebaseLoader } from '../CrcaFirebaseLoader.js';
 
 export const SET_REMOTE_CONFIG = 'SET_REMOTE_CONFIG';
 export const SET_FIREBASE_CONFIG_DEV = 'SET_FIREBASE_CONFIG_DEV';
@@ -64,8 +65,6 @@ const updateFirebaseUser = user => ({
   user
 });
 
-let remoteConfig;
-
 export const updateLastFetch = lastFetch => ({
   type: UPDATE_LAST_FETCH,
   lastFetch,
@@ -97,10 +96,12 @@ export const successFirebaseSignIn = signInMethod => ({
   signInMethod
 });
 
-export const crcaFirebaseGet = () => firebase;
+CrcaFirebaseLoader.firebase = firebase;
+
+export const crcaFirebaseGet = () => CrcaFirebaseLoader.firebase;
 
 export const firebaseAuthStateChanged = () => (dispatch) => {
-  firebase.auth().onAuthStateChanged((user) => {
+  CrcaFirebaseLoader.firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
@@ -156,23 +157,23 @@ export const firebaseInitializeApp = (enabledAnalytics = true) => (
     return;
   }
 
-  firebase.initializeApp(config);
+  CrcaFirebaseLoader.firebase.initializeApp(config);
   dispatch(successFirebase(config));
 
   if (enabledAnalytics) {
-    firebase.analytics();
+    CrcaFirebaseLoader.firebase.analytics();
   }
 };
 
 export const firebaseRemoteConfigActivate = () => dispatch => {
-  remoteConfig
+  CrcaFirebaseLoader.remoteConfig
     .activate()
-    .then(() => dispatch(setRemoteConfig(remoteConfig.getAll())))
+    .then(() => dispatch(setRemoteConfig(CrcaFirebaseLoader.remoteConfig.getAll())))
     .catch(e => console.log('RemoteConfig: activate fail', e));
 };
 
 export const firebaseRemoteConfigFetch = () => dispatch => {
-  remoteConfig
+  CrcaFirebaseLoader.remoteConfig
     .fetch()
     .then(dispatch(updateLastFetch(new Date())))
     .catch(e => console.log('RemoteConfig: fetch fail', e));
@@ -187,14 +188,14 @@ export const firebaseRemoteConfigLoadDefault = defaultConfig => (
   const initFirebase = crcaFirebaseInitSelector(state);
 
   if (initFirebase) {
-    remoteConfig = firebase.remoteConfig();
+    CrcaFirebaseLoader.remoteConfig = CrcaFirebaseLoader.firebase.remoteConfig();
     if (!isDominioProd) {
-      remoteConfig.settings = {
+      CrcaFirebaseLoader.remoteConfig.settings = {
         minimumFetchIntervalMillis: 300000,
       };
     }
 
-    remoteConfig.defaultConfig = stringifyPropValue(defaultConfig) || {};
+    CrcaFirebaseLoader.remoteConfig.defaultConfig = stringifyPropValue(defaultConfig) || {};
 
     dispatch(successRemoteConfig());
   } else {
@@ -206,7 +207,7 @@ export const firebaseSignInAnonymously = () => (dispatch, getState) => {
   const signIn = crcaFirebaseAuthSignInSelector(getState());
 
   if(!signIn){
-    firebase.auth().signInAnonymously()
+    CrcaFirebaseLoader.firebase.auth().signInAnonymously()
     .then(() => {
       dispatch(successFirebaseSignIn(FB_AUTH_ANONYMOUSLY));
     })
@@ -222,25 +223,33 @@ export const crcaFirebaseRemoteConfigGet = (
   key,
   typeValue = FB_RC_TYPE_VALUE_VALUE
 ) => {
+  if(isNull(CrcaFirebaseLoader.remoteConfig)) {
+    console.log('No se a inicializado remoteConfig');
+    return false;
+  }
   switch (typeValue) {
     case FB_RC_TYPE_VALUE_BOOLEAN:
-      return remoteConfig.getBoolean(key);
+      return CrcaFirebaseLoader.remoteConfig.getBoolean(key);
     case FB_RC_TYPE_VALUE_NUMBER:
-      return remoteConfig.getNumber(key);
+      return CrcaFirebaseLoader.remoteConfig.getNumber(key);
     case FB_RC_TYPE_VALUE_STRING:
-      return remoteConfig.getString(key);
+      return CrcaFirebaseLoader.remoteConfig.getString(key);
     case FB_RC_TYPE_VALUE_OBJECT:
       return (
-        (isObject(remoteConfig.getValue(key)._value) &&
-          remoteConfig.getValue(key)._value) ||
-        JSON.parse(remoteConfig.getString(key)) ||
+        (isObject(CrcaFirebaseLoader.remoteConfig.getValue(key)._value) &&
+        CrcaFirebaseLoader.remoteConfig.getValue(key)._value) ||
+        JSON.parse(CrcaFirebaseLoader.remoteConfig.getString(key)) ||
         {}
       );
     default:
-      return remoteConfig.getValue(key);
+      return CrcaFirebaseLoader.remoteConfig.getValue(key);
   }
 };
 
 export const crcaFirebaseRemoteConfigGetAll = () => {
-  return remoteConfig.getAll();
+  if(isNull(CrcaFirebaseLoader.remoteConfig)) {
+    console.log('No se a inicializado remoteConfig');
+    return false;
+  }
+  return CrcaFirebaseLoader.remoteConfig.getAll();
 };

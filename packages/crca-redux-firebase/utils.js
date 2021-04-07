@@ -27,3 +27,7 @@ export {
   getQueryCollectionByPropSorted,
   getQueryCollectionSorted,
 } from './src/utils/repository.js';
+
+export {
+  CrcaFirebaseLoader
+} from './src/CrcaFirebaseLoader.js';
