@@ -1,5 +1,8 @@
-import { crcaUrlPageSelector } from '@ascenso/crca-redux-url-parser';
-import { infoFeedback, negativeFeedback } from '@ascenso/crca-redux-feedback';
+import { crcaUrlPageSelector } from '@ascenso/crca-redux-url-parser/redux';
+import {
+  infoFeedback,
+  negativeFeedback,
+} from '@ascenso/crca-redux-feedback/redux';
 import { isDefined } from '@ascenso/crca-utils';
 import {
   crcaLandbotActiveSelector,

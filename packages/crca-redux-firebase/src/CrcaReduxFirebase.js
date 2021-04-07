@@ -4,7 +4,7 @@ import { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import {
   crcaUrlDominioSelector,
   crcaUrlPageSelector,
-} from '@ascenso/crca-redux-url-parser';
+} from '@ascenso/crca-redux-url-parser/redux';
 
 import { crcaFirebase } from './redux/reducer.js';
 import {

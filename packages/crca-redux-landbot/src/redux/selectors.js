@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { crcaUrlEnvSelector } from '@ascenso/crca-redux-url-parser';
+import { crcaUrlEnvSelector } from '@ascenso/crca-redux-url-parser/redux';
 import { isDefined, isObject, isString } from '@ascenso/crca-utils';
 
 const crcaLandbotStateSelector = state => (state && state.crcaLandbot) || {};

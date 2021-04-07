@@ -8,7 +8,7 @@ import 'firebase/analytics';
 import 'firebase/auth';
 import 'firebase/remote-config';
 
-import { crcaUrlIsHostProdSelector } from '@ascenso/crca-redux-url-parser';
+import { crcaUrlIsHostProdSelector } from '@ascenso/crca-redux-url-parser/redux';
 import {
   isNull,
   isObject,

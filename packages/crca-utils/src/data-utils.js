@@ -114,6 +114,10 @@ export const dataViewGet = (obj, prop) => {
 };
 
 export const existDiffObject = (objA, objB) => {
+  if(!(isObject(objA) && isObject(objB))) {
+    return true;
+  }
+
   if(Object.keys(objA).length!==Object.keys(objB).length) {
     return true;
   }

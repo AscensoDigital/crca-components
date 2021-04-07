@@ -3,7 +3,7 @@ import { connect } from 'pwa-helpers/connect-mixin';
 import { installRouter } from 'pwa-helpers/router';
 import { installOfflineWatcher } from 'pwa-helpers/network';
 import { CrcaStaticStore } from '@ascenso/crca-redux-store';
-import { infoFeedback } from '@ascenso/crca-redux-feedback';
+import { infoFeedback } from '@ascenso/crca-redux-feedback/redux';
 
 import { crcaUrl } from './redux/reducer.js';
 import {
