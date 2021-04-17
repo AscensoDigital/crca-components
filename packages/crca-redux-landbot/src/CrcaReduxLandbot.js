@@ -181,6 +181,19 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       )
     );
 
+    this._landbot.core.events.on('lb-custom-event', (event, payload) => {
+      this.dispatchEvent(
+        new CustomEvent('crca-landbot-custom-event', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            event,
+            payload,
+          },
+        })
+      );
+    });
+
     this._landbot.core.events.on('lb-send-customer-id', data => {
       // console.log("LB_SEND_CUSTOMER_ID",data);
       CrcaStaticStore.store.dispatch(
@@ -191,7 +204,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this._landbot.core.events.on('new_message', message => {
       console.log('Message: ', message);
       this.dispatchEvent(
-        new CustomEvent('crca-redux-landbot-new-message', {
+        new CustomEvent('crca-landbot-new-message', {
           bubbles: true,
           composed: true,
           detail: {
@@ -217,7 +230,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
         } else {
           console.log(`Landbot chat "${this.name}" was opened!`);
           this.dispatchEvent(
-            new CustomEvent('crca-redux-landbot-open', {
+            new CustomEvent('crca-landbot-open', {
               bubbles: true,
               composed: true,
               detail: {
@@ -245,7 +258,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
         }
         console.log(`Landbot chat "${this.name}" was closed!`);
         this.dispatchEvent(
-          new CustomEvent('crca-redux-landbot-close', {
+          new CustomEvent('crca-landbot-close', {
             bubbles: true,
             composed: true,
             detail: {
@@ -261,7 +274,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this._landbot.core.events.on('proactive_open', e => {
       console.log(e);
       this.dispatchEvent(
-        new CustomEvent('crca-redux-landbot-proactive-open', {
+        new CustomEvent('crca-landbot-proactive-open', {
           bubbles: true,
           composed: true,
           detail: {
@@ -275,7 +288,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this._landbot.core.events.on('proactive_close', e => {
       console.log(e);
       this.dispatchEvent(
-        new CustomEvent('crca-redux-landbot-proactive-close', {
+        new CustomEvent('crca-landbot-proactive-close', {
           bubbles: true,
           composed: true,
           detail: {
@@ -289,7 +302,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this._landbot.core.events.on('lb-navigate', data => {
       // console.log("LB_NAVIGATE",data);
       this.dispatchEvent(
-        new CustomEvent('crca-redux-landbot-navigate', {
+        new CustomEvent('crca-landbot-navigate', {
           bubbles: true,
           composed: true,
           detail: {
