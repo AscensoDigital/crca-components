@@ -14,6 +14,7 @@ import {
   isObject,
   stringifyPropValue,
 } from '@ascenso/crca-utils';
+import { negativeFeedback } from '@ascenso/crca-redux-feedback/redux';
 
 import {
   crcaFirebaseAuthSignInSelector,
@@ -99,6 +100,26 @@ export const successFirebaseSignIn = signInMethod => ({
 CrcaFirebaseLoader.firebase = firebase;
 
 export const crcaFirebaseGet = () => CrcaFirebaseLoader.firebase;
+
+export const crcaFirebaseAnalyticsLogEvent = (event, payload = null) => (dispatch, getState) => {
+  if(!isObject(analytics)) {
+    dispatch(negativeFeedback('Analytics no inicializado'));
+    return;
+  }
+
+  const state = getState();
+  if(crcaFirebaseInitSelector(state)) {
+    if(isNull(payload)) {
+      analytics.logEvent(event);
+    }
+    else {
+      analytics.logEvent(event, payload);
+    }
+  }
+  else {
+    dispatch(negativeFeedback('Analytics Event sin firebase inicializado'));
+  }
+}
 
 export const firebaseAuthStateChanged = () => (dispatch) => {
   CrcaFirebaseLoader.firebase.auth().onAuthStateChanged((user) => {

@@ -3,6 +3,7 @@ export {
   setFirebaseConfigDev,
   setFirebaseConfigProd,
   successFirebaseSignIn,
+  crcaFirebaseAnalyticsLogEvent,
   crcaFirebaseRemoteConfigGet,
   crcaFirebaseRemoteConfigGetAll,
   crcaFirebaseGet,

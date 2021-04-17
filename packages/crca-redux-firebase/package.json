@@ -14,6 +14,7 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
+    "@ascenso/crca-redux-feedback": "^0.3.0",
     "@ascenso/crca-redux-store": "^1.1.2",
     "@ascenso/crca-redux-url-parser": "^0.12.0",
     "@ascenso/crca-utils": "^0.4.0",
