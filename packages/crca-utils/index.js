@@ -27,3 +27,11 @@ stringifyPropValue
 export {
   generateUrl
 } from './src/endpoint-utils.js';
+
+export {
+ jsonDelete,
+ jsonGet,
+ jsonPatch,
+ jsonPost,
+ jsonPut
+} from './src/api-utils.js'
