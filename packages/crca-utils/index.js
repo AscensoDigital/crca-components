@@ -34,4 +34,4 @@ export {
  jsonPatch,
  jsonPost,
  jsonPut
-} from './src/api-utils.js'
+} from './src/api-utils.js';
