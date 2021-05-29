@@ -1,8 +1,7 @@
-import 'firebase/firestore';
-import { crcaFirebaseGet } from '../redux/actions.js';
+import { CrcaFirebaseLoader } from "../CrcaFirebaseLoader";
 
 export const getQueryCollectionByProp = (collection, prop, value) => {
-  const db = crcaFirebaseGet().firestore();
+  const db = CrcaFirebaseLoader.firebase.firestore();
   return db.collection(collection).where(prop, '==', value);
 };
 
@@ -16,6 +15,6 @@ export const getQueryCollectionByPropSorted = (
 };
 
 export const getQueryCollectionSorted = (collection, sortProp = 'sort') => {
-  const db = crcaFirebaseGet().firestore();
+  const db = CrcaFirebaseLoader.firebase.firestore();;
   return db.collection(collection).orderBy(sortProp);
 };

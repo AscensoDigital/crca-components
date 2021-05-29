@@ -6,6 +6,7 @@ import 'firebase/analytics';
 
 // Add the Firebase products that you want to use
 import 'firebase/auth';
+import 'firebase/firestore';
 import 'firebase/remote-config';
 
 import { crcaUrlIsHostProdSelector } from '@ascenso/crca-redux-url-parser/redux';
