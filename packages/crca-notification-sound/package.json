@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@ascenso/crca-animation": "^0.3.1",
-    "@material/mwc-icon-button": "^0.20.0",
+    "@material/mwc-icon-button": "^0.21.0",
     "lit-element": "^2.4.0",
     "lit-html": "^1.3.0"
   },
