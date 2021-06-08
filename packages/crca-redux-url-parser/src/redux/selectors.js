@@ -144,5 +144,6 @@ export const crcaUrlIsHostProdSelector = createSelector (
 
 export const crcaUrlEnvSelector = createSelector (
   crcaUrlIsHostProdSelector,
-  isProd => isProd ? CRCA_URL_ENV_PROD : CRCA_URL_ENV_DEV
+  crcaUrlSubdominioSelector,
+  (isProd, subdominio) => isProd ? CRCA_URL_ENV_PROD : (subdominio!=='' && subdominio || CRCA_URL_ENV_DEV)
 );
