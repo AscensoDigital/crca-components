@@ -126,7 +126,7 @@ export const updateBotNode = (bot, node) => ({
 });
 
 const sendNode = (bot, node, customerId, botId, botToken) => dispatch => {
-  console.log('TODO: sendNode', bot, node, customerId, botId, botToken);
+  console.log(`CRCA_LANDBOT sendNode, bot: ${bot}, node: ${node}, customerId: ${customerId}, botId: ${botId}, botToken: ${botToken}`);
   // const url = `https://api.landbot.io/v1/customers/${customerId}/assign_bot/${botId}/`;
   /* const dataNode = {
     launch: true,
@@ -154,7 +154,7 @@ const sendNode = (bot, node, customerId, botId, botToken) => dispatch => {
   }); */
 
   // PARCHE
-  console.log(botToken);
+  // console.log(botToken);
   const url = `https://restu.cl/ep/lb/nodo.php`;
   const dataNode = {
     lb_id: customerId,
