@@ -103,6 +103,7 @@ CrcaFirebaseLoader.firebase = firebase;
 export const crcaFirebaseGet = () => CrcaFirebaseLoader.firebase;
 
 export const crcaFirebaseAnalyticsLogEvent = (event, payload = null) => (dispatch, getState) => {
+  // eslint-disable-next-line no-undef
   if(!isObject(analytics)) {
     dispatch(negativeFeedback('Analytics no inicializado'));
     return;
@@ -111,9 +112,11 @@ export const crcaFirebaseAnalyticsLogEvent = (event, payload = null) => (dispatc
   const state = getState();
   if(crcaFirebaseInitSelector(state)) {
     if(isNull(payload)) {
+      // eslint-disable-next-line no-undef
       analytics.logEvent(event);
     }
     else {
+      // eslint-disable-next-line no-undef
       analytics.logEvent(event, payload);
     }
   }
@@ -201,6 +204,13 @@ export const firebaseRemoteConfigFetch = () => dispatch => {
     .catch(e => console.log('RemoteConfig: fetch fail', e));
 };
 
+export const firebaseRemoteConfigFetchAndActivate = () => dispatch => {
+  CrcaFirebaseLoader.remoteConfig
+    .fetchAndActivate()
+    .then(dispatch(setRemoteConfig(CrcaFirebaseLoader.remoteConfig.getAll())))
+    .catch(e => console.log('RemoteConfig: fetchAndActivate fail', e));
+};
+
 export const firebaseRemoteConfigLoadDefault = defaultConfig => (
   dispatch,
   getState
@@ -234,8 +244,8 @@ export const firebaseSignInAnonymously = () => (dispatch, getState) => {
       dispatch(successFirebaseSignIn(FB_AUTH_ANONYMOUSLY));
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      const errorCode = error.code;
+      const errorMessage = error.message;
       console.log(`Firebase SignIn Error ${errorCode}: ${errorMessage}`);
     });
   }

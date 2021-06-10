@@ -12,6 +12,7 @@ import {
   firebaseInitializeApp,
   firebaseRemoteConfigActivate,
   firebaseRemoteConfigFetch,
+  firebaseRemoteConfigFetchAndActivate,
   firebaseRemoteConfigLoadDefault,
   firebaseSignInAnonymously,
   updateLastFetch
@@ -33,6 +34,7 @@ export class CrcaReduxFirebase extends connect(CrcaStaticStore.store)(LitElement
   static get properties() {
     return {
       defaultRemoteConfig: { type: Object },
+      fetchAndActivate: { type: Boolean },
       _dominio: { type: String },
       _firebaseInit: { type: Boolean },
       _page: { type: String },
@@ -46,6 +48,7 @@ export class CrcaReduxFirebase extends connect(CrcaStaticStore.store)(LitElement
   constructor() {
     super();
     this.defaultRemoteConfig = null;
+    this.fetchAndActivate = false;
   }
 
   stateChanged(state) {
@@ -86,10 +89,15 @@ export class CrcaReduxFirebase extends connect(CrcaStaticStore.store)(LitElement
       }
 
       if( this._remoteConfigInit && changedProperties.has('_remoteConfigInit')) {
-        CrcaStaticStore.store.dispatch(firebaseRemoteConfigActivate());
-        CrcaStaticStore.store.dispatch(firebaseRemoteConfigFetch());
+        if(this.fetchAndActivate) {
+          CrcaStaticStore.store.dispatch(firebaseRemoteConfigFetchAndActivate());
+        }
+        else {
+          CrcaStaticStore.store.dispatch(firebaseRemoteConfigActivate());
+          CrcaStaticStore.store.dispatch(firebaseRemoteConfigFetch());
+        }
       }
-      else if ( changedProperties.has('_page') && this._page && this._lastFetch ) {
+      else if (!this.fetchAndActivate && changedProperties.has('_page') && this._page && this._lastFetch ) {
         CrcaStaticStore.store.dispatch(firebaseRemoteConfigActivate());
         CrcaStaticStore.store.dispatch(updateLastFetch(null));
       }
