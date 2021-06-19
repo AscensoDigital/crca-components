@@ -27,10 +27,10 @@ const fetchMethod = (method, url, config) => {
     })
     .then(response => {
       if(response.ok) {
-        response.json();
+        return response.json();
       }
       else {
-        reject(response);
+        return reject(response);
       }
     })
     .then(data => resolve(data))
