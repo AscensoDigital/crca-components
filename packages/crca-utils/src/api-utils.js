@@ -17,8 +17,7 @@ const fetchMethod = (method, url, config) => {
     }
 
     if(Object.keys(heads).length) {
-      customHeaders = new Headers(heads);
-      params.headers = customHeaders;
+      params.headers = new Headers(heads);
     }
 
     fetch(url, {
