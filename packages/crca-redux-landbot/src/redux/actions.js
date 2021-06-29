@@ -260,7 +260,7 @@ export const crcaLandbotOpen = (bot, action = '', data = {}) => (
 
   const vars = {
     ...contextVars,
-    payload: {
+    detail: {
       ...data,
     },
   };
