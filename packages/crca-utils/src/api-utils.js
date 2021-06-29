@@ -26,7 +26,14 @@ const fetchMethod = (method, url, config) => {
     })
     .then(response => {
       if(response.ok) {
-        return response.json();
+        const contentType = response.headers.get("content-type");
+        if(contentType && contentType.indexOf("application/json") !== -1) {
+          return response.json();
+        } /* else {
+          console.log("ContentType: ", contentType);
+        }
+        console.log("FETCH: ",response); */
+        return resolve(false);
       }
       else {
         return reject(response);
