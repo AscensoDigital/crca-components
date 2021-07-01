@@ -35,3 +35,7 @@ export {
  jsonPost,
  jsonPut
 } from './src/api-utils.js';
+
+export {
+  sendErrorDiscord
+} from './src/error-utils.js';
