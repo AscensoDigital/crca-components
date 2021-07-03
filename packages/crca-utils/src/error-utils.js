@@ -1,4 +1,4 @@
-import { isFunction, jsonPost } from "@ascenso/crca-utils";
+import { isFunction, isObject, jsonPost } from "@ascenso/crca-utils";
 
 export const sendErrorDiscord = (
   discordUrl,
