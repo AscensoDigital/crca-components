@@ -1,4 +1,4 @@
-import { isFunction, isObject, jsonPost } from "@ascenso/crca-utils";
+import { isString, isFunction, isObject, jsonPost } from "./data-utils";
 
 export const sendErrorDiscord = (
   discordUrl,
@@ -35,6 +35,9 @@ export const sendErrorDiscord = (
     Object.keys(error).forEach(key => {
       content.push(`error - ${key}: ${error[key]}`);
     });
+  }
+  else if(isString(error)) {
+    content.push(`error: ${error}`);
   }
 
   if(isObject(data)) {
