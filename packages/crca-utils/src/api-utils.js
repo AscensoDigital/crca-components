@@ -25,22 +25,26 @@ const fetchMethod = (method, url, config) => {
       ...params
     })
     .then(response => {
+      const contentType = response.headers.get("content-type");
       if(response.ok) {
-        const contentType = response.headers.get("content-type");
         if(contentType && contentType.indexOf("application/json") !== -1) {
-          return response.json();
-        } /* else {
-          console.log("ContentType: ", contentType);
+          return response.json().then(data => resolve(data));
         }
-        console.log("FETCH: ",response); */
+        console.log("RESOLVE FETCH NO JSON: ",response);
         return resolve(false);
       }
       else {
+        if(contentType && contentType.indexOf("application/json") !== -1) {
+          return response.json().then(err => reject(err));
+        }
+        console.log("REJECT FETCH NO JSON: ", response);
         return reject(response);
       }
     })
-    .then(data => resolve(data))
-    .catch(err => reject(err));
+    .catch(err =>  {
+      console.log(err);
+      return reject(err);
+    });
   });
   return prom;
 }
