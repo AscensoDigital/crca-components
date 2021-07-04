@@ -6,12 +6,14 @@ export const sendErrorDiscord = (
   data = {},
   tag = null,
 ) => {
-  // console.log('Process Error - discordUrl: ', discordUrl);
-  // console.log('Process Error - error: ', error);
-  // console.log('Process Error - data: ',data);
-  // console.log('Process Error - tag: ',tag);
+  // console.log('sendErrorDiscord - discordUrl: ', discordUrl);
+  // console.log('sendErrorDiscord - error: ', error);
+  // console.log('sendErrorDiscord - data: ',data);
+  // console.log('sendErrorDiscord - tag: ',tag);
+  // console.log('sendErrorDiscord isObject(error): ',isObject(error));
+
   const content = [`tag: ${tag}`];
-  if(isObject(error)) {
+  if(isObject(error) && Object.keys(error).length) {
     Object.keys(error).forEach(key => {
       content.push(`error - ${key}: ${error[key]}`);
     });
@@ -34,8 +36,9 @@ export const sendErrorDiscord = (
       }
     });
   }
-  // console.log('Process Error - content.lengt: ', content.join("\n").length);
-  // console.log('Process Error - content: ', content.join("\n"));
+  content.push("------------");
+  // console.log('sendErrorDiscord - content.lengt: ', content.join("\n").length);
+  // console.log('sendErrorDiscord - content: ', content.join("\n"));
   jsonPost(discordUrl, { data: { "content": content.join("\n") } })
   .catch(err => {
     console.log(err.content || err);
