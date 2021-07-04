@@ -16,6 +16,9 @@ export const sendErrorDiscord = (
       content.push(`error - ${key}: ${error[key]}`);
     });
   }
+  else {
+    content.push(`error: ${error}`);
+  }
 
   if(isObject(data)) {
     Object.keys(data).forEach(key => {
