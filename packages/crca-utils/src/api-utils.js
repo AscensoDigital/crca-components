@@ -35,7 +35,7 @@ const fetchMethod = (method, url, config) => {
           console.log("RESOLVE FETCH NO JSON: ",response);
           return resolve(response);
         }
-        return resolve(false);
+        return resolve(true);
       }
       else {
         if(contentType && contentType.indexOf("application/json") !== -1) {
@@ -45,7 +45,7 @@ const fetchMethod = (method, url, config) => {
           console.log("REJECT FETCH NO JSON: ", response);
           return reject(response);
         }
-        return reject(false);
+        return reject(true);
       }
     })
     .catch(err =>  {
