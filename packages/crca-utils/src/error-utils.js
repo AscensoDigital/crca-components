@@ -13,13 +13,28 @@ export const sendErrorDiscord = (
   // console.log('sendErrorDiscord isObject(error): ',isObject(error));
 
   const content = [`tag: ${tag}`];
+  if(error.name!==undefined) {
+    content.push(`error - name: ${error.name}`);
+  }
+  if(error.message!==undefined) {
+    content.push(`error - message: ${error.message}`);
+  }
+  if(error.fileName!==undefined) {
+    content.push(`error - fileName: ${error.fileName}`);
+  }
+  if(error.lineNumber!==undefined) {
+    content.push(`error - lineNumber: ${error.lineNumber}`);
+  }
+  if(error.columnNumber!==undefined) {
+    content.push(`error - columnNumber: ${error.columnNumber}`);
+  }
+  if(error.stack!==undefined) {
+    content.push(`error - stack: ${error.stack}`);
+  }
   if(isObject(error) && Object.keys(error).length) {
     Object.keys(error).forEach(key => {
       content.push(`error - ${key}: ${error[key]}`);
     });
-  }
-  else {
-    content.push(`error: ${error}`);
   }
 
   if(isObject(data)) {
