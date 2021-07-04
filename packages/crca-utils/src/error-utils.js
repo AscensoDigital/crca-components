@@ -31,7 +31,10 @@ export const sendErrorDiscord = (
       }
     });
   }
-  console.log('Process Error - content.lengt: ', content.join("\n").length);
+  // console.log('Process Error - content.lengt: ', content.join("\n").length);
   // console.log('Process Error - content: ', content.join("\n"));
-  return jsonPost(discordUrl, { data: { "content": content.join("\n") } });
+  jsonPost(discordUrl, { data: { "content": content.join("\n") } })
+  .catch(err => {
+    console.log(err.content || err);
+  })
 };
