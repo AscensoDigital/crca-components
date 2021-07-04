@@ -1,4 +1,5 @@
-import { isString, isFunction, isObject, jsonPost } from "./data-utils";
+import { jsonPost } from "./api-utils";
+import { isString, isFunction, isObject } from "./data-utils";
 
 export const sendErrorDiscord = (
   discordUrl,
