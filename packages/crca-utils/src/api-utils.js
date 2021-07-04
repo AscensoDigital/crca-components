@@ -30,19 +30,26 @@ const fetchMethod = (method, url, config) => {
         if(contentType && contentType.indexOf("application/json") !== -1) {
           return response.json().then(data => resolve(data));
         }
-        console.log("RESOLVE FETCH NO JSON: ",response);
+
+        if(response.status!==204) {
+          console.log("RESOLVE FETCH NO JSON: ",response);
+          return resolve(response);
+        }
         return resolve(false);
       }
       else {
         if(contentType && contentType.indexOf("application/json") !== -1) {
           return response.json().then(err => reject(err));
         }
-        console.log("REJECT FETCH NO JSON: ", response);
-        return reject(response);
+        if(response.status!==204) {
+          console.log("REJECT FETCH NO JSON: ", response);
+          return reject(response);
+        }
+        return reject(false);
       }
     })
     .catch(err =>  {
-      console.log(err);
+      console.log("FETCH CATCH:", err);
       return reject(err);
     });
   });
