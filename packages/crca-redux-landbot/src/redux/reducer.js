@@ -14,12 +14,14 @@ import {
   UPDATE_BOT_CONTEXT_VARS,
   UPDATE_BOT_KEYWORD,
   ADD_BOT_CONFIG,
+  ERROR_LANDBOT_LOAD,
 } from './actions.js';
 
 const initialState = {
   load: {
     loadBy: '',
     loaded: false,
+    error: false
   },
   bots: {},
   active: '',
@@ -42,6 +44,14 @@ export const crcaLandbot = (state = initialState, action) => {
         load: {
           ...state.load,
           loaded: true,
+        },
+      };
+    case ERROR_LANDBOT_LOAD:
+      return {
+        ...state,
+        load: {
+          ...state.load,
+          error: true,
         },
       };
     case READY_BOT:

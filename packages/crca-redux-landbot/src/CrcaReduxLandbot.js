@@ -18,6 +18,7 @@ import {
   finishLandbotLoad,
   updateBotContextVars,
   crcaLandbotAddBotConfig,
+  errorLandbotLoad,
 } from './redux/actions.js';
 
 import {
@@ -317,7 +318,16 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
 
   // eslint-disable-next-line class-methods-use-this
   _loadedLandbot() {
-    CrcaStaticStore.store.dispatch(finishLandbotLoad());
+    // eslint-disable-next-line no-undef
+    if(Landbot!==undefined) {
+      CrcaStaticStore.store.dispatch(finishLandbotLoad());
+    }
+    else {
+      CrcaStaticStore.store.dispatch(errorLandbotLoad());
+      CrcaStaticStore.store.dispatch(
+        negativeFeedback(`No se cargo Correctamente Landbot`)
+      );
+    }
   }
 
   _loadLandbot() {

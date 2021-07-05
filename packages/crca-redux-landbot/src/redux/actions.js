@@ -18,6 +18,7 @@ import {
 
 export const START_LANDBOT_LOAD = 'START_LANDBOT_LOAD';
 export const FINISH_LANDBOT_LOAD = 'FINISH_LANDBOT_LOAD';
+export const ERROR_LANDBOT_LOAD = 'ERROR_LANDBOT_LOAD';
 export const ACTIVATE_BOT = 'ACTIVATE_BOT';
 export const DESACTIVATE_BOT = 'DESACTIVATE_BOT';
 export const READY_BOT = 'READY_BOT';
@@ -50,6 +51,10 @@ export const desactivateBot = bot => ({
 export const destroyBot = bot => ({
   type: DESTROY_BOT,
   bot,
+});
+
+export const errorLandbotLoad = () => ({
+  type: ERROR_LANDBOT_LOAD,
 });
 
 export const finishLandbotLoad = () => ({
