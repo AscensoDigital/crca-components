@@ -1,6 +1,24 @@
 import { jsonPost } from "./api-utils";
 import { isString, isFunction, isObject } from "./data-utils";
 
+
+const recursionObject2Array = (obj, keyBase = '') => {
+  const ret = [];
+  const strKeyBase = `${keyBase.length ? `${keyBase} - ` : ''}`;
+  if(isObject(obj) && Object.keys(obj).length ) {
+    if(isObject(obj[key])) {
+      ret.push(...recursionObject2Array(obj[key], `${strKeyBase}${key}`));
+    }
+    else if(!isFunction(obj[key])){
+      ret.push(`${strKeyBase}${key}: ${obj[key]}`);
+    }
+  }
+  else if(isString(obj)) {
+    content.push(`${keyBase}: ${obj}`);
+  }
+  return ret;
+}
+
 export const sendErrorDiscord = (
   discordUrl,
   error,
@@ -32,29 +50,16 @@ export const sendErrorDiscord = (
   if(error.stack!==undefined) {
     content.push(`error - stack: ${error.stack}`);
   }
-  if(isObject(error) && Object.keys(error).length) {
-    Object.keys(error).forEach(key => {
-      content.push(`error - ${key}: ${error[key]}`);
-    });
-  }
-  else if(isString(error)) {
-    content.push(`error: ${error}`);
+  const arrError = recursionObject2Array(error,'error');
+  if(arrError.length) {
+    content.push(...arrError);
   }
 
-  if(isObject(data)) {
-    Object.keys(data).forEach(key => {
-      if(isObject(data[key])) {
-        Object.keys(data[key]).forEach(ObjKey => {
-          if(!isFunction(data[key][ObjKey])) {
-            content.push(`${key} - ${ObjKey}: ${data[key][ObjKey]}`);
-          }
-        });
-      }
-      else {
-        content.push(`${key}: ${data[key]}`);
-      }
-    });
+  const arrData = recursionObject2Array(data);
+  if(arrData.length) {
+    content.push(...arrData);
   }
+
   content.push("------------");
   // console.log('sendErrorDiscord - content.lengt: ', content.join("\n").length);
   // console.log('sendErrorDiscord - content: ', content.join("\n"));
