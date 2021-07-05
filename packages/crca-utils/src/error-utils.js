@@ -16,7 +16,7 @@ const recursionObject2Array = (obj, keyBase = '') => {
     });
   }
   else if(!isFunction(obj)) {
-    content.push(`${keyBase}: ${obj}`);
+    ret.push(`${keyBase}: ${obj}`);
   }
   return ret;
 }
