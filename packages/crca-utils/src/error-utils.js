@@ -6,12 +6,14 @@ const recursionObject2Array = (obj, keyBase = '') => {
   const ret = [];
   const strKeyBase = `${keyBase.length ? `${keyBase} - ` : ''}`;
   if(isObject(obj) && Object.keys(obj).length ) {
-    if(isObject(obj[key])) {
-      ret.push(...recursionObject2Array(obj[key], `${strKeyBase}${key}`));
-    }
-    else if(!isFunction(obj[key])){
-      ret.push(`${strKeyBase}${key}: ${obj[key]}`);
-    }
+    Object.keys(obj).forEach(key => {
+      if(isObject(obj[key])) {
+        ret.push(...recursionObject2Array(obj[key], `${strKeyBase}${key}`));
+      }
+      else if(!isFunction(obj[key])){
+        ret.push(`${strKeyBase}${key}: ${obj[key]}`);
+      }
+    });
   }
   else if(isString(obj)) {
     content.push(`${keyBase}: ${obj}`);
