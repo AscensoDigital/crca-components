@@ -3,7 +3,7 @@ import { connect } from 'pwa-helpers';
 
 import { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import { negativeFeedback } from '@ascenso/crca-redux-feedback/redux';
-import { existDiffObject, isDefined, isUndefined } from '@ascenso/crca-utils';
+import { existDiffObject, isDefined, isUndefined, sendErrorDiscord } from '@ascenso/crca-utils';
 
 import { crcaLandbot } from './redux/reducer.js';
 
@@ -59,6 +59,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       type: { type: String },
       open: { type: Boolean },
       botConfig: { type: Object },
+      discordUrl: { type: String },
       _activeKeyword: { type: Object },
       _activeOpened: { type: Object },
       _activeVars: { type: Object },
@@ -81,6 +82,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this.open = false;
     this.manualCreate = false;
     this.botConfig = null;
+    this.discordUrl = '';
   }
 
   stateChanged(state) {
@@ -317,7 +319,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
   }
 
   // eslint-disable-next-line class-methods-use-this
-  _loadedLandbot() {
+  _loadedLandbot(e) {
     // eslint-disable-next-line no-undef
     if(Landbot!==undefined) {
       CrcaStaticStore.store.dispatch(finishLandbotLoad());
@@ -327,6 +329,20 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       CrcaStaticStore.store.dispatch(
         negativeFeedback(`No se cargo Correctamente Landbot`)
       );
+      console.log(e);
+      if(this.discordUrl!=='') {
+        const data = {
+          location: window.location,
+          userAgent: window.navigator.userAgent,
+          info: {
+            botName: this.name,
+            botConfig: this.botConfig,
+            contextVars: this.contextVars,
+            config: this._config,
+          }
+        };
+        sendErrorDiscord(this.discordUrl,e,data, 'loadedLandbot');
+      }
     }
   }
 
