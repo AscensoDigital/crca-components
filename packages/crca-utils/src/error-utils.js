@@ -1,5 +1,5 @@
 import { jsonPost } from "./api-utils";
-import { isString, isFunction, isObject } from "./data-utils";
+import { isFunction, isObject } from "./data-utils";
 
 
 const recursionObject2Array = (obj, keyBase = '') => {
@@ -15,7 +15,7 @@ const recursionObject2Array = (obj, keyBase = '') => {
       }
     });
   }
-  else if(!isFunction(obj)) {
+  else if(!isFunction(obj) && !isObject(obj)) {
     ret.push(`${keyBase}: ${obj}`);
   }
   return ret;
