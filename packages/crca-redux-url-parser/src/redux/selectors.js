@@ -5,9 +5,6 @@ import { CRCA_URL_ENV_DEV, CRCA_URL_ENV_PROD, CRCA_URL_STATUS_MAINTENANCE, CRCA_
 const crcaUrlStateSelector = state => state && state.crcaUrl || {};
 
 export const crcaUrlIsDomainProd = (domain, dominiosProd) => {
-  if(dominiosProd.length===0) {
-    return true;
-  }
   for (const dom of dominiosProd) {
     const pos = domain.indexOf(dom);
     const len = domain.length;
