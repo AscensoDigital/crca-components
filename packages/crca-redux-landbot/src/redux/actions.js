@@ -210,7 +210,7 @@ export const crcaLandbotClose = bot => (dispatch, getState) => {
   }
 };
 
-export const crcaLandbotOpen = (bot, action = '', data = {}) => (
+export const crcaLandbotOpen = (bot, action = '', data = {}, nodeDefault = false) => (
   dispatch,
   getState
 ) => {
@@ -227,7 +227,7 @@ export const crcaLandbotOpen = (bot, action = '', data = {}) => (
   if (isDefined(action)) {
     let error = false;
     if (handleNodes) {
-      node = crcaLandbotConfigBotNodeSelector(bot, `${page}_${action}`, state);
+      node = crcaLandbotConfigBotNodeSelector(bot, `${page}_${action}`, state) || nodeDefault;
 
       if (botToken === false) {
         dispatch(infoFeedback(`Token para el bot ${bot}, no configurado`));
