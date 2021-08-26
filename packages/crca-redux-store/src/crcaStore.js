@@ -3,7 +3,7 @@ import {
   applyMiddleware,
   combineReducers
 } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly.js';
 
 import { lazyReducerEnhancer } from 'pwa-helpers/lazy-reducer-enhancer.js';
 
