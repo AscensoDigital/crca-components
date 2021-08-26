@@ -7,7 +7,7 @@ export const loadState = (key = null) => {
       return undefined; // Si no existe el state en el local storage devolvemos undefined para que cargue el state inicial que hayamos definido
     }
     const state = JSON.parse(serializedData);
-    return key!==null && state[key] ||  key===null && state || undefined; // Si encontramos con exito nuestro storage lo devolvemos.
+    return key!==null && state[key] ||  key===null && state || undefined;
   } catch (error) {
     return undefined; // Si ocurre algun error, devuelvo undefined para cargar el state inicial.
   }
