@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-feedback",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Webcomponent crca-redux-feedback following open-wc recommendations",
   "author": "crca-redux-feedback",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "@ascenso/crca-redux-store": "^1.2.1",
+    "@ascenso/crca-redux-store": "^1.2.2",
     "@dile/dile-toast": "^1.0.0",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",

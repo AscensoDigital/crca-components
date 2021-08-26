@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-redux-store",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Sotre de redux",
   "author": "Claudio Corvalan",
   "license": "ISC",
