@@ -386,9 +386,12 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     }
 
     if (this._isReady && changedProperties.has('contextVars')) {
-      CrcaStaticStore.store.dispatch(
-        updateBotContextVars(this.name, this.contextVars)
-      );
+      const preContextVars = changedProperties.get('contextVars');
+      if(existDiffObject(preContextVars, this.contextVars)) {
+        CrcaStaticStore.store.dispatch(
+          updateBotContextVars(this.name, this.contextVars)
+        );
+      }
     }
 
     if (changedProperties.has('_activeVars')) {
