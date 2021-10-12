@@ -6,7 +6,8 @@ import {
   initializeFirebase,
   loadEstados,
 } from './redux/actions/app.actions.js';
-import '@dile/dile-modal/dile-modal';
+
+// import '@dile/dile-modal/dile-modal';
 
 export class CrcaAgendaEstadoInit extends connect(store)(LitElement) {
   static get styles() {
