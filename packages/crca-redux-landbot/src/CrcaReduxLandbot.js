@@ -388,6 +388,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     if (this._isReady && changedProperties.has('contextVars')) {
       const preContextVars = changedProperties.get('contextVars');
       if(existDiffObject(preContextVars, this.contextVars)) {
+        console.log('UPDATE CONTEXT_VARS');
         CrcaStaticStore.store.dispatch(
           updateBotContextVars(this.name, this.contextVars)
         );
@@ -405,7 +406,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
         // console.log('LB-SEND-VARS', this._activeVars.vars);
         // this._landbot.core.events.emit('lb-send-vars', this._activeVars.vars);
 
-        // console.log('setCustomData', this._activeVars.vars);
+        console.log('setCustomData', this._activeVars.vars);
         this._landbot.setCustomData(this._activeVars.vars);
       }
     }
