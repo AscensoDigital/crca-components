@@ -77,7 +77,7 @@ export class CrcaStepper extends CrcaStatusLightMixin(LitElement) {
     return html`
       <div class="${classMap(this._classMap)}">
         ${this.label ? html`<label>${this.label}</label>` : ''}
-        <mwc-button 
+        <mwc-button
           ?dense=${this.dense}
           ?raised=${this.raised}
           ?outlined=${this.outlined}
@@ -85,11 +85,11 @@ export class CrcaStepper extends CrcaStatusLightMixin(LitElement) {
           @click=${this._decrement}
         >-</mwc-button>
         <span>${this.value}</span>
-        <mwc-button 
+        <mwc-button
           ?dense=${this.dense}
           ?raised=${this.raised}
           ?outlined=${this.outlined}
-          ?disabled=${this._canIncrement===false}  
+          ?disabled=${this._canIncrement===false}
           @click=${this._increment}
         >+</mwc-button>
       </div>
@@ -108,7 +108,7 @@ export class CrcaStepper extends CrcaStatusLightMixin(LitElement) {
   get _canIncrement() {
     const value = this.value===undefined ? 0 : this.value;
     const newValue = Number(value) + Number(this.step);
-    if(this.min===null || newValue >= this.min) {
+    if(this.max===null || newValue <= this.max) {
       return newValue;
     }
     return false;
