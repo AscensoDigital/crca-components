@@ -16,7 +16,7 @@
   "dependencies": {
     "@ascenso/crca-redux-store": "file:../crca-redux-store",
     "@dile/dile-spinner": "^1.0.0",
-    "@material/mwc-circular-progress": "^0.21.0",
+    "@material/mwc-circular-progress": "^0.25.3",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "pwa-helpers": "^0.9.1",
@@ -27,7 +27,7 @@
     "@open-wc/testing": "^2.0.0",
     "@web/dev-server": "^0.1.1",
     "@web/test-runner": "^0.11.5",
-    "eslint": "^6.1.0",
+    "eslint": "^8.1.0",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^1.0.0",
     "lint-staged": "^10.0.0",
