@@ -4,20 +4,24 @@ import { classMap } from 'lit-html/directives/class-map.js';
 import { CrcaStatusLightMixin } from '@ascenso/crca-status-light/src/mixin/crca-status-light-mixin.js';
 
 import '@material/mwc-button';
+import '@material/mwc-icon-button';
 
 export class CrcaStepper extends CrcaStatusLightMixin(LitElement) {
   static get styles() {
     return css`
       :host {
         display: inline-flex;
+        --mdc-icon-size: var(--crca-stepper-icon-size, 0);
+        --mdc-icon-button-size: var(--crca-stepper-icon-button-size, 48px);
       }
       div {
         display: flex;
         position: relative;
         align-items: center;
         justify-content: space-between;
-        padding: 2px;
-        min-width: var(--crca-stepper-width,100px);
+        padding: var(--crca-stepper-padding, 2px);
+        min-width: var(--crca-stepper-min-width, 100px);
+        max-width: var(--crca-stepper-max-width, 200px);
         color: var(--crca-stepper-text-color, --mdc-theme-primary);
         border-radius: var(--crca-stepper-border-radius, 5px);
         border-width: var(--crca-stepper-border-width, 1px);
@@ -40,10 +44,11 @@ export class CrcaStepper extends CrcaStatusLightMixin(LitElement) {
         justify-content: center;
         align-items: center;
         align-self: stretch;
-        min-width: 50px;
+        min-width: var(--crca-stepper-value-min-width, 40px);
+        max-width: var(--crca-stepper-value-max-width, 80px);
         flex-grow: 1;
-        margin: 0 5px;
-        padding: 0 5px;
+        margin: var(--crca-stepper-value-margin, 0 5px);
+        padding: var(--crca-stepper-value-padding, 0 5px);
         user-select: none;
         border-radius: var(--crca-stepper-value-border-radius, 3px);
         border-width: var(--crca-stepper-value-border-width, 1px);
@@ -61,37 +66,66 @@ export class CrcaStepper extends CrcaStatusLightMixin(LitElement) {
       step: { type: Number },
       dense: { type: Boolean },
       raised: { type: Boolean },
-      outlined: { type: Boolean }
+      outlined: { type: Boolean },
+      iconButton: { type: Boolean },
+      iconDecrement: { type: String },
+      iconLabelDecrement: { type: String },
+      iconIncrement: { type: String },
+      iconLabelIncrement: { type: String }
     };
   }
 
   constructor() {
     super();
     this.step = 1;
-    this.min=null;
-    this.max=null;
-    this.label="";
+    this.min = null;
+    this.max = null;
+    this.label = "";
+    this.dense = false;
+    this.raised = false;
+    this.outlined = false;
+    this.iconButton = false;
+    this.labelDecrement = "-";
+    this.iconDecrement = ""
+    this.labelIncrement = "+";
+    this.iconIncrement = ""
   }
 
   render() {
     return html`
       <div class="${classMap(this._classMap)}">
         ${this.label ? html`<label>${this.label}</label>` : ''}
-        <mwc-button
-          ?dense=${this.dense}
-          ?raised=${this.raised}
-          ?outlined=${this.outlined}
-          ?disabled=${this._canDecrement===false}
-          @click=${this._decrement}
-        >-</mwc-button>
+        ${this.iconButton
+          ?  html`<mwc-icon-button
+                    .icon=${this.iconDecrement}
+                    ?disabled=${this._canDecrement===false}
+                    @click=${this._decrement}
+                  >${this.labelDecrement}</mwc-icon-button>`
+          : html`<mwc-button
+                  ?dense=${this.dense}
+                  ?raised=${this.raised}
+                  ?outlined=${this.outlined}
+                  ?disabled=${this._canDecrement===false}
+                  @click=${this._decrement}
+                  .icon=${this.iconDecrement}
+                >${this.labelDecrement}</mwc-button>`
+        }
         <span>${this.value}</span>
-        <mwc-button
-          ?dense=${this.dense}
-          ?raised=${this.raised}
-          ?outlined=${this.outlined}
-          ?disabled=${this._canIncrement===false}
-          @click=${this._increment}
-        >+</mwc-button>
+        ${this.iconButton
+          ?  html`<mwc-icon-button
+                    .icon=${this.iconIncrement}
+                    ?disabled=${this._canIncrement===false}
+                    @click=${this._increment}
+                  >${this.labelIncrement}</mwc-icon-button>`
+          : html`<mwc-button
+                    ?dense=${this.dense}
+                    ?raised=${this.raised}
+                    ?outlined=${this.outlined}
+                    ?disabled=${this._canIncrement===false}
+                    @click=${this._increment}
+                    .icon=${this.iconIncrement}
+                  >${this.labelIncrement}</mwc-button>`
+        }
       </div>
     `;
   }
