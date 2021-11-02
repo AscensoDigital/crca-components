@@ -22,11 +22,11 @@ export class CrcaStepper extends CrcaStatusLightMixin(LitElement) {
         padding: var(--crca-stepper-padding, 2px);
         min-width: var(--crca-stepper-min-width, 100px);
         max-width: var(--crca-stepper-max-width, 200px);
-        color: var(--crca-stepper-text-color, --mdc-theme-primary);
+        color: var(--crca-stepper-text-color, #000);
         border-radius: var(--crca-stepper-border-radius, 5px);
         border-width: var(--crca-stepper-border-width, 1px);
         border-style: var(--crca-stepper-border-style, solid);
-        border-color: var(--crca-stepper-border-color, --mdc-theme-primary);
+        border-color: var(--crca-stepper-border-color, var(--mdc-theme-primary));
       }
       div.label {
         padding: 15px 5px 5px;
@@ -57,7 +57,7 @@ export class CrcaStepper extends CrcaStatusLightMixin(LitElement) {
         border-radius: var(--crca-stepper-value-border-radius, 3px);
         border-width: var(--crca-stepper-value-border-width, 1px);
         border-style: var(--crca-stepper-value-border-style, solid);
-        border-color: var(--crca-stepper-value-border-color, --mdc-theme-primary);
+        border-color: var(--crca-stepper-value-border-color, var(--mdc-theme-primary));
       }
     `;
   }
