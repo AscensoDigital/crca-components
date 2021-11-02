@@ -39,8 +39,12 @@ export class CrcaStepper extends CrcaStatusLightMixin(LitElement) {
         background-color: #fff;
         padding: 1px 2px;
       }
+      mwc-icon-button {
+        color: var(--mdc-theme-primary);
+      }
       span {
         display: flex;
+        box-sizing:border-box;
         justify-content: center;
         align-items: center;
         align-self: stretch;
@@ -113,6 +117,7 @@ export class CrcaStepper extends CrcaStatusLightMixin(LitElement) {
         <span>${this.value}</span>
         ${this.iconButton
           ?  html`<mwc-icon-button
+                    ?raised=${this.raised}
                     .icon=${this.iconIncrement}
                     ?disabled=${this._canIncrement===false}
                     @click=${this._increment}
