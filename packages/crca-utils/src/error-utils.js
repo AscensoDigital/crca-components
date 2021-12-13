@@ -62,20 +62,11 @@ export const sendErrorDiscord = (
     content.push(...arrData);
   }
 
-  jsonGet("https://api.ipify.org?format=json")
-    .then(response => {
-      if(response.ip) {
-        content.push(`IP: ${response.ip}`);
-      }
-      content.push("------------");
-      jsonPost(discordUrl, { data: { "content": content.join("\n") } })
-    })
-    .catch(errIp => {
-      const arrErrorIp = recursionObject2Array(errIp,'errorIp');
-      if(arrErrorIp.length) {
-        content.push(...arrErrorIp);
-      }
-      content.push("------------");
-      jsonPost(discordUrl, { data: { "content": content.join("\n") } })
-    })
+  content.push("------------");
+  // console.log('sendErrorDiscord - content.lengt: ', content.join("\n").length);
+  // console.log('sendErrorDiscord - content: ', content.join("\n"));
+  jsonPost(discordUrl, { data: { "content": content.join("\n") } })
+  .catch(err => {
+    console.log(err.content || err);
+  });
 };
