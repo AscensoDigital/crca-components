@@ -227,13 +227,14 @@ export const crcaLandbotOpen = (bot, action = '', data = {}, nodeDefault = false
   if (isDefined(action)) {
     let error = false;
     if (handleNodes) {
-      node = crcaLandbotConfigBotNodeSelector(bot, `${page}_${action}`, state) || nodeDefault;
-
       if (botToken === false) {
         dispatch(infoFeedback(`Token para el bot ${bot}, no configurado`));
         error = true;
       }
 
+      node = crcaLandbotConfigBotNodeSelector(bot, `${page}_${action}`, state) ||
+              crcaLandbotConfigBotNodeSelector(bot, action, state) ||
+              nodeDefault;
       if (node === false) {
         dispatch(
           infoFeedback(`Bot asistente para: ${page} ${action}, no configurado`)
@@ -244,17 +245,21 @@ export const crcaLandbotOpen = (bot, action = '', data = {}, nodeDefault = false
 
     if (handleKeywords && isDefined(action)) {
       keyword = `${page}_${action}`;
-      const keywordLabel = crcaLandbotConfigBotKeywordSelector(
+      let keywordLabel = crcaLandbotConfigBotKeywordSelector(
         bot,
-        `${keyword}`,
+        keyword,
         state
       );
 
       if (keywordLabel === false) {
-        dispatch(
-          infoFeedback(`Bot asistente para: ${page} ${action}, no configurado`)
-        );
-        error = true;
+        keyword = action;
+        keywordLabel = crcaLandbotConfigBotKeywordsSelector(bot, keyword, state);
+        if(keywordLabel === false) {
+          dispatch(
+            infoFeedback(`Bot asistente para: ${page} ${action}, no configurado`)
+          );
+          error = true;
+        }
       }
     }
 
