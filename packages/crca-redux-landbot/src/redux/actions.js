@@ -235,7 +235,7 @@ export const crcaLandbotOpen = (bot, action = '', data = {}, nodeDefault = false
       node = crcaLandbotConfigBotNodeSelector(bot, `${page}_${action}`, state) ||
               crcaLandbotConfigBotNodeSelector(bot, action, state) ||
               nodeDefault;
-      if (node === false) {
+      if (!handleKeywords && node === false) {
         dispatch(
           infoFeedback(`Bot asistente para: ${page} ${action}, no configurado`)
         );
