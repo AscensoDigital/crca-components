@@ -205,7 +205,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     });
 
     this._landbot.core.events.on('new_message', message => {
-      console.log('Message: ', message);
+      // console.log('Message: ', message);
       this.dispatchEvent(
         new CustomEvent('crca-landbot-new-message', {
           bubbles: true,
@@ -230,8 +230,9 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           !this._activeOpened.opened
         ) {
           CrcaStaticStore.store.dispatch(crcaLandbotOpen(this.name));
+          console.log(`widget_open dispatch action crcaLandbotOpen`);
         } else {
-          console.log(`Landbot chat "${this.name}" was opened!`);
+          console.log(`widget_open Landbot chat "${this.name}" was opened!`);
           this.dispatchEvent(
             new CustomEvent('crca-landbot-open', {
               bubbles: true,
@@ -256,10 +257,10 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           this._activeOpened.opened === undefined ||
           this._activeOpened.opened
         ) {
-          console.log('Cierro bot de widget_close');
+          console.log('widget_close dispatch action crcaLandbotClose');
           CrcaStaticStore.store.dispatch(crcaLandbotClose(this.name));
         }
-        console.log(`Landbot chat "${this.name}" was closed!`);
+        console.log(`widget_close Landbot chat "${this.name}" was closed!`);
         this.dispatchEvent(
           new CustomEvent('crca-landbot-close', {
             bubbles: true,
@@ -275,7 +276,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     });
 
     this._landbot.core.events.on('proactive_open', e => {
-      console.log(e);
+      // console.log(e);
       this.dispatchEvent(
         new CustomEvent('crca-landbot-proactive-open', {
           bubbles: true,
@@ -285,11 +286,11 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           },
         })
       );
-      console.log(`Proactive message chat "${this.name}" was opened!`);
+      // console.log(`Proactive message chat "${this.name}" was opened!`);
     });
 
     this._landbot.core.events.on('proactive_close', e => {
-      console.log(e);
+      // console.log(e);
       this.dispatchEvent(
         new CustomEvent('crca-landbot-proactive-close', {
           bubbles: true,
@@ -299,7 +300,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           },
         })
       );
-      console.log(`Proactive message chat "${this.name}" was closed!`);
+      // console.log(`Proactive message chat "${this.name}" was closed!`);
     });
 
     this._landbot.core.events.on('lb-navigate', data => {
@@ -388,7 +389,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     if (this._isReady && changedProperties.has('contextVars')) {
       const preContextVars = changedProperties.get('contextVars');
       if(existDiffObject(preContextVars, this.contextVars)) {
-        console.log('UPDATE CONTEXT_VARS');
+        // console.log('UPDATE CONTEXT_VARS');
         CrcaStaticStore.store.dispatch(
           updateBotContextVars(this.name, this.contextVars)
         );
@@ -403,8 +404,9 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
         isDefined(this._activeVars.vars) &&
         existDiffObject(preActiveVars, this._activeVars)
       ) {
-        // console.log('LB-SEND-VARS', this._activeVars.vars);
-        // this._landbot.core.events.emit('lb-send-vars', this._activeVars.vars);
+        /* Envio de variables mediante evento
+        console.log('LB-SEND-VARS', this._activeVars.vars);
+        this._landbot.core.events.emit('lb-send-vars', this._activeVars.vars); */
 
         console.log('setCustomData', this._activeVars.vars);
         this._landbot.setCustomData(this._activeVars.vars);
