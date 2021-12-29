@@ -444,10 +444,16 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           this._keywords[this._activeKeyword.keyword] ||
           this._activeKeyword.keyword || false;
         if (this._activeOpened.opened && keywordLabel!==false) {
-          const msg = {
-            type: 'hidden',
-            payload: `#${this._activeKeyword.keyword}`,
-          };
+          const msg = keywordLabel===true
+            ? {
+              type: 'hidden',
+              payload: `#${this._activeKeyword.keyword}`,
+            }
+            : {
+              type: 'button',
+              message: `${keywordLabel}`,
+              payload: `#${this._activeKeyword.keyword}`,
+            };
           this._landbot.sendMessage(msg);
           console.log(msg);
         } else {
