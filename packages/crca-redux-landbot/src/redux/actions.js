@@ -11,8 +11,8 @@ import {
   crcaLandbotConfigBotIdSelector,
   crcaLandbotConfigBotNodeSelector,
   crcaLandbotConfigBotTokenSelector,
-  crcaLandbotBotHandleKeywordsSelector,
   crcaLandbotConfigBotKeywordSelector,
+  crcaLandbotBotHandleKeywordsSelector,
   crcaLandbotBotContextVarsSelector,
 } from './selectors.js';
 
@@ -253,7 +253,7 @@ export const crcaLandbotOpen = (bot, action = '', data = {}, nodeDefault = false
 
       if (keywordLabel === false) {
         keyword = action;
-        keywordLabel = crcaLandbotConfigBotKeywordsSelector(bot, keyword, state);
+        keywordLabel = crcaLandbotConfigBotKeywordSelector(bot, keyword, state);
         if(keywordLabel === false) {
           dispatch(
             infoFeedback(`Bot asistente para: ${page} ${action}, no configurado`)
