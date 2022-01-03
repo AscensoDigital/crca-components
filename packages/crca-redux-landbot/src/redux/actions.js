@@ -223,9 +223,9 @@ export const crcaLandbotOpen = (bot, action = '', data = {}, nodeDefault = false
 
   let node = false;
   let keyword = false;
+  let error = false;
 
   if (isDefined(action)) {
-    let error = false;
     if (handleNodes) {
       if (botToken === false) {
         dispatch(infoFeedback(`Token para el bot ${bot}, no configurado`));
@@ -262,10 +262,6 @@ export const crcaLandbotOpen = (bot, action = '', data = {}, nodeDefault = false
         }
       }
     }
-
-    if (error) {
-      return;
-    }
   }
 
   const vars = {
@@ -280,7 +276,7 @@ export const crcaLandbotOpen = (bot, action = '', data = {}, nodeDefault = false
     dispatch(activateBot(bot));
   }
 
-  if (isDefined(action) && handleNodes) {
+  if (isDefined(action) && handleNodes && !error) {
     const customerId = crcaLandbotBotCustomerIdSelector(bot, state);
     const botId = crcaLandbotConfigBotIdSelector(bot, state);
     if (customerId) {
@@ -293,7 +289,7 @@ export const crcaLandbotOpen = (bot, action = '', data = {}, nodeDefault = false
         )
       );
     }
-  } else if (isDefined(action) && handleKeywords) {
+  } else if (isDefined(action) && handleKeywords && !error) {
     dispatch(openBot(bot));
     dispatch(updateBotKeyword(bot, keyword));
   } else {
