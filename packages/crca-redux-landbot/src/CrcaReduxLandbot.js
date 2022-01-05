@@ -184,6 +184,12 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       )
     );
 
+    this._landbot.core.events.on("init", () => {
+      if (isDefined(this._config.initKeyword)) {
+        this._landbot.sendMessage({ type: 'hidden', payload: `#${this._config.initKeyword}` });
+      }
+    });
+
     this._landbot.core.events.on('lb-custom-event', (event, payload) => {
       this.dispatchEvent(
         new CustomEvent('crca-landbot-custom-event', {
