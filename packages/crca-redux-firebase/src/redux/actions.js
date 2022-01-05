@@ -193,21 +193,27 @@ export const firebaseInitializeApp = (enabledAnalytics = true) => (
 export const firebaseRemoteConfigActivate = () => dispatch => {
   CrcaFirebaseLoader.remoteConfig
     .activate()
-    .then(() => dispatch(setRemoteConfig(CrcaFirebaseLoader.remoteConfig.getAll())))
+    .then(() => {
+      dispatch(setRemoteConfig(CrcaFirebaseLoader.remoteConfig.getAll()));
+    })
     .catch(e => console.log('RemoteConfig: activate fail', e));
 };
 
 export const firebaseRemoteConfigFetch = () => dispatch => {
   CrcaFirebaseLoader.remoteConfig
     .fetch()
-    .then(dispatch(updateLastFetch(new Date())))
+    .then(() => {
+      dispatch(updateLastFetch(new Date()));
+    })
     .catch(e => console.log('RemoteConfig: fetch fail', e));
 };
 
 export const firebaseRemoteConfigFetchAndActivate = () => dispatch => {
   CrcaFirebaseLoader.remoteConfig
     .fetchAndActivate()
-    .then(dispatch(setRemoteConfig(CrcaFirebaseLoader.remoteConfig.getAll())))
+    .then( () => {
+      dispatch(setRemoteConfig(CrcaFirebaseLoader.remoteConfig.getAll()));
+    })
     .catch(e => console.log('RemoteConfig: fetchAndActivate fail', e));
 };
 
