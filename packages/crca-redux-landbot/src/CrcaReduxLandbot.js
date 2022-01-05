@@ -31,6 +31,7 @@ import {
   crcaLandbotConfigBotKeywordsSelector,
   crcaLandbotLoadBySelector,
   crcaLandbotLoadedSelector,
+  crcaLandbotConfigBotInitKeywordSelector,
 } from './redux/selectors.js';
 
 import {
@@ -65,6 +66,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       _activeVars: { type: Object },
       _config: { type: Object },
       _botId: { type: String },
+      _initKeyword: { type: String},
       _kewords: { type: Array },
       _landbot: { type: Object },
       _isReady: { type: Boolean },
@@ -93,6 +95,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this._activeKeyword = crcaLandbotBotActiveKeywordSelector(state);
     this._config = crcaLandbotConfigBotConfigSelector(this.name, state);
     this._botId = crcaLandbotConfigBotIdSelector(this.name, state);
+    this._initKeyword = crcaLandbotConfigBotInitKeywordSelector(this.name, state);
     this._keywords = crcaLandbotConfigBotKeywordsSelector(this.name, state);
     this._isReady = crcaLandbotBotIsReadySelector(this.name, state);
   }
@@ -185,8 +188,8 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     );
 
     this._landbot.core.events.on("init", () => {
-      if (isDefined(this._config.initKeyword)) {
-        this._landbot.sendMessage({ type: 'hidden', payload: `#${this._config.initKeyword}` });
+      if (this._initKeyword!==false) {
+        this._landbot.sendMessage({ type: 'hidden', payload: `#${this._initKeyword}` });
       }
     });
 

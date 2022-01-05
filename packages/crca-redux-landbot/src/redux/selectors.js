@@ -107,6 +107,9 @@ const crcaLandbotConfigPropSelector = (bot, prop, state) => {
 export const crcaLandbotConfigBotIdSelector = (bot, state) =>
   crcaLandbotConfigPropSelector(bot, 'id', state);
 
+export const crcaLandbotConfigBotInitKeywordSelector = (bot, state) =>
+  crcaLandbotConfigPropSelector(bot, 'initKeyword', state);
+
 export const crcaLandbotConfigBotKeywordSelector = (bot, keyword, state) => {
   const config = crcaLandbotConfigBotSelector(bot, state);
   return (config.keywords && config.keywords[keyword]) || false;
