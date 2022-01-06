@@ -416,8 +416,9 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
         /* Envio de variables mediante evento
         console.log('LB-SEND-VARS', this._activeVars.vars);
         this._landbot.core.events.emit('lb-send-vars', this._activeVars.vars); */
-
-        console.log('setCustomData', this._activeVars.vars);
+        if(this._activeVars.vars.env===undefined || this._activeVars.vars.env!=='prod') {
+          console.log('setCustomData', this._activeVars.vars);
+        }
         this._landbot.setCustomData(this._activeVars.vars);
       }
     }
