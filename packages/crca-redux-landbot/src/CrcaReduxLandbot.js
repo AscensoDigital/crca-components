@@ -364,6 +364,15 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     document.body.append(script);
   }
 
+  setCustomData(data) {
+    if(this._landbot) {
+      this._landbot.setCustomData(data);
+      return true;
+    }
+
+    return false;
+  }
+
   updated(changedProperties) {
     if (this._landbotLoadBy === '') {
       CrcaStaticStore.store.dispatch(startLandbotLoad(this.name));
