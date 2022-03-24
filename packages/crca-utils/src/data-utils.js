@@ -158,6 +158,9 @@ const filtrar = (p, key, filtro) => {
 };
 
 const ordenar = (a, b, order) => {
+  if(!isDefined(a[order.field]) && !isDefined(b[order.field])) {
+    return 0;
+  }
   if(!isDefined(a[order.field])) {
     return 1;
   }
