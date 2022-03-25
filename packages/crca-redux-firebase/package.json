@@ -19,7 +19,7 @@
     "@ascenso/crca-redux-url-parser": "^0.12.7",
     "@ascenso/crca-utils": "^0.8.2",
     "date-fns": "^2.16.1",
-    "firebase": "^9.6.5",
+    "firebase": "^8.6.3",
     "lit-element": "^2.4.0",
     "lit-html": "^1.1.2",
     "pwa-helpers": "^0.9.1",
