@@ -69,7 +69,8 @@ export const crcaFirebaseInitSelector = createSelector(
 
 export const crcaFirebaseDiscordUrlSelector = createSelector(
   crcaFirebaseStateSelector,
-  fb => fb.discordUrl || ''
+  crcaUrlEnvSelector,
+  (fb, env) => isObject(fb.discordUrl) && fb.discordUrl[env] || fb.discordUrl || ''
 );
 
 export const crcaFirebaseConfigDevSelector = createSelector(
