@@ -2,6 +2,7 @@ export {
   setFirebaseAuthMethods,
   setFirebaseConfigDev,
   setFirebaseConfigProd,
+  setFirebaseDiscordUrl,
   successFirebaseSignIn,
   crcaFirebaseAnalyticsLogEvent,
   crcaFirebaseRemoteConfigGet,

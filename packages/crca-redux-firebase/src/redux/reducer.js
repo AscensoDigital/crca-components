@@ -1,6 +1,7 @@
 import {
   SET_FIREBASE_CONFIG_DEV,
   SET_FIREBASE_CONFIG_PROD,
+  SET_FIREBASE_DISCORD_URL,
   SET_REMOTE_CONFIG,
   SUCCESS_FIREBASE,
   SUCCESS_REMOTE_CONFIG,
@@ -29,7 +30,8 @@ const initialState = {
   configDev: { config: null, useAsProd: false },
   configProd: { config: null, useAsDev: false },
   remoteConfig: initialRemoteState,
-  auth: initialAuthState
+  auth: initialAuthState,
+  discordUrl: ''
 };
 
 const authReducer = (state,action) => {
@@ -116,6 +118,11 @@ export const crcaFirebase = (state = initialState, action) => {
         ...state,
         configProd: action.configProd,
       };
+    case SET_FIREBASE_DISCORD_URL:
+      return {
+        ...state,
+        discordUrl: action.discordUrl
+      }
     default:
       return state;
   }
