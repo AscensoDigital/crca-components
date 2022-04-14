@@ -49,7 +49,7 @@ export const sendErrorDiscord = (
   if(error.columnNumber!==undefined) {
     content.push(`error - columnNumber: ${error.columnNumber}`);
   }
-  if(error.stack!==undefined) {
+  if(error.stack!==undefined && error.stack.length<1500) {
     content.push(`error - stack: ${error.stack}`);
   }
   const arrError = recursionObject2Array(error,'error');
