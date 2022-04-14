@@ -65,7 +65,11 @@ export const sendErrorDiscord = (
   content.push("------------");
   // console.log('sendErrorDiscord - content.lengt: ', content.join("\n").length);
   // console.log('sendErrorDiscord - content: ', content.join("\n"));
-  jsonPost(discordUrl, { data: { "content": content.join("\n") } })
+  const contentStr = content.join("\n");
+  if(contentStr.length>=2000) {
+    contentStr = `${contentStr.substring(0,1995)}...`;
+  }
+  jsonPost(discordUrl, { data: { "content": contentStr } })
   .catch(err => {
     console.log(err.content || err);
   });
