@@ -118,6 +118,11 @@ export const crcaFirebaseRemoteConfigGetSelector = (
   typeValue = FB_RC_TYPE_VALUE_VALUE
 ) => {
   const rc = crcaFirebaseRemoteConfigConfigSelector(state);
+  const remoteError = crcaFirebaseRemoteConfigErrorSelector(state);
+  console.log(key, typeValue, rc, remoteError);
+  if(remoteError) {
+    return rc[key] || false;
+  }
   const value = rc[key];
 
   switch (typeValue) {
