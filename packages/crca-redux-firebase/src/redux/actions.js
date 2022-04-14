@@ -9,7 +9,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/remote-config';
 
-import { crcaUrlIsHostProdSelector, crcaUrlEnvSelector } from '@ascenso/crca-redux-url-parser/redux';
+import { crcaUrlIsHostProdSelector } from '@ascenso/crca-redux-url-parser/redux';
 import {
   isNull,
   isObject,
@@ -320,32 +320,40 @@ export const crcaFirebaseRemoteConfigGet = (
   typeValue = FB_RC_TYPE_VALUE_VALUE
 ) => {
   if(isNull(CrcaFirebaseLoader.remoteConfig)) {
-    console.log('No se a inicializado remoteConfig, usando defaultConfig');
+    // console.log('No se a inicializado remoteConfig, usando defaultConfig');
     return CrcaFirebaseLoader.remoteConfigDefault[key] || false;
   }
-  switch (typeValue) {
-    case FB_RC_TYPE_VALUE_BOOLEAN:
-      return CrcaFirebaseLoader.remoteConfig.getBoolean(key);
-    case FB_RC_TYPE_VALUE_NUMBER:
-      return CrcaFirebaseLoader.remoteConfig.getNumber(key);
-    case FB_RC_TYPE_VALUE_STRING:
-      return CrcaFirebaseLoader.remoteConfig.getString(key);
-    case FB_RC_TYPE_VALUE_OBJECT:
-      return (
-        (isObject(CrcaFirebaseLoader.remoteConfig.getValue(key)._value) &&
-        CrcaFirebaseLoader.remoteConfig.getValue(key)._value) ||
-        JSON.parse(CrcaFirebaseLoader.remoteConfig.getString(key)) ||
-        {}
-      );
-    default:
-      return CrcaFirebaseLoader.remoteConfig.getValue(key);
+  try {
+    switch (typeValue) {
+      case FB_RC_TYPE_VALUE_BOOLEAN:
+        return CrcaFirebaseLoader.remoteConfig.getBoolean(key);
+      case FB_RC_TYPE_VALUE_NUMBER:
+        return CrcaFirebaseLoader.remoteConfig.getNumber(key);
+      case FB_RC_TYPE_VALUE_STRING:
+        return CrcaFirebaseLoader.remoteConfig.getString(key);
+      case FB_RC_TYPE_VALUE_OBJECT:
+        return (
+          (isObject(CrcaFirebaseLoader.remoteConfig.getValue(key)._value) &&
+          CrcaFirebaseLoader.remoteConfig.getValue(key)._value) ||
+          JSON.parse(CrcaFirebaseLoader.remoteConfig.getString(key)) ||
+          {}
+        );
+      default:
+        return CrcaFirebaseLoader.remoteConfig.getValue(key);
+    }
+  } catch (error) {
+    return CrcaFirebaseLoader.remoteConfigDefault[key] || false;
   }
 };
 
 export const crcaFirebaseRemoteConfigGetAll = () => {
   if(isNull(CrcaFirebaseLoader.remoteConfig)) {
-    console.log('No se a inicializado remoteConfig, usando defaultConfig');
-    return CrcaFirebaseLoader.remoteConfigDefault || false;
+    // console.log('No se a inicializado remoteConfig, usando defaultConfig');
+    return CrcaFirebaseLoader.remoteConfigDefault || {};
   }
-  return CrcaFirebaseLoader.remoteConfig.getAll();
+  try {
+    return CrcaFirebaseLoader.remoteConfig.getAll();
+  } catch (error) {
+    return CrcaFirebaseLoader.remoteConfigDefault || {};
+  }
 };
