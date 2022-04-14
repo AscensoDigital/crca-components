@@ -38,6 +38,7 @@ import { CrcaFirebaseLoader } from '../CrcaFirebaseLoader.js';
 
 export const SET_FIREBASE_DISCORD_URL = 'SET_FIREBASE_DISCORD_URL';
 export const SET_REMOTE_CONFIG = 'SET_REMOTE_CONFIG';
+export const SET_REMOTE_ERROR = 'SET_REMOTE_ERROR';
 export const SET_FIREBASE_CONFIG_DEV = 'SET_FIREBASE_CONFIG_DEV';
 export const SET_FIREBASE_CONFIG_PROD = 'SET_FIREBASE_CONFIG_PROD';
 export const SET_FIREBASE_AUTH_METHODS = 'SET_FIREBASE_AUTH_METHODS';
@@ -55,6 +56,11 @@ const _logoutFirebase = () => ({
 const setRemoteConfig = config => ({
   type: SET_REMOTE_CONFIG,
   config,
+});
+
+const setRemoteError = remoteError => ({
+  type: SET_REMOTE_ERROR,
+  remoteError,
 });
 
 const successFirebase = () => ({
@@ -229,7 +235,11 @@ export const firebaseRemoteConfigActivate = () => (dispatch, getState) => {
     .then(() => {
       dispatch(setRemoteConfig(CrcaFirebaseLoader.remoteConfig.getAll()));
     })
-    .catch(e => sendError(state, 'firebaseRemoteConfigActive-catch', e, {msg:'RemoteConfig: activate fail'}));
+    .catch(e => {
+      dispatch(setRemoteError(true));
+      dispatch(setRemoteConfig(CrcaFirebaseLoader.remoteConfigDefault));
+      sendError(state, 'firebaseRemoteConfigActive-catch', e, {msg:'RemoteConfig: activate fail'})
+    });
 };
 
 export const firebaseRemoteConfigFetch = () => (dispatch, getState) => {
@@ -249,7 +259,11 @@ export const firebaseRemoteConfigFetchAndActivate = () => (dispatch, getState) =
     .then( () => {
       dispatch(setRemoteConfig(CrcaFirebaseLoader.remoteConfig.getAll()));
     })
-    .catch(e => sendError(state, 'firebaseRemoteConfigFetchAndActivate-catch', e, {msg:'RemoteConfig: fetchAndActivate fail'}));
+    .catch(e => {
+      dispatch(setRemoteError(true));
+      dispatch(setRemoteConfig(CrcaFirebaseLoader.remoteConfigDefault));
+      sendError(state, 'firebaseRemoteConfigFetchAndActivate-catch', e, {msg:'RemoteConfig: fetchAndActivate fail'})
+    });
 };
 
 export const firebaseRemoteConfigLoadDefault = defaultConfig => (
@@ -257,26 +271,28 @@ export const firebaseRemoteConfigLoadDefault = defaultConfig => (
   getState
 ) => {
   const state = getState();
-  const isDominioProd = crcaUrlIsHostProdSelector(state);
+  // const isDominioProd = crcaUrlIsHostProdSelector(state);
   const initFirebase = crcaFirebaseInitSelector(state);
 
   if (initFirebase) {
     try {
       CrcaFirebaseLoader.remoteConfig = CrcaFirebaseLoader.firebase.remoteConfig();
-      if (!isDominioProd) {
+      /* if (!isDominioProd) {
         CrcaFirebaseLoader.remoteConfig.settings = {
           minimumFetchIntervalMillis: 300000,
         };
-      }
-
+      } */
+      CrcaFirebaseLoader.remoteConfigDefault=defaultConfig;
       CrcaFirebaseLoader.remoteConfig.defaultConfig = stringifyPropValue(defaultConfig) || {};
 
       dispatch(successRemoteConfig());
     }
     catch(err) {
+      dispatch(setRemoteError(true));
       sendError(state, 'firebaseRemoteConfigLoadDefault-catch', err);
     }
   } else {
+    dispatch(setRemoteError(true));
     sendError(state, 'firebaseRemoteConfigLoadDefault', { error: 'No se ha inizializado Firebase'});
   }
 };
@@ -304,8 +320,8 @@ export const crcaFirebaseRemoteConfigGet = (
   typeValue = FB_RC_TYPE_VALUE_VALUE
 ) => {
   if(isNull(CrcaFirebaseLoader.remoteConfig)) {
-    console.log('No se a inicializado remoteConfig');
-    return false;
+    console.log('No se a inicializado remoteConfig, usando defaultConfig');
+    return CrcaFirebaseLoader.remoteConfigDefault[key] || false;
   }
   switch (typeValue) {
     case FB_RC_TYPE_VALUE_BOOLEAN:
@@ -328,8 +344,8 @@ export const crcaFirebaseRemoteConfigGet = (
 
 export const crcaFirebaseRemoteConfigGetAll = () => {
   if(isNull(CrcaFirebaseLoader.remoteConfig)) {
-    console.log('No se a inicializado remoteConfig');
-    return false;
+    console.log('No se a inicializado remoteConfig, usando defaultConfig');
+    return CrcaFirebaseLoader.remoteConfigDefault || false;
   }
   return CrcaFirebaseLoader.remoteConfig.getAll();
 };

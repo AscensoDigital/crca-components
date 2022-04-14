@@ -23,4 +23,16 @@ export class CrcaFirebaseLoader {
   static set remoteConfig(rc) {
     CrcaFirebaseLoader.privateRemoteConfig = rc;
   }
+
+  static get remoteConfigDefault() {
+    if(CrcaFirebaseLoader.privateRemoteConfigDefault === undefined) {
+      return null;
+    }
+
+    return CrcaFirebaseLoader.privateRemoteConfigDefault;
+  }
+
+  static set remoteConfigDefault(rcd) {
+    CrcaFirebaseLoader.privateRemoteConfigDefault = rcd;
+  }
 }

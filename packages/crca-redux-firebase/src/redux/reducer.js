@@ -3,6 +3,7 @@ import {
   SET_FIREBASE_CONFIG_PROD,
   SET_FIREBASE_DISCORD_URL,
   SET_REMOTE_CONFIG,
+  SET_REMOTE_ERROR,
   SUCCESS_FIREBASE,
   SUCCESS_REMOTE_CONFIG,
   SUCCESS_FIREBASE_SIGN_IN,
@@ -16,6 +17,7 @@ const initialRemoteState = {
   init: false,
   config: null,
   lastFetch: null,
+  remoteError: false
 };
 
 const initialAuthState = {
@@ -76,6 +78,11 @@ const remoteConfigReducer = (state, action) => {
         ...state,
         config: action.config,
       };
+    case SET_REMOTE_ERROR:
+      return {
+        ...state,
+        remoteError: action.remoteError,
+      };
     case UPDATE_LAST_FETCH:
       return {
         ...state,
@@ -90,6 +97,7 @@ export const crcaFirebase = (state = initialState, action) => {
   switch (action.type) {
     case SUCCESS_REMOTE_CONFIG:
     case SET_REMOTE_CONFIG:
+    case SET_REMOTE_ERROR:
     case UPDATE_LAST_FETCH:
       return {
         ...state,

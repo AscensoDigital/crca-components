@@ -102,6 +102,11 @@ export const crcaFirebaseRemoteConfigConfigSelector = createSelector(
     {}
 );
 
+export const crcaFirebaseRemoteConfigErrorSelector = createSelector(
+  crcaFirebaseRemoteConfigSelector,
+  rc => rc.remoteError || false
+);
+
 export const crcaFirebaseRemoteConfigLastFetchSelector = createSelector(
   crcaFirebaseRemoteConfigSelector,
   rc => rc.lastFetch || false
