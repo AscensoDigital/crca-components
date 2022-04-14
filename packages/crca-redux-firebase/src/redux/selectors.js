@@ -119,7 +119,7 @@ export const crcaFirebaseRemoteConfigGetSelector = (
 ) => {
   const rc = crcaFirebaseRemoteConfigConfigSelector(state);
   const remoteError = crcaFirebaseRemoteConfigErrorSelector(state);
-  console.log(key, typeValue, rc, remoteError);
+  // console.log(key, typeValue, rc, remoteError);
   if(remoteError) {
     return rc[key] || false;
   }
