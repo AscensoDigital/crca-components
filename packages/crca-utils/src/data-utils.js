@@ -215,6 +215,12 @@ export const stringifyPropValue = obj => {
   return objRet;
 };
 
+export const sanitizeHTML = (text)  => {
+  const element = document.createElement('div');
+  element.innerText = text;
+  return element.innerHTML;
+}
+
 export const slugify = (str) => {
     str = str.replace(/^\s+|\s+$/g, '');
 

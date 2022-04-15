@@ -20,6 +20,8 @@ isObject,
 isString,
 isUndefined,
 joinParts,
+sanitizeHTML,
+slugify,
 sortData,
 stringifyPropValue
 } from './src/data-utils.js';
