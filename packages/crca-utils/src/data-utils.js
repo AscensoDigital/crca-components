@@ -97,16 +97,16 @@ export const isObject = obj => obj !== null && typeof obj === 'object';
 export const isString = str => typeof str === 'string';
 export const isUndefined = und => typeof und === 'undefined';
 
-export const dataViewGet = (obj, prop) => {
+export const dataViewGet = (obj, prop, defaultValue = false) => {
   if (!isObject(obj) || !isString(prop)) {
-    return false;
+    return defaultValue;
   }
   const parts = prop.split('.');
   let ref = obj;
   for (let index = 0; index < parts.length; index += 1) {
     const part = parts[index];
     if (!isDefined(ref[part])) {
-      return false;
+      return defaultValue;
     }
     ref = ref[part];
   }
