@@ -60,6 +60,7 @@ export const crcaLandbot = (state = initialState, action) => {
         bots: {
           ...state.bots,
           [action.detail.bot]: {
+            ...(state.bots[action.detail.bot] || {}),
             ready: true,
             id: action.detail.id,
             opened: action.detail.opened,
