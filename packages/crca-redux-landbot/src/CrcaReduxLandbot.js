@@ -61,6 +61,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       open: { type: Boolean },
       botConfig: { type: Object },
       discordUrl: { type: String },
+      persistCustomerId: { type: String },
       _activeKeyword: { type: Object },
       _activeOpened: { type: Object },
       _activeVars: { type: Object },
@@ -85,6 +86,41 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this.manualCreate = false;
     this.botConfig = null;
     this.discordUrl = '';
+    this.persistCustomerId = 'none';
+  }
+
+
+  firstUpdated() {
+    const persistedCustomerId = this._getPersistCustomerId();
+    if(persistedCustomerId) {
+      CrcaStaticStore.store.dispatch(updateBotCustomerId(this.name, persistedCustomerId));
+    }
+  }
+
+  _getPersistCustomerId() {
+    const key = `${this.name}_landbotCustomerId`;
+    switch(this.persistCustomerId) {
+      case "local":
+        return localStorage.getItem(key) || false;
+      case "session":
+        return sessionStorage.getItem(key) || false;
+      default:
+        return false;
+    }
+  }
+
+  _setPersistCustomerId(customerId) {
+    const key = `${this.name}_landbotCustomerId`;
+    switch(this.persistCustomerId) {
+      case "local":
+        localStorage.setItem(key, customerId) || false;
+        break;
+      case "session":
+        sessionStorage.setItem(key, customerId) || false;
+        break;
+      default:
+        break;
+    }
   }
 
   stateChanged(state) {
@@ -211,6 +247,9 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
       CrcaStaticStore.store.dispatch(
         updateBotCustomerId(this.name, data.customerId)
       );
+      if(this.persistCustomerId!=="none") {
+        this._setPersistCustomerId(data.customerId);
+      }
     });
 
     this._landbot.core.events.on('new_message', message => {
