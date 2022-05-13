@@ -41,6 +41,9 @@ import {
   CRCA_LANDBOT_TYPE_LIVECHAT,
   CRCA_LANDBOT_TYPE_NATIVE,
   CRCA_LANDBOT_TYPE_POPUP,
+  CRCA_LANDBOT_PERSIST_NONE,
+  CRCA_LANDBOT_PERSIST_LOCAL,
+  CRCA_LANDBOT_PERSIST_SESSION,
 } from './consts.js';
 
 CrcaStaticStore.store.addReducers({
@@ -86,7 +89,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
     this.manualCreate = false;
     this.botConfig = null;
     this.discordUrl = '';
-    this.persistCustomerId = 'none';
+    this.persistCustomerId = CRCA_LANDBOT_PERSIST_NONE;
   }
 
 
@@ -100,9 +103,9 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
   _getPersistCustomerId() {
     const key = `${this.name}_landbotCustomerId`;
     switch(this.persistCustomerId) {
-      case "local":
+      case CRCA_LANDBOT_PERSIST_LOCAL:
         return localStorage.getItem(key) || false;
-      case "session":
+      case CRCA_LANDBOT_PERSIST_SESSION:
         return sessionStorage.getItem(key) || false;
       default:
         return false;
@@ -112,11 +115,11 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
   _setPersistCustomerId(customerId) {
     const key = `${this.name}_landbotCustomerId`;
     switch(this.persistCustomerId) {
-      case "local":
-        localStorage.setItem(key, customerId) || false;
+      case CRCA_LANDBOT_PERSIST_LOCAL:
+        localStorage.setItem(key, customerId);
         break;
-      case "session":
-        sessionStorage.setItem(key, customerId) || false;
+      case CRCA_LANDBOT_PERSIST_SESSION:
+        sessionStorage.setItem(key, customerId);
         break;
       default:
         break;
