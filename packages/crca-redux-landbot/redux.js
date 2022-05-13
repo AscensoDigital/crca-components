@@ -13,4 +13,5 @@ export {
   crcaLandbotBotActive,
   crcaLandbotBotIsReadySelector,
   crcaLandbotConfigBotConfigSelector,
+  crcaLandbotBotCustomerIdSelector
 } from './src/redux/selectors.js';
