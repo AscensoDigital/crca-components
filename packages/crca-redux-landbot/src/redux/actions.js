@@ -130,7 +130,7 @@ export const updateBotNode = (bot, node) => ({
   },
 });
 
-const sendNode = (bot, node, customerId, botId, botToken) => dispatch => {
+const sendNode = (bot, node, customerId, botId, botToken, open = true) => dispatch => {
   console.log(`CRCA_LANDBOT sendNode, bot: ${bot}, node: ${node}, customerId: ${customerId}, botId: ${botId}, botToken: ${botToken}`);
   // const url = `https://api.landbot.io/v1/customers/${customerId}/assign_bot/${botId}/`;
   /* const dataNode = {
@@ -181,7 +181,9 @@ const sendNode = (bot, node, customerId, botId, botToken) => dispatch => {
     .then(() => {
       // console.log(rs);
       dispatch(updateBotNode(bot, node));
-      dispatch(openBot(bot));
+      if(open) {
+        dispatch(openBot(bot));
+      }
     })
     .catch(e => {
       console.log(e);
@@ -294,6 +296,76 @@ export const crcaLandbotOpen = (bot, action = '', data = {}, nodeDefault = false
     dispatch(updateBotKeyword(bot, keyword));
   } else {
     dispatch(openBot(bot));
+  }
+};
+
+export const crcaLandbotSendNode = (bot, action = '') => (
+  dispatch,
+  getState
+) => {
+  const state = getState();
+  const page = crcaUrlPageSelector(state);
+  const handleNodes = crcaLandbotBotHandleNodesSelector(bot, state);
+  const handleKeywords = crcaLandbotBotHandleKeywordsSelector(bot, state);
+  const botToken = crcaLandbotConfigBotTokenSelector(bot, state);
+
+  let node = false;
+  let keyword = false;
+  let error = false;
+
+  if (isDefined(action)) {
+    if (handleNodes) {
+      if (botToken === false) {
+        dispatch(infoFeedback(`Token para el bot ${bot}, no configurado`));
+        error = true;
+      }
+
+      node = crcaLandbotConfigBotNodeSelector(bot, `${page}_${action}`, state) ||
+              crcaLandbotConfigBotNodeSelector(bot, action, state) || false;
+      if (!handleKeywords && node === false) {
+        dispatch(
+          infoFeedback(`Bot asistente para: ${page} ${action}, no configurado`)
+        );
+        error = true;
+      }
+    }
+
+    if (handleKeywords && isDefined(action)) {
+      keyword = `${page}_${action}`;
+      let keywordLabel = crcaLandbotConfigBotKeywordSelector(
+        bot,
+        keyword,
+        state
+      );
+
+      if (keywordLabel === false) {
+        keyword = action;
+        keywordLabel = crcaLandbotConfigBotKeywordSelector(bot, keyword, state);
+        if(keywordLabel === false) {
+          dispatch(
+            infoFeedback(`Bot asistente para: ${page} ${action}, no configurado`)
+          );
+          error = true;
+        }
+      }
+    }
+  }
+
+  if (isDefined(action) && handleNodes && !error) {
+    const customerId = crcaLandbotBotCustomerIdSelector(bot, state);
+    const botId = crcaLandbotConfigBotIdSelector(bot, state);
+    if (customerId) {
+      dispatch(sendNode(bot, node, customerId, botId, botToken, false));
+    } else {
+      // TODO: redirigir a home del bot para setear customer id
+      dispatch(
+        negativeFeedback(
+          `Debes realizar la bienvenida en el bot para identificarte`
+        )
+      );
+    }
+  } else if (isDefined(action) && handleKeywords && !error) {
+    dispatch(updateBotKeyword(bot, keyword));
   }
 };
 

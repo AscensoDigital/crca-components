@@ -4,6 +4,7 @@ export {
   crcaLandbotClose,
   crcaLandbotOpen,
   crcaLandbotSetBotsConfig,
+  crcaLandbotSendNode
 } from './src/redux/actions.js';
 
 export {
