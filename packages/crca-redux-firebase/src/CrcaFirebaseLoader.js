@@ -1,38 +1,48 @@
-export class CrcaFirebaseLoader {
+class CrcaFirebasePrivateLoader {
 
   static get firebase() {
-    if(CrcaFirebaseLoader.privateFirebase === undefined) {
+    if(this.privateFirebase === undefined) {
       return null;
     }
 
-    return CrcaFirebaseLoader.privateFirebase;
+    return this.privateFirebase;
   }
 
   static set firebase(fb) {
-    CrcaFirebaseLoader.privateFirebase = fb;
+    this.privateFirebase = fb;
   }
 
   static get remoteConfig() {
-    if(CrcaFirebaseLoader.privateRemoteConfig === undefined) {
+    if(this.privateRemoteConfig === undefined) {
       return null;
     }
 
-    return CrcaFirebaseLoader.privateRemoteConfig;
+    return this.privateRemoteConfig;
   }
 
   static set remoteConfig(rc) {
-    CrcaFirebaseLoader.privateRemoteConfig = rc;
+    this.privateRemoteConfig = rc;
   }
 
   static get remoteConfigDefault() {
-    if(CrcaFirebaseLoader.privateRemoteConfigDefault === undefined) {
+    if(this.privateRemoteConfigDefault === undefined) {
       return null;
     }
 
-    return CrcaFirebaseLoader.privateRemoteConfigDefault;
+    return this.privateRemoteConfigDefault;
   }
 
   static set remoteConfigDefault(rcd) {
-    CrcaFirebaseLoader.privateRemoteConfigDefault = rcd;
+    this.privateRemoteConfigDefault = rcd;
   }
 }
+
+// register globally so we can make sure there is only one
+window.CrcaFirebaseLoader = window.CrcaFirebaseLoader || {};
+window.CrcaFirebaseLoader.requestAvailability = () => {
+  if (!window.CrcaFirebaseLoader.instance) {
+    window.CrcaFirebaseLoader.instance = new CrcaFirebasePrivateLoader();
+  }
+  return window.CrcaFirebaseLoader.instance;
+};
+export const CrcaFirebaseLoader = window.CrcaFirebaseLoader.requestAvailability();
