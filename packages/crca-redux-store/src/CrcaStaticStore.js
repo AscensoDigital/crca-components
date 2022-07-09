@@ -1,38 +1,49 @@
 import { crcaStore } from "./crcaStore.js";
 
-export class CrcaStaticStore {
+class CrcaPrivateStore {
 
-  static get store() {
-    if(CrcaStaticStore.privateStore === undefined) {
-      CrcaStaticStore.privateStore = crcaStore;
-      console.log('CrcaStaticStore: Usando store por defecto: crcaStore');
+  get store() {
+    if(this.privateStore === undefined) {
+      this.privateStore = crcaStore;
+      console.log('CrcaPrivateStore: Usando store por defecto: crcaStore');
     }
 
-    return CrcaStaticStore.privateStore;
+    return this.privateStore;
   }
 
-  static set store(store) {
-    if(CrcaStaticStore.privateStore === undefined) {
-      CrcaStaticStore.privateStore = store;
+
+  set store(store) {
+    if(this.privateStore === undefined) {
+      this.privateStore = store;
     }
     else {
-      console.log('CrcaStaticStore.store: Ya Inicializado');
+      console.log('CrcaPrivateStore.store: Ya Inicializado');
     }
   }
 
-  static get persistName() {
-    if(CrcaStaticStore.privatePersistName === undefined) {
-      CrcaStaticStore.privatePersistName = 'crca-persist-store';
+  get persistName() {
+    if(this.privatePersistName === undefined) {
+      this.privatePersistName = 'crca-persist-store';
     }
-    return CrcaStaticStore.privatePersistName;
+    return this.privatePersistName;
   }
 
-  static set persistName(persistName) {
-    if(CrcaStaticStore.privatePersistName === undefined) {
-      CrcaStaticStore.privatePersistName = persistName;
+  set persistName(persistName) {
+    if(this.privatePersistName === undefined) {
+      this.privatePersistName = persistName;
     }
     else {
-      console.log('CrcaStaticStore.persistName: Ya Inicializado');
+      console.log('CrcaPrivatetore.persistName: Ya Inicializado');
     }
   }
 }
+
+// register globally so we can make sure there is only one
+window.CrcaStaticStore = window.CrcaStaticStore || {};
+window.CrcaStaticStore.requestAvailability = () => {
+  if (!window.CrcaStaticStore.instance) {
+    window.CrcaStaticStore.instance = new CrcaPrivateStore();
+  }
+  return window.CrcaStaticStore.instance;
+};
+export const CrcaStaticStore = window.CrcaStaticStore.requestAvailability();
