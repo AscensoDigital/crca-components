@@ -14,10 +14,10 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "@ascenso/crca-redux-feedback": "^0.3.5",
-    "@ascenso/crca-redux-store": "^1.2.4",
-    "@ascenso/crca-redux-url-parser": "^0.12.7",
-    "@ascenso/crca-utils": "^0.9.1",
+    "@ascenso/crca-redux-feedback": "*",
+    "@ascenso/crca-redux-store": "*",
+    "@ascenso/crca-redux-url-parser": "*",
+    "@ascenso/crca-utils": "*",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "pwa-helpers": "^0.9.1",

@@ -2,13 +2,6 @@
   "packages": [
     "packages/*"
   ],
-  "version": "independent",
-  "command": {
-    "bootstrap": {
-      "hoist": true,
-      "npmClientArgs": [
-        "--no-package-lock"
-      ]
-    }
-  }
+  "useNx": true,
+  "version": "independent"
 }
