@@ -1,74 +1,84 @@
-export class CrcaUrlLoader {
+class CrcaUrlPrivateLoader {
 
-  static get subdominio() {
-    if(CrcaUrlLoader.privateSubdominio === undefined) {
+  get subdominio() {
+    if(this.privateSubdominio === undefined) {
       return null;
     }
 
-    return CrcaUrlLoader.privateSubdominio;
+    return this.privateSubdominio;
   }
 
-  static set subdominio(callback) {
-    CrcaUrlLoader.privateSubdominio = callback;
+  set subdominio(callback) {
+    this.privateSubdominio = callback;
   }
 
-  static get dominio() {
-    if(CrcaUrlLoader.privateDominio === undefined) {
+  get dominio() {
+    if(this.privateDominio === undefined) {
       return null;
     }
 
-    return CrcaUrlLoader.privateDominio;
+    return this.privateDominio;
   }
 
-  static set dominio(callback) {
-    CrcaUrlLoader.privateDominio = callback;
+  set dominio(callback) {
+    this.privateDominio = callback;
   }
 
-  static get page() {
-    if(CrcaUrlLoader.privatePage === undefined) {
+  get page() {
+    if(this.privatePage === undefined) {
       return null;
     }
 
-    return CrcaUrlLoader.privatePage;
+    return this.privatePage;
   }
 
-  static set page(callback) {
-    CrcaUrlLoader.privatePage = callback;
+  set page(callback) {
+    this.privatePage = callback;
   }
 
-  static get section() {
-    if(CrcaUrlLoader.privateSection === undefined) {
+  get section() {
+    if(this.privateSection === undefined) {
       return null;
     }
 
-    return CrcaUrlLoader.privateSection;
+    return this.privateSection;
   }
 
-  static set section(callback) {
-    CrcaUrlLoader.privateSection = callback;
+  set section(callback) {
+    this.privateSection = callback;
   }
 
-  static get search() {
-    if(CrcaUrlLoader.privateSearch === undefined) {
+  get search() {
+    if(this.privateSearch === undefined) {
       return null;
     }
 
-    return CrcaUrlLoader.privateSearch;
+    return this.privateSearch;
   }
 
-  static set search(callback) {
-    CrcaUrlLoader.privateSearch = callback;
+  set search(callback) {
+    this.privateSearch = callback;
   }
 
-  static get anchor() {
-    if(CrcaUrlLoader.privateAnchor === undefined) {
+  get anchor() {
+    if(this.privateAnchor === undefined) {
       return null;
     }
 
-    return CrcaUrlLoader.privateAnchor;
+    return this.privateAnchor;
   }
 
-  static set anchor(callback) {
-    CrcaUrlLoader.privateAnchor = callback;
+  set anchor(callback) {
+    this.privateAnchor = callback;
   }
 }
+
+// register globally so we can make sure there is only one
+window.CrcaUrlLoader = window.CrcaUrlLoader || {};
+window.CrcaUrlLoader.requestAvailability = () => {
+  if (!window.CrcaUrlLoader.instance) {
+    window.CrcaUrlLoader.instance = new CrcaUrlPrivateLoader();
+  }
+  return window.CrcaUrlLoader.instance;
+};
+export const CrcaUrlLoader = window.CrcaUrlLoader.requestAvailability();
