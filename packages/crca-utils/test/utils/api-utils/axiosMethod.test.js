@@ -1,5 +1,5 @@
 import { expect } from '@esm-bundle/chai';
-import { axiosMethod } from '../../../src/utils/api-utils';
+import { axiosMethod } from '../../../src/utils/api-utils.js';
 
 it('axiosMethod get status then has data', () => {
   const url = 'https://apidev.restu.io/dev/';

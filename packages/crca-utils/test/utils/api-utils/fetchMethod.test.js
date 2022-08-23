@@ -1,5 +1,5 @@
 import { expect } from '@esm-bundle/chai';
-import { fetchMethod } from '../../../src/utils/api-utils';
+import { fetchMethod } from '../../../src/utils/api-utils.js';
 
 it('fetchMethod get status then has data', () => {
   const url = 'https://apidev.restu.io/dev/';

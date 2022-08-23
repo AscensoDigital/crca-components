@@ -1,5 +1,5 @@
 import { expect } from '@esm-bundle/chai';
-import { jsonGet } from '../../../src/utils/api-utils';
+import { jsonGet } from '../../../src/utils/api-utils.js';
 
 it('jsonGet get status then has data', () => {
   const url = 'https://apidev.restu.io/dev/';

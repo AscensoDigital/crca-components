@@ -1,4 +1,4 @@
-import { isDefined, isObject } from "./data-utils";
+import { isDefined, isObject } from "./data-utils.js";
 import axios from 'redaxios';
 
 export const axiosMethod = (method, url, config) => {

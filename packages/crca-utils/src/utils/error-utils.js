@@ -1,5 +1,5 @@
-import { jsonPost } from "./utils/api-utils";
-import { isFunction, isObject } from "./data-utils";
+import { jsonPost } from "./api-utils.js";
+import { isFunction, isObject } from "./data-utils.js";
 
 
 const recursionObject2Array = (obj, keyBase = '') => {
