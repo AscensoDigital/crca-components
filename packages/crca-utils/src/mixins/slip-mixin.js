@@ -20,7 +20,7 @@ export const SlipMixin = Superclass =>
         delta: 0
       };
       this._touchStartBind = this._touchStart.bind(this);
-      this._touchEndBind = this._touchStart.bind(this);
+      this._touchEndBind = this._touchEnd.bind(this);
     }
 
     detectSlipTouch(elem, minimalSlip = 15) {
