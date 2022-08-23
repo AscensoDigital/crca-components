@@ -1,4 +1,4 @@
-import { jsonPost } from "./api-utils";
+import { jsonPost } from "./utils/api-utils";
 import { isFunction, isObject } from "./data-utils";
 
 
