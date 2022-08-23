@@ -24,11 +24,11 @@ sanitizeHTML,
 slugify,
 sortData,
 stringifyPropValue
-} from './src/data-utils.js';
+} from './src/utils/data-utils.js';
 
 export {
   generateUrl
-} from './src/endpoint-utils.js';
+} from './src/utils/endpoint-utils.js';
 
 export {
  jsonDelete,
@@ -36,8 +36,16 @@ export {
  jsonPatch,
  jsonPost,
  jsonPut
-} from './src/api-utils.js';
+} from './src/utils/api-utils.js';
 
 export {
   sendErrorDiscord
-} from './src/error-utils.js';
+} from './src/utils/error-utils.js';
+
+export {
+  SlipMixin
+} from './src/mixins/slip-mixin.js';
+
+export {
+  isInViewportMixin
+} from './src/mixins/is-in-viewport-mixin.js';
