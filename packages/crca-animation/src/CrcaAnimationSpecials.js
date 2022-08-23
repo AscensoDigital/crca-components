@@ -1,6 +1,6 @@
 import { CrcaAnimationBase } from './CrcaAnimationBase.js';
 
-//Source animations http://daneden.github.io/animate.css
+// Source animations http://daneden.github.io/animate.css
 import { specials } from './animations/specials.js';
 
 export class CrcaAnimationSpecials extends CrcaAnimationBase {

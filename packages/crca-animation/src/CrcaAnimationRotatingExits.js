@@ -1,6 +1,6 @@
 import { CrcaAnimationBase } from './CrcaAnimationBase.js';
 
-//Source animations http://daneden.github.io/animate.css
+// Source animations http://daneden.github.io/animate.css
 import { rotating_exits } from './animations/rotating_exits.js';
 
 export class CrcaAnimationRotatingExits extends CrcaAnimationBase {

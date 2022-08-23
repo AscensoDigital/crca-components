@@ -1,7 +1,7 @@
-import { html, css, LitElement } from 'lit-element';
-import { classMap } from 'lit-html/directives/class-map';
+import { html, css, LitElement } from 'lit';
+import { classMap } from 'lit/directives/class-map';
 
-import { isInViewportMixin } from './is-in-viewport-mixin.js';
+import { isInViewportMixin } from '@ascenso/crca-utils';
 
 export class CrcaAnimationBase extends isInViewportMixin(LitElement) {
 

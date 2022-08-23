@@ -1,6 +1,6 @@
 import { CrcaAnimationBase } from './CrcaAnimationBase.js';
 
-//Source animations http://daneden.github.io/animate.css
+// Source animations http://daneden.github.io/animate.css
 import { bouncing_exits } from './animations/bouncing_exits.js';
 import { fading_exits } from './animations/fading_exits.js'
 import { rotating_exits } from './animations/rotating_exits.js';

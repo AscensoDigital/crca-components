@@ -1,6 +1,6 @@
 import { CrcaAnimationBase } from './CrcaAnimationBase.js';
 
-//Source animations http://daneden.github.io/animate.css
+// Source animations http://daneden.github.io/animate.css
 import { attention_seekers } from './animations/attention_seekers.js';
 
 export class CrcaAnimationAttentionSeekers extends CrcaAnimationBase {
