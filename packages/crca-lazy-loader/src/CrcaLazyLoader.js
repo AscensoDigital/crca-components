@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit-element';
+import { html, LitElement } from 'lit';
 
 export class CrcaLazyLoader extends LitElement {
   static get properties() {

@@ -14,24 +14,23 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "lit-element": "^2.2.1",
-    "lit-html": "^1.1.2"
+    "lit": "^2.3.1"
   },
   "devDependencies": {
-    "@open-wc/eslint-config": "^4.2.0",
-    "@open-wc/testing": "^2.0.0",
-    "@web/dev-server": "^0.1.1",
-    "@web/test-runner": "^0.11.5",
-    "eslint": "^6.1.0",
-    "eslint-config-prettier": "^6.11.0",
-    "husky": "^1.0.0",
-    "lint-staged": "^10.0.0",
-    "prettier": "^2.0.4"
+    "@open-wc/eslint-config": "^4.3.0",
+    "@open-wc/testing": "next",
+    "@web/dev-server": "^0.1.28",
+    "@web/test-runner": "^0.13.22",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.4.1"
   },
   "eslintConfig": {
     "extends": [
-      "@open-wc/eslint-config",
-      "eslint-config-prettier"
+      "@open-wc",
+      "prettier"
     ]
   },
   "prettier": {
@@ -46,8 +45,7 @@
   "lint-staged": {
     "*.js": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "repository": {
