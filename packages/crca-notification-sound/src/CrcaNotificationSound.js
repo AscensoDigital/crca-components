@@ -1,6 +1,7 @@
-import { html, css, LitElement } from 'lit-element';
-import { classMap } from 'lit-html/directives/class-map';
+import { html, css, LitElement } from 'lit';
+import { classMap } from 'lit/directives/class-map';
 import { swing } from '@ascenso/crca-animation/src/animations/attention_seekers/swing.js';
+
 import '@material/mwc-icon-button/mwc-icon-button';
 
 export class CrcaNotificationSound extends LitElement {
