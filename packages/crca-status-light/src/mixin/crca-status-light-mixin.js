@@ -1,3 +1,5 @@
+import { CRCA_ORDER_ASC, CRCA_ORDER_DESC } from "../const.js";
+
 export const CrcaStatusLightMixin = Superclass =>
   class extends Superclass {
     static get properties() {
@@ -13,10 +15,11 @@ export const CrcaStatusLightMixin = Superclass =>
 
     constructor() {
       super();
-      this.order = 'asc';
+      this.order = CRCA_ORDER_ASC;
       this.success = null;
       this.warning = null;
       this.danger = null;
+      this.status = '';
     }
 
     getClass(value) {
@@ -25,7 +28,7 @@ export const CrcaStatusLightMixin = Superclass =>
       if (numeric.indexOf(typeof value) === -1) {
         return '';
       }
-      if (this.order === 'asc') {
+      if (this.order === CRCA_ORDER_ASC) {
         if (this.danger !== null && Number(value) <= Number(this.danger)) {
           return 'danger';
         }
@@ -39,14 +42,13 @@ export const CrcaStatusLightMixin = Superclass =>
         }
       }
 
-      if (this.order === 'desc') {
+      if (this.order === CRCA_ORDER_DESC) {
         if (this.danger !== null && Number(value) >= Number(this.danger)) {
           return 'danger';
         }
         if (this.warning !== null && Number(value) >= Number(this.warning)) {
           return 'warning';
         }
-        console.log();
         if ( ( (this.danger !== null || this.warning !== null) && this.success === null)
           || (this.success !== null && Number(value) <= Number(this.success))
         ) {

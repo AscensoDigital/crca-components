@@ -14,8 +14,8 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "lit-element": "^2.2.1",
-    "lit-html": "^1.1.2"
+    "@ascenso/crca-animation": "^0.3.1",
+    "lit": "^2.3.1"
   },
   "devDependencies": {
     "@open-wc/eslint-config": "^4.2.0",

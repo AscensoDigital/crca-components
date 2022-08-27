@@ -1,9 +1,17 @@
-import { html, css, LitElement } from 'lit-element';
+import { html, css, LitElement } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
+
+import { flash } from '@ascenso/crca-animation/src/animations/attention_seekers/flash.js';
+import { crcaAnimationStyle } from '@ascenso/crca-animation/src/styles/crcaAnimationStyle.js';
+
 import { CrcaStatusLightMixin } from './mixin/crca-status-light-mixin.js';
 
 export class CrcaStatusLight extends CrcaStatusLightMixin(LitElement) {
   static get styles() {
-    return css`
+    return [
+      crcaAnimationStyle,
+      flash,
+      css`
       :host {
         display: inline-block;
       }
@@ -40,13 +48,14 @@ export class CrcaStatusLight extends CrcaStatusLightMixin(LitElement) {
         background-color: var(--eit-badge-danger-background-color, red);
         border-color: var(--crca-status-light-default-border-color, #e60000);
       }
-    `;
+    `];
   }
 
   static get properties() {
     return {
       titleStatus: { type: String },
       valueAsContent: { type: Boolean },
+      animated: { type: Boolean }
     };
   }
 
@@ -54,17 +63,49 @@ export class CrcaStatusLight extends CrcaStatusLightMixin(LitElement) {
     super();
     this.titleStatus = '';
     this.valueAsContent = false;
+    this.animated = false;
+  }
+
+  firstUpdated() {
+    this.light = this.shadowRoot.getElementById('light');
+    this.addEventListener('crca-status-light-change', this._changeStatus);
   }
 
   render() {
     return html`
-      <div class="${this.status}" title="${this._titleStatus}">
+      <div id="light" class="${classMap(this._lightClassMap)}" title="${this._titleStatus}">
         ${this.valueAsContent ? this.value : html`<slot></slot>`}
       </div>
     `;
   }
 
+  get _lightClassMap() {
+    if(this.status!=='')
+    {
+      return {
+        [this.status]: true,
+        crcaAnimated: this.animated,
+        flash: this.animated
+      }
+    }
+    return {};
+  }
+
   get _titleStatus() {
     return this.titleStatus || this.getClass(this.value);
+  }
+
+  _changeStatus(e) {
+    // console.log(e);
+    if(e.detail.status!=='') {
+      this.animated=true;
+      setTimeout(() => {this.animated=false} , 3000);
+    }
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('crca-status-light-change');
+
   }
 }
