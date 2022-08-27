@@ -31,7 +31,7 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
   static get styles() {
     return css`
     .offline {
-      width: var(--crca-url-offline-width, 95vw);
+      max-width: var(--crca-url-offline-max-width, 95vw);
       background-color: var(--crca-url-offline-background-color, red);
       color: var(--crca-url-offline-color, #fff);
       padding: var(--crca-url-offline-padding, 10px);
@@ -42,7 +42,7 @@ export class CrcaReduxUrlParser extends connect(CrcaStaticStore.store)(LitElemen
     }
 
     .env-dev {
-      width: var(--crca-url-env-dev-width, 95vw);
+      max-width: var(--crca-url-env-dev-max-width, 95vw);
       background-color: var(--crca-url-env-dev-background-color, yellow);
       color: var(--crca-url-env-dev-color, red);
       padding: var(--crca-url-env-dev-padding, 10px);
