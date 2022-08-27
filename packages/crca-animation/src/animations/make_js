@@ -18,9 +18,9 @@ do
 			echo $i.js existe
 		else
 			echo $i.js NOexiste
-			
+
 			(
-			echo "import { css } from \"lit-element\";"
+			echo "import { css } from \"lit\";"
 			echo ""
 			echo -n "export const $i = css\` "
 			cat $f

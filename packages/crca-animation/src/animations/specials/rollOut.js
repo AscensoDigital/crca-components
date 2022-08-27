@@ -1,4 +1,4 @@
-import { css } from "lit-element";
+import { css } from "lit";
 
 export const rollOut = css` /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
 

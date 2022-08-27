@@ -1,4 +1,4 @@
-import { css } from "lit-element";
+import { css } from "lit";
 
 export const fadeOutLeft = css` @keyframes fadeOutLeft {
   from {

@@ -1,25 +1,14 @@
-import { html, css, LitElement } from 'lit';
-import { classMap } from 'lit/directives/class-map';
+import { html, LitElement } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { isInViewportMixin } from '@ascenso/crca-utils';
+
+import { crcaAnimationStyle } from './styles/crcaAnimationStyle.js';
 
 export class CrcaAnimationBase extends isInViewportMixin(LitElement) {
 
   static get styles() {
-    return css`
-      .animated {
-        animation-duration: var(--crca-animation-animation-duration, 1s);
-        animation-delay: var(--crca-animation-animation-delay, 0);
-        animation-fill-mode: both;
-      }
-      @media (print), (prefers-reduced-motion: reduce) {
-        .animated {
-          animation-duration: 1ms !important;
-          transition-duration: 1ms !important;
-          animation-iteration-count: 1 !important;
-        }
-      }
-      `;
+    return [crcaAnimationStyle];
   }
 
   static get properties() {
@@ -67,7 +56,7 @@ export class CrcaAnimationBase extends isInViewportMixin(LitElement) {
    */
   _getClassMap () {
     return {
-      animated: true,
+      crcaAnimated: true,
       [this.animation]: this._appear
     }
   }
