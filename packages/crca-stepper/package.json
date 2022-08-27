@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-stepper",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Webcomponent crca-stepper following open-wc recommendations",
   "author": "Claudio Corvalan",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "@ascenso/crca-status-light": "^0.3.0",
+    "@ascenso/crca-status-light": "^0.3.1",
     "@material/mwc-button": "^0.25.3",
     "@material/mwc-icon-button": "^0.25.3",
     "lit": "^2.3.1"

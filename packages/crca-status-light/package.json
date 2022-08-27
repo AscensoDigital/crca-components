@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-status-light",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Webcomponent crca-status-light following open-wc recommendations",
   "author": "Claudio Corvalan",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "@ascenso/crca-animation": "^0.4.0",
+    "@ascenso/crca-animation": "^0.4.1",
     "lit": "^2.3.1"
   },
   "devDependencies": {
