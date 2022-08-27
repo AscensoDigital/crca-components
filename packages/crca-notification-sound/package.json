@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-notification-sound",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Webcomponent crca-notification-sound following open-wc recommendations",
   "author": "crca-notification-sound",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "@ascenso/crca-animation": "^0.4.1",
+    "@ascenso/crca-animation": "^0.4.2",
     "@material/mwc-icon-button": "^0.25.3",
     "lit": "^2.3.1"
   },
