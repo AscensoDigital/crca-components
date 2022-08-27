@@ -1,7 +1,7 @@
-import { html, css, LitElement } from 'lit-element';
-import { classMap } from 'lit-html/directives/class-map.js';
+import { html, css, LitElement } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 
-import { CrcaStatusLightMixin } from '@ascenso/crca-status-light/src/mixin/crca-status-light-mixin.js';
+import { CrcaStatusLightMixin } from '@ascenso/crca-status-light/mixin.js';
 
 import '@material/mwc-button';
 import '@material/mwc-icon-button';

@@ -1,4 +1,4 @@
-import { html, css, LitElement } from 'lit-element';
+import { html, css, LitElement } from 'lit';
 import { connect } from 'pwa-helpers/connect-mixin';
 import { installRouter } from 'pwa-helpers/router';
 import { installOfflineWatcher } from 'pwa-helpers/network';
@@ -20,6 +20,7 @@ import {
   crcaUrlNavigate,
   crcaUrlUpdateOffline
 } from './redux/actions.js';
+
 import { CRCA_URL_PAGE_MAINTENANCE, CRCA_URL_PAGE_SUSPENDED, CRCA_URL_PAGES_BLOCKED } from './page.js';
 
 CrcaStaticStore.store.addReducers({

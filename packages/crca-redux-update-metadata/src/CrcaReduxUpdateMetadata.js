@@ -1,4 +1,4 @@
-import { LitElement } from 'lit-element';
+import { LitElement } from 'lit';
 import { connect, updateMetadata } from 'pwa-helpers';
 
 import { CrcaStaticStore } from '@ascenso/crca-redux-store';

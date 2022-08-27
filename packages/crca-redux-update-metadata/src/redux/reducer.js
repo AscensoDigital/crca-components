@@ -1,4 +1,4 @@
-import { UPDATE_METADATA } from "./actions";
+import { UPDATE_METADATA } from "./actions.js";
 
 const initialState = {
   metadata: null

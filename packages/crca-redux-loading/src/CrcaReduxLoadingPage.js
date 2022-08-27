@@ -1,11 +1,11 @@
-import { html, css, LitElement } from 'lit-element';
+import { html, css, LitElement } from 'lit';
 import  { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import { connect } from 'pwa-helpers/connect-mixin'
 
 import { crcaLoading } from './redux/reducer.js';
+import { crcaLoadingPageSelector } from './redux/selectors.js';
 
 import '@dile/dile-spinner/dile-spinner-modal';
-import { crcaLoadingPageSelector } from './redux/selectors.js';
 
 CrcaStaticStore.store.addReducers({
   crcaLoading

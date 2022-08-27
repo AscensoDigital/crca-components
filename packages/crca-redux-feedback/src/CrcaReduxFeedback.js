@@ -1,11 +1,11 @@
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html, css } from 'lit';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
 import { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import { crcaFeedback } from './redux/reducer.js';
+import { crcaFeedbackFeedbackSelector } from './redux/selectors.js';
 
 import '@dile/dile-toast/dile-toast';
-import { crcaFeedbackFeedbackSelector } from './redux/selectors.js';
 
 CrcaStaticStore.store.addReducers({
   crcaFeedback,

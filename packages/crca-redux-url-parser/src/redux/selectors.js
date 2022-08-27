@@ -1,6 +1,12 @@
 import { createSelector } from "reselect";
+
 import { CRCA_URL_PAGE_HOME } from "../page.js";
-import { CRCA_URL_ENV_DEV, CRCA_URL_ENV_PROD, CRCA_URL_STATUS_MAINTENANCE, CRCA_URL_STATUS_SUSPENDED } from "../consts.js";
+import {
+  CRCA_URL_ENV_DEV,
+  CRCA_URL_ENV_PROD,
+  CRCA_URL_STATUS_MAINTENANCE,
+  CRCA_URL_STATUS_SUSPENDED
+} from "../consts.js";
 
 const crcaUrlStateSelector = state => state && state.crcaUrl || {};
 

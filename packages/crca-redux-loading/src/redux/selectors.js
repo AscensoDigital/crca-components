@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
-import { SCOPE_PAGE, SCOPE_ELEMENT, SCOPE_INTERNAL } from "./actions";
+
+import { SCOPE_PAGE, SCOPE_ELEMENT, SCOPE_INTERNAL } from "./actions.js";
 
 const crcaLoadingStateSelector = state => state && state.crcaLoading || {};
 

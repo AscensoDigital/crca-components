@@ -1,5 +1,6 @@
 import { CrcaUrlLoader } from "../CrcaUrlLoader.js";
-import { CRCA_URL_PAGES_BLOCKED, CRCA_URL_PAGE_404, CRCA_URL_PAGE_MAINTENANCE, CRCA_URL_PAGE_SUSPENDED } from "../page.js";
+import { CRCA_URL_PAGES_BLOCKED, CRCA_URL_PAGE_404 } from "../page.js";
+
 import {
   crcaUrlConfigSelector,
   crcaUrlDominioSelector,
@@ -253,7 +254,9 @@ export const crcaUrlLoadPage = (page, loaderAction = null, manualUpdate = false)
     if(CRCA_URL_PAGES_BLOCKED.includes(actualPage)) {
       return;
     }
-    else if(page!==CRCA_URL_PAGE_404 && !CRCA_URL_PAGES_BLOCKED.includes(page)) {
+
+    if(page!==CRCA_URL_PAGE_404 && !CRCA_URL_PAGES_BLOCKED.includes(page)) {
+      // eslint-disable-next-line no-use-before-define
       dispatch(crcaUrlNavigate(crcaUrlStatusSelector(state)));
       return;
     }

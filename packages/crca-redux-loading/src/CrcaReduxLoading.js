@@ -1,4 +1,4 @@
-import { html, css, LitElement } from 'lit-element';
+import { html, css, LitElement } from 'lit';
 import  { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import { connect } from 'pwa-helpers/connect-mixin';
 
