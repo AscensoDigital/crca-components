@@ -14,7 +14,7 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "@ascenso/crca-status-light": "file:../crca-status-light",
+    "@ascenso/crca-status-light": "^0.3.0",
     "@material/mwc-button": "^0.25.3",
     "@material/mwc-icon-button": "^0.25.3",
     "lit": "^2.3.1"
@@ -54,5 +54,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "44a07d57b8e8fb07cbaf72f1d19e5f4570680154"
 }
