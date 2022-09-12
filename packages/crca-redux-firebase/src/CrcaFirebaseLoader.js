@@ -1,5 +1,41 @@
 class CrcaFirebasePrivateLoader {
 
+  static get analytics() {
+    if(this.privateAnalytics === undefined) {
+      return null;
+    }
+
+    return this.privateAnalytics;
+  }
+
+  static set analytics(an) {
+    this.privateAnalytics = an;
+  }
+
+  static get auth() {
+    if(this.privateAuth === undefined) {
+      return null;
+    }
+
+    return this.privateAuth;
+  }
+
+  static set auth(auth) {
+    this.privateAuth = auth;
+  }
+
+  static get db() {
+    if(this.privateDb === undefined) {
+      return null;
+    }
+
+    return this.privateDb;
+  }
+
+  static set db(db) {
+    this.privateDb = db;
+  }
+
   static get firebase() {
     if(this.privateFirebase === undefined) {
       return null;

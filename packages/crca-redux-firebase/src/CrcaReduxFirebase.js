@@ -1,4 +1,4 @@
-import { LitElement } from 'lit-element';
+import { LitElement } from 'lit';
 import { connect } from 'pwa-helpers';
 import { CrcaStaticStore } from '@ascenso/crca-redux-store';
 import {
@@ -8,22 +8,38 @@ import {
 
 import { crcaFirebase } from './redux/reducer.js';
 import {
-  firebaseAuthStateChanged,
   firebaseInitializeApp,
+} from './redux/actions/app-actions.js';
+
+import {
+  firebaseAuthStateChanged,
+  firebaseSignInAnonymously,
+} from './redux/actions/auth-actions.js';
+
+import {
   firebaseRemoteConfigActivate,
   firebaseRemoteConfigFetch,
   firebaseRemoteConfigFetchAndActivate,
   firebaseRemoteConfigLoadDefault,
-  firebaseSignInAnonymously,
   updateLastFetch
-} from './redux/actions.js';
+} from './redux/actions/remoteConfig-actions.js';
+
+import {
+  crcaFirebaseInitSelector,
+} from './redux/selectors/app-selectors.js';
+
 import {
   crcaFirebaseAuthHasMethodSelector,
   crcaFirebaseAuthHasMethodsSelector,
-  crcaFirebaseInitSelector,
+} from './redux/selectors/auth-selectors.js';
+
+import {
   crcaFirebaseRemoteConfigInitSelector,
   crcaFirebaseRemoteConfigLastFetchSelector
-} from './redux/selectors.js';
+} from './redux/selectors/remoteConfig-selectors.js';
+
+import { firestoreInitialize } from './redux/actions/firestore-actions.js';
+
 import { FB_AUTH_ANONYMOUSLY } from './consts.js';
 
 CrcaStaticStore.store.addReducers({
@@ -35,6 +51,8 @@ export class CrcaReduxFirebase extends connect(CrcaStaticStore.store)(LitElement
     return {
       defaultRemoteConfig: { type: Object },
       fetchAndActivate: { type: Boolean },
+      firestore: { type: Boolean },
+      analytics:  { type: Boolean },
       _dominio: { type: String },
       _firebaseInit: { type: Boolean },
       _page: { type: String },
@@ -49,6 +67,8 @@ export class CrcaReduxFirebase extends connect(CrcaStaticStore.store)(LitElement
     super();
     this.defaultRemoteConfig = null;
     this.fetchAndActivate = false;
+    this.firestore = false;
+    this.analytics = false;
   }
 
   stateChanged(state) {
@@ -67,11 +87,17 @@ export class CrcaReduxFirebase extends connect(CrcaStaticStore.store)(LitElement
       this._dominio !== '' &&
       !this._firebaseInit
     ) {
-      CrcaStaticStore.store.dispatch(firebaseInitializeApp());
+      CrcaStaticStore.store.dispatch(firebaseInitializeApp(this.analytics));
     }
 
     if(this._firebaseInit) {
       if(changedProperties.has('_firebaseInit') && changedProperties.get('_firebaseInit')===false ){
+
+        if(this.firestore) {
+          CrcaStaticStore.store.dispatch(
+            firestoreInitialize()
+          );
+        }
 
         if(this.defaultRemoteConfig !== null) {
           CrcaStaticStore.store.dispatch(

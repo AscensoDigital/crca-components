@@ -23,11 +23,5 @@ export {
 } from './src/consts.js';
 
 export {
-  getQueryCollectionByProp,
-  getQueryCollectionByPropSorted,
-  getQueryCollectionSorted,
-} from './src/utils/repository.js';
-
-export {
   CrcaFirebaseLoader
 } from './src/CrcaFirebaseLoader.js';

@@ -1,16 +1,27 @@
+export { crcaFirebase } from './src/redux/reducer.js';
+
 export {
-  setFirebaseAuthMethods,
   setFirebaseConfigDev,
   setFirebaseConfigProd,
   setFirebaseDiscordUrl,
-  successFirebaseSignIn,
   crcaFirebaseAnalyticsLogEvent,
+  crcaFirebaseGet,
+} from './src/redux/actions/app-actions.js';
+
+export {
+  setFirebaseAuthMethods,
+  successFirebaseSignIn,
+} from './src/redux/actions/auth-actions.js';
+
+export {
   crcaFirebaseRemoteConfigGet,
   crcaFirebaseRemoteConfigGetAll,
-  crcaFirebaseGet,
-} from './src/redux/actions.js';
+} from './src/redux/actions/remoteConfig-actions.js';
 
-export { crcaFirebase } from './src/redux/reducer.js';
+
+export {
+  crcaFirebaseInitSelector,
+} from './src/redux/selectors/app-selectors.js';
 
 export {
   crcaFirebaseAuthHasMethodSelector,
@@ -21,9 +32,15 @@ export {
   crcaFirebaseAuthSignInMethodSelector,
   crcaFirebaseAuthUserSelector,
   crcaFirebaseAuthUserUidSelector,
-  crcaFirebaseInitSelector,
+} from './src/redux/selectors/auth-selectors.js';
+
+export {
+  crcaFirebaseFirestoreInitSelector
+} from './src/redux/selectors/firestore-selectors.js';
+
+export {
   crcaFirebaseRemoteConfigInitSelector,
   crcaFirebaseRemoteConfigConfigSelector,
   crcaFirebaseRemoteConfigLastFetchSelector,
   crcaFirebaseRemoteConfigGetSelector,
-} from './src/redux/selectors.js';
+} from './src/redux/selectors/remoteConfig-selectors.js';

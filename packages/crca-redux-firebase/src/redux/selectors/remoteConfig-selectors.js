@@ -1,88 +1,14 @@
 import { createSelector } from 'reselect';
-import {
-  isBoolean,
-  isDefined,
-  isNumber,
-  isObject,
-  isString,
-} from '@ascenso/crca-utils';
-import { crcaUrlEnvSelector } from '@ascenso/crca-redux-url-parser/redux';
+import { isBoolean, isDefined, isNumber, isObject, isString } from '@ascenso/crca-utils';
 
+import { crcaFirebaseStateSelector } from './app-selectors.js';
 import {
   FB_RC_TYPE_VALUE_BOOLEAN,
   FB_RC_TYPE_VALUE_NUMBER,
   FB_RC_TYPE_VALUE_OBJECT,
   FB_RC_TYPE_VALUE_STRING,
   FB_RC_TYPE_VALUE_VALUE,
-} from '../consts.js';
-
-const crcaFirebaseStateSelector = state => (state && state.crcaFirebase) || {};
-
-const crcaFirebaseAuthSelector = createSelector(
-  crcaFirebaseStateSelector,
-  fb => fb.auth || {}
-);
-
-export const crcaFirebaseAuthMethodsSelector = createSelector(
-  crcaFirebaseAuthSelector,
-  auth => auth.methods || {}
-);
-
-export const crcaFirebaseAuthHasMethodsSelector = createSelector(
-  crcaFirebaseAuthMethodsSelector,
-  methods => Object.keys(methods).length>0
-);
-
-export const crcaFirebaseAuthHasMethodSelector = (method, state) => {
-  const methods = crcaFirebaseAuthMethodsSelector(state);
-  return isDefined(methods[method]);
-}
-
-export const crcaFirebaseAuthMethodSelector = (method, state) => {
-  const methods = crcaFirebaseAuthMethodsSelector(state);
-  return methods[method] || false;
-}
-
-export const crcaFirebaseAuthSignInSelector = createSelector(
-  crcaFirebaseAuthSelector,
-  auth => auth.signIn || false
-);
-
-export const crcaFirebaseAuthSignInMethodSelector = createSelector(
-  crcaFirebaseAuthSelector,
-  auth => auth.signInMethod || null
-);
-
-export const crcaFirebaseAuthUserSelector = createSelector(
-  crcaFirebaseAuthSelector,
-  auth => auth.user || null
-);
-
-export const crcaFirebaseAuthUserUidSelector = createSelector(
-  crcaFirebaseAuthUserSelector,
-  user => user && user.uid || false
-);
-
-export const crcaFirebaseInitSelector = createSelector(
-  crcaFirebaseStateSelector,
-  fb => fb.init || false
-);
-
-export const crcaFirebaseDiscordUrlSelector = createSelector(
-  crcaFirebaseStateSelector,
-  crcaUrlEnvSelector,
-  (fb, env) => isObject(fb.discordUrl) && fb.discordUrl[env] || fb.discordUrl || ''
-);
-
-export const crcaFirebaseConfigDevSelector = createSelector(
-  crcaFirebaseStateSelector,
-  fb => fb.configDev || { config: null, useAsProd: false }
-);
-
-export const crcaFirebaseConfigProdSelector = createSelector(
-  crcaFirebaseStateSelector,
-  fb => fb.configProd || { config: null, useAsDev: false }
-);
+} from '../../consts.js';
 
 const crcaFirebaseRemoteConfigSelector = createSelector(
   crcaFirebaseStateSelector,

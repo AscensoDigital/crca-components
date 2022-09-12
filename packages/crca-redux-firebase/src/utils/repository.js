@@ -1,20 +1,28 @@
-import { CrcaFirebaseLoader } from "../CrcaFirebaseLoader";
+import { isNull } from '@ascenso/crca-utils';
+import { collection, query, where, orderBy } from "firebase/firestore";
 
-export const getQueryCollectionByProp = (collection, prop, value) => {
-  const db = CrcaFirebaseLoader.firebase.firestore();
-  return db.collection(collection).where(prop, '==', value);
+import { CrcaFirebaseLoader } from "../CrcaFirebaseLoader.js";
+
+export const getQueryCollectionByProp = (collectionName, prop, value) => {
+  if(!isNull(CrcaFirebaseLoader.db)) {
+    return false;
+  }
+  const collectionRef = collection(CrcaFirebaseLoader.db, collectionName);
+  return query(collectionRef, where(prop, "==", value));
 };
 
 export const getQueryCollectionByPropSorted = (
-  collection,
+  collectionName,
   prop,
   value,
-  sortProp = 'sort'
+  sortProp = 'sort',
+  sortOrder = 'asc'
 ) => {
-  return getQueryCollectionByProp(collection, prop, value).orderBy(sortProp);
+  const collectionRef = collection(CrcaFirebaseLoader.db, collectionName);
+  return query(collectionRef, where(prop, "==", value), orderBy(sortProp, sortOrder));
 };
 
-export const getQueryCollectionSorted = (collection, sortProp = 'sort') => {
-  const db = CrcaFirebaseLoader.firebase.firestore();;
-  return db.collection(collection).orderBy(sortProp);
+export const getQueryCollectionSorted = (collectionName, sortProp = 'sort', sortOrder = 'asc') => {
+  const collectionRef = collection(CrcaFirebaseLoader.db, collectionName);
+  return query(collectionRef, orderBy(sortProp, sortOrder));
 };

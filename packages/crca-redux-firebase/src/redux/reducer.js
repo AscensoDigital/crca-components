@@ -2,16 +2,27 @@ import {
   SET_FIREBASE_CONFIG_DEV,
   SET_FIREBASE_CONFIG_PROD,
   SET_FIREBASE_DISCORD_URL,
-  SET_REMOTE_CONFIG,
-  SET_REMOTE_ERROR,
   SUCCESS_FIREBASE,
-  SUCCESS_REMOTE_CONFIG,
+  SEND_FB_ANALYTICS_EVENT,
+  SUCCESS_FB_ANALYTICS_EVENT,
+  FAIL_FB_ANALYTICS_EVENT
+} from './actions/app-actions.js';
+
+import {
   SUCCESS_FIREBASE_SIGN_IN,
-  UPDATE_LAST_FETCH,
   UPDATE_FIREBASE_USER,
   SET_FIREBASE_AUTH_METHODS,
   LOGOUT_FIREBASE
-} from './actions.js';
+} from './actions/auth-actions.js';
+
+import { SUCCESS_FIRESTORE } from './actions/firestore-actions.js';
+
+import {
+  SET_REMOTE_CONFIG,
+  SET_REMOTE_ERROR,
+  SUCCESS_REMOTE_CONFIG,
+  UPDATE_LAST_FETCH
+} from './actions/remoteConfig-actions.js';
 
 const initialRemoteState = {
   init: false,
@@ -33,7 +44,9 @@ const initialState = {
   configProd: { config: null, useAsDev: false },
   remoteConfig: initialRemoteState,
   auth: initialAuthState,
-  discordUrl: ''
+  discordUrl: '',
+  events: [],
+  firestoreInit: false
 };
 
 const authReducer = (state,action) => {
@@ -130,6 +143,26 @@ export const crcaFirebase = (state = initialState, action) => {
       return {
         ...state,
         discordUrl: action.discordUrl
+      }
+    case SEND_FB_ANALYTICS_EVENT:
+      return {
+        ...state,
+        events: [{eventId: action.detail.eventId, event: action.detail.event}, ...state.events]
+      }
+    case SUCCESS_FB_ANALYTICS_EVENT:
+      return {
+        ...state,
+        events: state.events.filter(e => e.eventId!==action.eventId)
+      }
+    case FAIL_FB_ANALYTICS_EVENT:
+      return {
+        ...state,
+        events: state.events.map(e => e.eventId===action.detail.eventId ? {...e, err: action.detail.err} : e)
+      }
+    case SUCCESS_FIRESTORE:
+      return {
+        ...state,
+        firestoreInit: true
       }
     default:
       return state;

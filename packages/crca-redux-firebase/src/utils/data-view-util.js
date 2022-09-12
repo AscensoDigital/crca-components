@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import { Timestamp } from 'firebase/firestore';
 import { isDefined } from '@ascenso/crca-utils';
 
 export const dateFirebase2Js = date => {
@@ -6,7 +6,7 @@ export const dateFirebase2Js = date => {
     return null;
   }
   // eslint-disable-next-line no-undef
-  const timestamp = new firebase.firestore.Timestamp(
+  const timestamp = new Timestamp(
     date.seconds,
     date.nanoseconds
   );
