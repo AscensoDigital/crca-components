@@ -1,3 +1,7 @@
+export {
+  CrcaFirebaseLoader
+} from './src/CrcaFirebaseLoader.js';
+
 export { crcaFirebase } from './src/redux/reducer.js';
 
 export {
