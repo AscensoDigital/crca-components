@@ -9,7 +9,7 @@ import {
   getAll,
   activate,
   fetchAndActivate,
-  fetch
+  fetchConfig
 } from "firebase/remote-config";
 
 import {
@@ -68,7 +68,7 @@ export const firebaseRemoteConfigFetch = () => (dispatch, getState) => {
   const state = getState();
 
   if(!isNull(CrcaFirebaseLoader.remoteConfig)){
-    fetch(CrcaFirebaseLoader.remoteConfig)
+    fetchConfig(CrcaFirebaseLoader.remoteConfig)
     .then(() => {
       dispatch(updateLastFetch(new Date()));
     })
