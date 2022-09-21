@@ -485,7 +485,7 @@ export class CrcaReduxLandbot extends connect(CrcaStaticStore.store)(
           this._landbot.close();
         }
       }
-      if (preActiveOpened.bot === this.name) {
+      if (isDefined(preActiveOpened) && preActiveOpened.bot === this.name) {
         if (preActiveOpened.opened && isUndefined(this._activeOpened.opened)) {
           this._landbot.close();
           console.log('Cierro bot desde UPDATED PREactiveOpened');
