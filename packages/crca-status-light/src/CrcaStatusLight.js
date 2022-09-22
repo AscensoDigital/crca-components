@@ -105,7 +105,6 @@ export class CrcaStatusLight extends CrcaStatusLightMixin(LitElement) {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('crca-status-light-change');
-
+    this.removeEventListener('crca-status-light-change', this._changeStatus);
   }
 }
