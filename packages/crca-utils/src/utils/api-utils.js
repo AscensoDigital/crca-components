@@ -98,16 +98,16 @@ export const fetchMethod = (method, url, config) => {
 }
 
 export const jsonDelete = (url, config) => {
-  return fetchMethod('delete', url, config);
+  return fetchMethod('DELETE', url, config);
 }
 
 export const jsonGet = (url, config) => {
   const prom = new Promise((resolve, reject) => {
-    fetchMethod('get', url, config)
+    fetchMethod('GET', url, config)
     .then(response => resolve(response))
     .catch(fetchError => {
       if(isDefined(axios)){
-        axiosMethod('get',url, config)
+        axiosMethod('GET',url, config)
         .then(response => resolve(response))
         .catch(axiosError => reject({error: {fetch: fetchError, axios: axiosError}}));
       }
@@ -121,13 +121,13 @@ export const jsonGet = (url, config) => {
 }
 
 export const jsonPatch = (url, config) => {
-  return fetchMethod('patch', url, config);
+  return fetchMethod('PATCH', url, config);
 }
 
 export const jsonPost = (url, config) => {
-  return fetchMethod('post', url, config);
+  return fetchMethod('POST', url, config);
 }
 
 export const jsonPut = (url, config) => {
-  return fetchMethod('put', url, config);
+  return fetchMethod('PUT', url, config);
 }
