@@ -1,13 +1,13 @@
 {
   "name": "@ascenso/crca-animation",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Webcomponent crca-animation following open-wc recommendations",
   "author": "crca-animation",
   "license": "MIT",
   "main": "index.js",
   "module": "index.js",
   "dependencies": {
-    "@ascenso/crca-utils": "*",
+    "@ascenso/crca-utils": "^0.10.3",
     "animate.css": "^3.7.2",
     "lit": "^2.3.1"
   },
