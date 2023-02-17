@@ -1,6 +1,6 @@
 {
   "name": "@ascenso/crca-utils",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "description": "Util data functions manipulate",
   "main": "index.js",
   "author": "Claudio Corvalan",
