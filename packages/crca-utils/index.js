@@ -35,7 +35,12 @@ export {
  jsonGet,
  jsonPatch,
  jsonPost,
- jsonPut
+ jsonPut,
+ HTML_METHOD_GET,
+ HTML_METHOD_POST,
+ HTML_METHOD_PATCH,
+ HTML_METHOD_PUT,
+ HTML_METHOD_DELETE
 } from './src/utils/api-utils.js';
 
 export {

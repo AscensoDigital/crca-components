@@ -1,12 +1,18 @@
 import { isDefined, isObject } from "./data-utils.js";
 import axios from 'redaxios';
 
+export const HTML_METHOD_GET = 'GET';
+export const HTML_METHOD_POST = 'POST';
+export const HTML_METHOD_PUT = 'PUT';
+export const HTML_METHOD_PATCH = 'PATCH';
+export const HTML_METHOD_DELETE = 'DELETE';
+
 export const axiosMethod = (method, url, config) => {
   const prom = new Promise((resolve, reject) => {
     if(isDefined(axios)) {
       const params = {};
       const heads = {};
-      if(method!=='get' && isDefined(config.data) && isObject(config.data)) {
+      if(method!==HTML_METHOD_GET && isDefined(config.data) && isObject(config.data)) {
         params.data = config.data;
         heads['Content-Type'] = 'application/json';
       }
@@ -46,7 +52,7 @@ export const fetchMethod = (method, url, config) => {
 
     const params = {};
     const heads = {};
-    if(method!=='get' && isDefined(config.data) && isObject(config.data)) {
+    if(method!==HTML_METHOD_GET && isDefined(config.data) && isObject(config.data)) {
       params.body = JSON.stringify(config.data);
       heads['Content-Type'] = 'application/json';
     }
@@ -98,16 +104,16 @@ export const fetchMethod = (method, url, config) => {
 }
 
 export const jsonDelete = (url, config) => {
-  return fetchMethod('DELETE', url, config);
+  return fetchMethod(HTML_METHOD_DELETE, url, config);
 }
 
 export const jsonGet = (url, config) => {
   const prom = new Promise((resolve, reject) => {
-    fetchMethod('GET', url, config)
+    fetchMethod(HTML_METHOD_GET, url, config)
     .then(response => resolve(response))
     .catch(fetchError => {
       if(isDefined(axios)){
-        axiosMethod('GET',url, config)
+        axiosMethod(HTML_METHOD_GET,url, config)
         .then(response => resolve(response))
         .catch(axiosError => reject({error: {fetch: fetchError, axios: axiosError}}));
       }
@@ -121,13 +127,13 @@ export const jsonGet = (url, config) => {
 }
 
 export const jsonPatch = (url, config) => {
-  return fetchMethod('PATCH', url, config);
+  return fetchMethod(HTML_METHOD_PATCH, url, config);
 }
 
 export const jsonPost = (url, config) => {
-  return fetchMethod('POST', url, config);
+  return fetchMethod(HTML_METHOD_POST, url, config);
 }
 
 export const jsonPut = (url, config) => {
-  return fetchMethod('PUT', url, config);
+  return fetchMethod(HTML_METHOD_PUT, url, config);
 }
