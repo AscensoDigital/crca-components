@@ -31,16 +31,16 @@ export {
 } from './src/utils/endpoint-utils.js';
 
 export {
+  HTML_METHOD_GET,
+  HTML_METHOD_POST,
+  HTML_METHOD_PATCH,
+  HTML_METHOD_PUT,
+  HTML_METHOD_DELETE,
  jsonDelete,
  jsonGet,
  jsonPatch,
  jsonPost,
  jsonPut,
- HTML_METHOD_GET,
- HTML_METHOD_POST,
- HTML_METHOD_PATCH,
- HTML_METHOD_PUT,
- HTML_METHOD_DELETE
 } from './src/utils/api-utils.js';
 
 export {
